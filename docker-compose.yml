@@ -1,0 +1,20 @@
+version: '3.7'
+name: frontend
+
+services:
+  frontend_cra:
+    container_name: frontend_cra
+    image: frontend-frontend_cra:dev
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: dev
+    volumes:
+      - '.:/app'
+      - '/app/node_modules'
+    ports:
+      - 3000:3000
+    environment:
+      - WDS_SOCKET_HOST=127.0.0.1 
+      - CHOKIDAR_USEPOLLING=true
+      - WATCHPACK_POLLING=true

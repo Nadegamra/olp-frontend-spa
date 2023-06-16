@@ -1,0 +1,47 @@
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  [data-theme='light'] {
+      --color-bg-primary: #ffffff;
+      --color-bg-secondary: #f4f5f7;
+      --color-bg-tertiary: #fafbfc;
+      --color-bg-extra: rgb(20, 50, 255);
+      --color-text-primary: black;
+      --color-text-secondary: black;
+      --color-text-tertiary: black;
+      --color-text-hover: rgb(37 99 235);
+
+      --color-text-inverted: white;
+      --color-bg-chat: #dedee0;
+      --color-border: black;
+  }
+  [data-theme='dark'] {
+      --color-bg-primary: #0d1117;
+      --color-bg-secondary: #161b22;
+      --color-bg-tertiary: #010409;
+      --color-bg-extra: rgb(20, 50, 255);
+      --color-text-primary: white;
+      --color-text-secondary: white;
+      --color-text-tertiary: white;
+      --color-text-hover: rgb(37 99 235);
+
+      --color-text-inverted: black;
+      --color-bg-chat: #3d3d3d;
+      --color-border: white;
+  }
+}
+
