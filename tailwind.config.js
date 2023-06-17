@@ -17,7 +17,10 @@ export default {
       't-tertiary': `var(${'--color-text-tertiary'})`,
       't-hover': `var(${'--color-text-hover'})`,
       'white': 'rgb(255,255,255)',
-      'black': 'rgb(0,0,0)'
+      'black': 'rgb(0,0,0)',
+      'success': 'rgb(34, 139, 34)',
+      'error': 'rgb(139, 0, 0)'
+
   },
   fontFamily: {
       'ff-primary': `var(${'--font-family-primary'})`,

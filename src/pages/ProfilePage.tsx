@@ -1,5 +1,9 @@
+import useAuth from '../stores/AuthStore'
+
 function ProfilePage() {
-    return <div>Profile page</div>
+    const { user } = useAuth()
+
+    return <section>{user?.email}</section>
 }
 
 export default ProfilePage
