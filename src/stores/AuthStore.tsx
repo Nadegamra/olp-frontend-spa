@@ -7,7 +7,6 @@ import {
     User
 } from '../dtos/User'
 import axios from 'axios'
-import { useMemo } from 'react'
 
 interface AuthState {
     user?: User
@@ -46,7 +45,7 @@ const useAuth = create<AuthState>()((set, get) => {
         accessToken = localStorage.getItem('accessToken') ?? undefined
         refreshToken = localStorage.getItem('refreshToken') ?? undefined
         accessExp = accessToken !== undefined ? getExpirationDate(accessToken) : undefined
-        userId = localStorage.getItem('refreshToken') ?? undefined
+        userId = localStorage.getItem('userId') ?? undefined
     })()
 
     const saveLoginInfo = (data: LoginResponseDTO) => {
@@ -56,6 +55,7 @@ const useAuth = create<AuthState>()((set, get) => {
         localStorage.setItem('refreshToken', refreshToken)
         accessExp = getExpirationDate(accessToken)
         userId = data.userId
+        localStorage.setItem('userId', data.userId)
         role = getRole(accessToken)
     }
 
@@ -131,6 +131,7 @@ const useAuth = create<AuthState>()((set, get) => {
         logout: () => {
             localStorage.removeItem('accessToken')
             localStorage.removeItem('refreshToken')
+            localStorage.removeItem('userId')
             accessToken = undefined
             refreshToken = undefined
             accessExp = undefined
