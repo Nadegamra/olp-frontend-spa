@@ -1,6 +1,6 @@
 import AppRoutes from './components/routing/AppRoutes'
-import Footer from './components/ui/Footer'
-import Header from './components/ui/Header'
+import Footer from './components/ui/layout/Footer'
+import Header from './components/ui/layout/Header'
 
 function App() {
     return (
