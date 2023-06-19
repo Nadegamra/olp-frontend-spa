@@ -3,8 +3,8 @@ name: frontend
 
 services:
   frontend_cra:
-    container_name: frontend_cra
-    image: frontend-frontend_cra:dev
+    container_name: frontend_vite
+    image: frontend-frontend_vite:dev
     build:
       context: .
       dockerfile: Dockerfile
