@@ -4,6 +4,7 @@ import ProfilePage from '../../pages/ProfilePage'
 import useAuth from '../../stores/AuthStore'
 import ConditionalRoute from './ConditionalRoute'
 import LoginPage from '../../pages/LoginPage'
+import RegisterPage from '../../pages/RegisterPage'
 
 function AppRoutes() {
     const { user, role } = useAuth()
@@ -15,6 +16,7 @@ function AppRoutes() {
             <Route path="/profile" element={<ProfilePage />} />
             <Route element={<ConditionalRoute condition={user === undefined} redirect="/" />}>
                 <Route path="/login" element={<LoginPage />} />
+                <Route path="/register" element={<RegisterPage />} />
             </Route>
         </Routes>
     )

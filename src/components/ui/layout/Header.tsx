@@ -31,7 +31,7 @@ function Header() {
     }
 
     return (
-        <header className="bg-bg-secondary p-5 flex">
+        <header className="bg-clr-bg2 p-5 flex">
             <a href="#main-content" className="sr-only">
                 Skip to main content
             </a>
@@ -54,8 +54,13 @@ function Header() {
                         )}
                     </button>
                     {user === undefined && (
-                        <li>
+                        <li className="select-none">
                             <Link to={'/login'}>Login</Link>
+                        </li>
+                    )}
+                    {user === undefined && (
+                        <li className="select-none">
+                            <Link to={'/register'}>Register</Link>
                         </li>
                     )}
                     {user !== undefined && (

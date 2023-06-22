@@ -26,7 +26,7 @@ function LoginPage() {
     return (
         <section className="p-5 flex flex-col items-center">
             <form
-                className="m-auto bg-bg-secondary flex flex-col p-7 rounded-md"
+                className="m-auto bg-clr-bg2 flex flex-col p-7 rounded-md"
                 onSubmit={handleSubmit(async (data) => {
                     setLoading(true)
                     const res = await login(new LoginRequestDTO(data.email, data.password, false))
