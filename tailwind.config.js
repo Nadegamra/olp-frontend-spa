@@ -31,9 +31,10 @@ export default {
       'ff-primary': `var(${'--font-family-primary'})`,
   },
   fontSize: {
-      'fs-h1': "25px",
-      'fs-h2': "16px",
-      'fs-primary': "12px",
+      'fs-h1': "24px",
+      'fs-h2': "18px",
+      'fs-h3': "14px",
+      'fs-h4': "12px",
   },
  }
 }

@@ -71,7 +71,7 @@ const useAuth = create<AuthState>()((set, get) => {
             return false
         }
         const res = await api.post('refresh-token', new RenewTokenRequestDTO(userId, refreshToken))
-        if (res.status < 400) {
+        if (res.status === 200) {
             saveLoginInfo(res.data as LoginResponseDTO)
             const res2 = await profile()
             if (res2 !== false) {
@@ -92,7 +92,7 @@ const useAuth = create<AuthState>()((set, get) => {
         const res = await api.get('profile', {
             headers: { Authorization: `Bearer ${accessToken}` }
         })
-        if (res.status < 400) {
+        if (res.status === 200) {
             const data = res.data as User
             set(() => ({ user: data }))
             return data
@@ -112,7 +112,7 @@ const useAuth = create<AuthState>()((set, get) => {
         user: user,
         login: async (dto: LoginRequestDTO) => {
             const res = await api.post('login', dto)
-            if (res.status < 400) {
+            if (res.status === 200) {
                 saveLoginInfo(res.data as LoginResponseDTO)
                 const res2 = await profile()
                 if (res2 !== false) {
@@ -125,7 +125,7 @@ const useAuth = create<AuthState>()((set, get) => {
         refresh: refresh,
         register: async (dto: RegisterDTO): Promise<boolean> => {
             const res = await api.post('register', dto)
-            return res.status < 400
+            return res.status === 200
         },
         isTokenExpired: isTokenExpired,
         logout: () => {

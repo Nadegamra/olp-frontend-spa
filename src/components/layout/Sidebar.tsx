@@ -42,7 +42,7 @@ function Sidebar({ sections, currentSection }: Sections) {
                 <div className="h-full px-3 py-4 overflow-y-auto bg-clr-bg3">
                     <ul className="space-y-2 font-medium">
                         {sections.map(({ icon, name, sectionName }) => (
-                            <li>
+                            <li key={sectionName}>
                                 <a
                                     onClick={() => navigate(`/settings/${sectionName}`)}
                                     className={
