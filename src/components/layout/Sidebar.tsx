@@ -1,15 +1,18 @@
+import { useNavigate } from 'react-router-dom'
+
 export interface SidebarSection {
     name: string
-    route: string
+    sectionName: string
     icon: string
-    isActive: boolean
 }
 
 interface Sections {
     sections: SidebarSection[]
+    currentSection?: string
 }
 
-function Sidebar({ sections }: Sections) {
+function Sidebar({ sections, currentSection }: Sections) {
+    const navigate = useNavigate()
     return (
         <>
             <button
@@ -34,28 +37,34 @@ function Sidebar({ sections }: Sections) {
 
             <aside
                 id="sidebar-multi-level-sidebar"
-                className="fixed left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0"
+                className="w-64 h-full transition-transform -translate-x-full sm:translate-x-0"
                 aria-label="Sidebar">
-                <div className="h-full px-3 py-4 overflow-y-auto bg-clr-bg2">
+                <div className="h-full px-3 py-4 overflow-y-auto bg-clr-bg3">
                     <ul className="space-y-2 font-medium">
-                        {sections.map(({ icon, name, route, isActive }) => (
+                        {sections.map(({ icon, name, sectionName }) => (
                             <li>
                                 <a
-                                    href={route}
-                                    className="flex items-center p-2 text-clr-text1 rounded-lg hover:bg-clr-bg3">
-                                    {isActive ? (
+                                    onClick={() => navigate(`/settings/${sectionName}`)}
+                                    className={
+                                        currentSection?.toUpperCase() === sectionName.toUpperCase()
+                                            ? 'flex items-center p-2 text-clr-text1 rounded-lg bg-clr-bg2 hover:bg-clr-bg1 cursor-pointer'
+                                            : 'flex items-center p-2 text-clr-text1 rounded-lg bg-clr-bg3 hover:bg-clr-bg1 cursor-pointer'
+                                    }>
+                                    {currentSection?.toUpperCase() === sectionName.toUpperCase() ? (
                                         <>
-                                            <span className="material-symbols-outlined text-clr-link">
+                                            <span className="material-symbols-outlined text-clr-link select-none">
                                                 {icon}
                                             </span>
-                                            <span className="ml-3 text-clr-link">{name}</span>
+                                            <span className="ml-3 text-clr-link select-none">
+                                                {name}
+                                            </span>
                                         </>
                                     ) : (
                                         <>
-                                            <span className="material-symbols-outlined">
+                                            <span className="material-symbols-outlined select-none">
                                                 {icon}
                                             </span>
-                                            <span className="ml-3">{name}</span>
+                                            <span className="ml-3 select-none">{name}</span>
                                         </>
                                     )}
                                 </a>

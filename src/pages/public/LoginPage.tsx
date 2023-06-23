@@ -3,9 +3,9 @@ import useAuth from '../../stores/AuthStore'
 import { LoginRequestDTO } from '../../dtos/User'
 import { useNavigate } from 'react-router-dom'
 import { useState } from 'react'
-import Button from '../../components/ui/elements/Button'
-import Spinner from '../../components/ui/elements/Spinner'
-import FormField from '../../components/ui/elements/FormField'
+import Button from '../../components/forms/Button'
+import Spinner from '../../components/forms/Spinner'
+import FormField from '../../components/forms/FormField'
 
 interface ILoginInfo {
     email: string
@@ -32,7 +32,7 @@ function LoginPage() {
                     const res = await login(new LoginRequestDTO(data.email, data.password, false))
                     setLoading(false)
                     if (res) {
-                        navigate('/profile')
+                        navigate('/')
                         return
                     }
                     setError('root', {

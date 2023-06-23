@@ -1,5 +1,5 @@
 import { Link, useNavigate } from 'react-router-dom'
-import useAuth from '../../../stores/AuthStore'
+import useAuth from '../../stores/AuthStore'
 import { useEffect, useState } from 'react'
 
 function Header() {
@@ -31,7 +31,7 @@ function Header() {
     }
 
     return (
-        <header className="bg-clr-bg2 p-5 flex">
+        <header className="bg-clr-bg4 p-5 flex">
             <a href="#main-content" className="sr-only">
                 Skip to main content
             </a>
@@ -65,7 +65,7 @@ function Header() {
                     )}
                     {user !== undefined && (
                         <li className="select-none hover:text-clr-hover">
-                            <Link to={'/settings/profile'}>
+                            <Link to={'/settings/public'}>
                                 <span className="material-symbols-outlined">settings</span>
                             </Link>
                         </li>

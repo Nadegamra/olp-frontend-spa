@@ -26,10 +26,10 @@ const CustomRadio = React.forwardRef<HTMLInputElement, Props>(
                 <div className="ml-2 text-sm">
                     <label htmlFor={id} className="font-medium text-t-primary">
                         {label}
+                        <p id="helper-radio-text" className="text-xs font-normal text-t-secondary">
+                            {helperText}
+                        </p>
                     </label>
-                    <p id="helper-radio-text" className="text-xs font-normal text-t-secondary">
-                        {helperText}
-                    </p>
                 </div>
             </div>
         )

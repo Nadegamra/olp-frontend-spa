@@ -21,9 +21,10 @@ input:-webkit-autofill:focus {
 
 @layer base {
   [data-theme='light'] {
-      --color-bg-primary: #ffffff;
-      --color-bg-secondary: #f4f5f7;
-      --color-bg-tertiary: #fafbfc;
+      --color-bg-primary: #f1f4f7;
+      --color-bg-secondary: #e7eaee;
+      --color-bg-tertiary: #dbe1e6;
+      --color-bg-quaternary: #cbd3d8;
       --color-bg-extra: rgb(20, 50, 255);
       --color-text-primary: black;
       --color-text-secondary: rgb(107 114 128);
@@ -33,9 +34,10 @@ input:-webkit-autofill:focus {
       --color-border: rgb(209 213 219);
   }
   [data-theme='dark'] {
-      --color-bg-primary: #0d1117;
-      --color-bg-secondary: #161b22;
-      --color-bg-tertiary: #010409;
+      --color-bg-primary: #232b3d;
+      --color-bg-secondary: #1d2433;
+      --color-bg-tertiary: #11151f;
+      --color-bg-quaternary: #0a0d13;
       --color-bg-extra: rgb(20, 50, 255);
       --color-text-primary: white;
       --color-text-secondary: rgb(209 213 219);
