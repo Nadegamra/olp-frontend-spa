@@ -6,7 +6,7 @@ import { useState } from 'react'
 import Button from '../../components/ui/elements/Button'
 import Spinner from '../../components/ui/elements/Spinner'
 import FormField from '../../components/ui/elements/FormField'
-import Radio from '../../components/ui/elements/Radio'
+import CustomRadio from '../../components/ui/elements/Radio'
 
 interface IRegisterInfo {
     email: string
@@ -48,7 +48,8 @@ function RegisterPage() {
                             message: 'An error has occurred while registering'
                         })
                     }
-                })}>
+                })}
+                aria-busy={loading}>
                 <h1 className="text-center pb-3 text-fs-h1">Register</h1>
                 <fieldset className="flex flex-col mb-2">
                     <legend className="sr-only">Registration details</legend>
@@ -98,14 +99,14 @@ function RegisterPage() {
                         </div>
                     </div>
                     <div className="flex gap-2">
-                        <Radio
+                        <CustomRadio
                             label="Creator"
                             id="role1"
                             helperText="Can create new courses"
                             value={UserRole.Creator}
                             {...register('role', { required: true })}
                         />
-                        <Radio
+                        <CustomRadio
                             label="Learner"
                             id="role2"
                             helperText="Can take courses"
@@ -122,12 +123,12 @@ function RegisterPage() {
                 </div>
             </form>
             {errors.root && (
-                <p role="alert" className="text-clr-error text-center">
+                <p role="alert" className="text-clr-error text-center" aria-live="polite">
                     {errors.root.message}
                 </p>
             )}
             {message !== '' && (
-                <p role="alert" className="text-clr-success text-center">
+                <p role="alert" className="text-clr-success text-center" aria-live="polite">
                     {message}
                 </p>
             )}

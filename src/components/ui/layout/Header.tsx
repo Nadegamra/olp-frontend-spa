@@ -35,7 +35,7 @@ function Header() {
             <a href="#main-content" className="sr-only">
                 Skip to main content
             </a>
-            <Link className="select-none" to={'/'}>
+            <Link className="select-none hover:text-clr-hover" to={'/'}>
                 Home
             </Link>
             <div className="flex-1" />
@@ -43,7 +43,7 @@ function Header() {
                 <ul className="flex gap-7">
                     <button
                         onClick={toggleTheme}
-                        className="select-none"
+                        className="select-none hover:text-clr-hover"
                         aria-label={
                             theme === 'light' ? 'Switch to dark mode' : 'Switch to light mode'
                         }>
@@ -54,19 +54,19 @@ function Header() {
                         )}
                     </button>
                     {user === undefined && (
-                        <li className="select-none">
+                        <li className="select-none hover:text-clr-hover">
                             <Link to={'/login'}>Login</Link>
                         </li>
                     )}
                     {user === undefined && (
-                        <li className="select-none">
+                        <li className="select-none hover:text-clr-hover">
                             <Link to={'/register'}>Register</Link>
                         </li>
                     )}
                     {user !== undefined && (
-                        <li className="select-none">
-                            <Link to={'/profile'}>
-                                <span className="material-symbols-outlined">person</span>
+                        <li className="select-none hover:text-clr-hover">
+                            <Link to={'/settings/profile'}>
+                                <span className="material-symbols-outlined">settings</span>
                             </Link>
                         </li>
                     )}
@@ -74,7 +74,7 @@ function Header() {
                         <li>
                             <button
                                 role="logout"
-                                className="select-none"
+                                className="select-none hover:text-clr-hover"
                                 onClick={() => {
                                     logout()
                                     navigate('/')
