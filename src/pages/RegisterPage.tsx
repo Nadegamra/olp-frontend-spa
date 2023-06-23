@@ -31,23 +31,23 @@ function RegisterPage() {
     return (
         <section className="p-5 flex flex-col items-center">
             <form
-                className="m-auto bg-clr-bg2 flex flex-col p-7 rounded-md mb-3"
+                className="m-auto bg-clr-bg2 flex flex-col p-7 rounded-md mb-7"
                 onSubmit={handleSubmit(async (data) => {
                     setMessage('')
-                    // setLoading(true)
+                    setLoading(true)
 
-                    // const res = await registerUser(
-                    //     new RegisterDTO(data.email, data.password, data.role)
-                    // )
-                    // setLoading(false)
-                    // if (res) {
-                    //     // Tell to check email
-                    // }
-                    setMessage('Please check your email to confirm your account')
-                    // setError('root', {
-                    //     type: 'validate',
-                    //     message: 'Login credentials are incorrect'
-                    // })
+                    const res = await registerUser(
+                        new RegisterDTO(data.email, data.password, data.role)
+                    )
+                    setLoading(false)
+                    if (res) {
+                        setMessage('Please check your email to confirm your account')
+                    } else {
+                        setError('root', {
+                            type: 'validate',
+                            message: 'An error has occurred while registering'
+                        })
+                    }
                 })}>
                 <h1 className="text-center pb-3 text-fs-h1">Register</h1>
                 <fieldset className="flex flex-col mb-2">
@@ -60,10 +60,10 @@ function RegisterPage() {
                         disabled={loading}
                         {...register('email', { required: true })}
                     />
-                    <p className="text-clr-error h-5 mb-3" role="alert">
+                    <p className="text-clr-error h-5 mb-2" role="alert">
                         {errors.email?.type == 'required' && 'Email is required'}
                     </p>
-                    <div className="flex flex-col sm:flex-row pb-10 gap-2">
+                    <div className="flex flex-col sm:flex-row pb-5 sm:pb-3 gap-2">
                         <div className="flex flex-col">
                             <FormField
                                 placeholder="password"
@@ -97,7 +97,7 @@ function RegisterPage() {
                             </p>
                         </div>
                     </div>
-                    <div className="flex pb-2 gap-2">
+                    <div className="flex gap-2">
                         <Radio
                             label="Creator"
                             id="role1"
@@ -118,21 +118,21 @@ function RegisterPage() {
                     </p>
                 </fieldset>
                 <div className="mx-auto mt-3">
-                    <Button text="Login" type="submit" disabled={loading} />
+                    <Button text="Register" type="submit" disabled={loading} />
                 </div>
             </form>
             {errors.root && (
-                <p role="alert" className="text-clr-error">
+                <p role="alert" className="text-clr-error text-center">
                     {errors.root.message}
                 </p>
             )}
             {message !== '' && (
-                <p role="alert" className="text-clr-success">
+                <p role="alert" className="text-clr-success text-center">
                     {message}
                 </p>
             )}
             {loading && (
-                <div className="mx-auto mt-7">
+                <div className="mx-auto">
                     <Spinner />
                 </div>
             )}
