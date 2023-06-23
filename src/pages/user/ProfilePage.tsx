@@ -1,4 +1,4 @@
-import useAuth from '../stores/AuthStore'
+import useAuth from '../../stores/AuthStore'
 
 function ProfilePage() {
     const { user } = useAuth()

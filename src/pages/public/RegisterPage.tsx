@@ -1,12 +1,12 @@
 import { useForm } from 'react-hook-form'
-import useAuth from '../stores/AuthStore'
-import { LoginRequestDTO, RegisterDTO, UserRole } from '../dtos/User'
+import useAuth from '../../stores/AuthStore'
+import { LoginRequestDTO, RegisterDTO, UserRole } from '../../dtos/User'
 import { useNavigate } from 'react-router-dom'
 import { useState } from 'react'
-import Button from '../components/ui/elements/Button'
-import Spinner from '../components/ui/elements/Spinner'
-import FormField from '../components/ui/elements/FormField'
-import Radio from '../components/ui/elements/Radio'
+import Button from '../../components/ui/elements/Button'
+import Spinner from '../../components/ui/elements/Spinner'
+import FormField from '../../components/ui/elements/FormField'
+import Radio from '../../components/ui/elements/Radio'
 
 interface IRegisterInfo {
     email: string
