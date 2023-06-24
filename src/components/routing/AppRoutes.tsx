@@ -6,23 +6,42 @@ import ConditionalRoute from './ConditionalRoute'
 import LoginPage from '../../pages/public/LoginPage'
 import RegisterPage from '../../pages/public/RegisterPage'
 import PageNotFoundPage from '../../pages/public/PageNotFoundPage'
+import { useEffect, useState } from 'react'
+import { User } from '../../dtos/User'
 
 function AppRoutes() {
-    const { user, role } = useAuth()
-    return (
-        <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route element={<ConditionalRoute condition={user !== undefined} />}>
-                <Route path="/settings" element={<SettingsPage />} />
-                <Route path="/settings/:section" element={<SettingsPage />} />
-            </Route>
-            <Route element={<ConditionalRoute condition={user === undefined} redirect="/" />}>
-                <Route path="/login" element={<LoginPage />} />
-                <Route path="/register" element={<RegisterPage />} />
-            </Route>
-            <Route path="*" element={<PageNotFoundPage />} />
-        </Routes>
-    )
+    const { profile, stateNumber } = useAuth()
+    const [loading, setLoading] = useState<boolean>(true)
+    const [user, setUser] = useState<User | undefined>(undefined)
+    useEffect(() => {
+        profile()
+            .then((res) => {
+                if (res === false) {
+                    setUser(undefined)
+                    return
+                }
+                setUser(res)
+            })
+            .finally(() => {
+                setLoading(false)
+            })
+    }, [stateNumber])
+    if (!loading) {
+        return (
+            <Routes>
+                <Route path="/" element={<HomePage />} />
+                <Route element={<ConditionalRoute condition={user !== undefined} redirect="/" />}>
+                    <Route path="/settings" element={<SettingsPage />} />
+                    <Route path="/settings/:section" element={<SettingsPage />} />
+                </Route>
+                <Route element={<ConditionalRoute condition={user === undefined} redirect="/" />}>
+                    <Route path="/login" element={<LoginPage />} />
+                    <Route path="/register" element={<RegisterPage />} />
+                </Route>
+                <Route path="*" element={<PageNotFoundPage />} />
+            </Routes>
+        )
+    }
 }
 
 export default AppRoutes

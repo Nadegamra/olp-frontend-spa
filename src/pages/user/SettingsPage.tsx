@@ -1,13 +1,11 @@
 import { useParams } from 'react-router-dom'
 import Sidebar, { SidebarSection } from '../../components/layout/Sidebar'
-import useAuth from '../../stores/AuthStore'
 import PublicProfileSection from './settingsPage/PublicProfileSection'
 import PasswordSection from './settingsPage/PasswordSection'
 import EmailSection from './settingsPage/EmailSection'
 import AppearanceSection from './settingsPage/AppearanceSection'
 
 function SettingsPage() {
-    const { user } = useAuth()
     const { section } = useParams()
 
     const sections: SidebarSection[] = [

@@ -9,13 +9,15 @@ import {
 import axios from 'axios'
 
 interface AuthState {
-    user?: User
-    role?: string
+    profile: () => Promise<User | false>
+    getRole: () => string
     login: (data: LoginRequestDTO) => Promise<boolean>
     refresh: () => Promise<boolean>
     register: (data: RegisterDTO) => Promise<boolean>
     isTokenExpired: () => boolean
     logout: () => void
+    getAccessToken: () => Promise<string | undefined>
+    stateNumber: number
 }
 
 const api = axios.create({
@@ -28,19 +30,11 @@ const getExpirationDate = (accessToken: string): Date => {
     return new Date(payload.exp * 1000)
 }
 
-const getRole = (accessToken: string): string => {
-    const parts = accessToken.split('.')
-    const payload = JSON.parse(window.atob(parts[1]))
-    return payload.role
-}
-
 const useAuth = create<AuthState>()((set, get) => {
     let accessToken: string | undefined
     let refreshToken: string | undefined
     let accessExp: Date | undefined
     let userId: string | undefined
-    let user: User | undefined
-    let role: string | undefined
     ;(() => {
         accessToken = localStorage.getItem('accessToken') ?? undefined
         refreshToken = localStorage.getItem('refreshToken') ?? undefined
@@ -56,7 +50,6 @@ const useAuth = create<AuthState>()((set, get) => {
         accessExp = getExpirationDate(accessToken)
         userId = data.userId
         localStorage.setItem('userId', data.userId)
-        role = getRole(accessToken)
     }
 
     const isTokenExpired = (): boolean => {
@@ -73,10 +66,7 @@ const useAuth = create<AuthState>()((set, get) => {
         const res = await api.post('refresh-token', new RenewTokenRequestDTO(userId, refreshToken))
         if (res.status === 200) {
             saveLoginInfo(res.data as LoginResponseDTO)
-            const res2 = await profile()
-            if (res2 !== false) {
-                user = res2
-            }
+            set((state) => ({ stateNumber: state.stateNumber + 1 }))
             return true
         }
         return false
@@ -94,30 +84,24 @@ const useAuth = create<AuthState>()((set, get) => {
         })
         if (res.status === 200) {
             const data = res.data as User
-            set(() => ({ user: data }))
             return data
         } else {
             return false
         }
     }
+
     ;(async () => {
         const res = await profile()
-        if (res !== false) {
-            user = res
-        }
     })()
 
     return {
-        role: role,
-        user: user,
+        stateNumber: 0,
+        profile: profile,
         login: async (dto: LoginRequestDTO) => {
             const res = await api.post('login', dto)
             if (res.status === 200) {
                 saveLoginInfo(res.data as LoginResponseDTO)
-                const res2 = await profile()
-                if (res2 !== false) {
-                    user = res2
-                }
+                set((state) => ({ stateNumber: state.stateNumber + 1 }))
                 return true
             }
             return false
@@ -136,9 +120,25 @@ const useAuth = create<AuthState>()((set, get) => {
             refreshToken = undefined
             accessExp = undefined
             userId = undefined
-            user = undefined
-            role = undefined
-            set({ user: undefined, role: undefined })
+            set((state) => ({ stateNumber: state.stateNumber + 1 }))
+        },
+        getAccessToken: async () => {
+            if (isTokenExpired()) {
+                const refreshSucceeded = await refresh()
+                if (refreshSucceeded) {
+                    return accessToken
+                }
+                return undefined
+            }
+            return accessToken
+        },
+        getRole: (): string => {
+            if (accessToken === undefined) {
+                return ''
+            }
+            const parts = accessToken.split('.')
+            const payload = JSON.parse(window.atob(parts[1]))
+            return payload.role
         }
     }
 })
