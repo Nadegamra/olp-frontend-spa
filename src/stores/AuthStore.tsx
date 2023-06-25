@@ -9,7 +9,9 @@ import {
 import axios from 'axios'
 
 interface AuthState {
-    profile: () => Promise<User | false>
+    loading: boolean
+    user: User | undefined
+    profile: () => Promise<boolean>
     getRole: () => string
     login: (data: LoginRequestDTO) => Promise<boolean>
     refresh: () => Promise<boolean>
@@ -66,17 +68,17 @@ const useAuth = create<AuthState>()((set, get) => {
         const res = await api.post('refresh-token', new RenewTokenRequestDTO(userId, refreshToken))
         if (res.status === 200) {
             saveLoginInfo(res.data as LoginResponseDTO)
-            set((state) => ({ stateNumber: state.stateNumber + 1 }))
-            return true
+            profile().finally(() => {
+                return true
+            })
         }
         return false
     }
-
-    const profile = async (): Promise<User | false> => {
+    const profile = async (): Promise<boolean> => {
         if (isTokenExpired()) {
             const res = await refresh()
             if (!res) {
-                return res
+                return false
             }
         }
         const res = await api.get('profile', {
@@ -84,25 +86,30 @@ const useAuth = create<AuthState>()((set, get) => {
         })
         if (res.status === 200) {
             const data = res.data as User
-            return data
+            set((state) => ({ user: data, stateNumber: state.stateNumber + 1 }))
+            return true
         } else {
             return false
         }
     }
 
     ;(async () => {
-        const res = await profile()
+        await profile()
+        set(() => ({ loading: false }))
     })()
 
     return {
+        loading: true,
+        user: undefined,
         stateNumber: 0,
         profile: profile,
-        login: async (dto: LoginRequestDTO) => {
+        login: async (dto: LoginRequestDTO): Promise<boolean> => {
             const res = await api.post('login', dto)
             if (res.status === 200) {
                 saveLoginInfo(res.data as LoginResponseDTO)
-                set((state) => ({ stateNumber: state.stateNumber + 1 }))
-                return true
+                profile().finally(() => {
+                    return true
+                })
             }
             return false
         },
@@ -120,9 +127,9 @@ const useAuth = create<AuthState>()((set, get) => {
             refreshToken = undefined
             accessExp = undefined
             userId = undefined
-            set((state) => ({ stateNumber: state.stateNumber + 1 }))
+            set((state) => ({ stateNumber: state.stateNumber + 1, user: undefined }))
         },
-        getAccessToken: async () => {
+        getAccessToken: async (): Promise<string | undefined> => {
             if (isTokenExpired()) {
                 const refreshSucceeded = await refresh()
                 if (refreshSucceeded) {

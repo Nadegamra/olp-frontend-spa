@@ -6,27 +6,10 @@ import ConditionalRoute from './ConditionalRoute'
 import LoginPage from '../../pages/public/LoginPage'
 import RegisterPage from '../../pages/public/RegisterPage'
 import PageNotFoundPage from '../../pages/public/PageNotFoundPage'
-import { useEffect, useState } from 'react'
-import { User } from '../../dtos/User'
 
 function AppRoutes() {
-    const { profile, stateNumber } = useAuth()
-    const [loading, setLoading] = useState<boolean>(true)
-    const [user, setUser] = useState<User | undefined>(undefined)
-    useEffect(() => {
-        setLoading(true)
-        profile()
-            .then((res) => {
-                if (res === false) {
-                    setUser(undefined)
-                    return
-                }
-                setUser(res)
-            })
-            .finally(() => {
-                setLoading(false)
-            })
-    }, [stateNumber])
+    const { user, loading } = useAuth()
+
     if (!loading) {
         return (
             <Routes>

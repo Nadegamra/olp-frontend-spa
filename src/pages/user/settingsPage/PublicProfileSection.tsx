@@ -11,18 +11,13 @@ interface Props {
 }
 
 function PublicProfileSection() {
-    const { profile } = useAuth()
+    const { user } = useAuth()
     useEffect(() => {
-        profile().then((res) => {
-            if (res === false) {
-                return
-            }
-            const defaultValues: Props = {
-                username: res?.username ?? ''
-            }
-            reset({ ...defaultValues })
-        })
-    }, [])
+        const defaultValues: Props = {
+            username: user?.username ?? ''
+        }
+        reset({ ...defaultValues })
+    }, [user])
     const {
         handleSubmit,
         register,

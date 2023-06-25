@@ -1,6 +1,5 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import useAuth from '../../../stores/AuthStore'
-import { User } from '../../../dtos/User'
 import { useForm } from 'react-hook-form'
 import FormField from '../../../components/forms/FormField'
 import Button from '../../../components/forms/Button'
@@ -12,16 +11,7 @@ interface Props {
 }
 
 function EmailSection() {
-    const [user, setUser] = useState<User | undefined>(undefined)
-    const { profile } = useAuth()
-    useEffect(() => {
-        profile().then((res) => {
-            if (res === false) {
-                return
-            }
-            setUser(res)
-        })
-    }, [])
+    const { user } = useAuth()
     const {
         register,
         handleSubmit,

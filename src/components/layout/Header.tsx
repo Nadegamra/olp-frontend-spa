@@ -1,35 +1,21 @@
 import { Link, useNavigate } from 'react-router-dom'
 import useAuth from '../../stores/AuthStore'
-import { useEffect, useReducer, useState } from 'react'
-import { User } from '../../dtos/User'
+import { useEffect, useState } from 'react'
 
 function Header() {
-    const { profile, logout, stateNumber } = useAuth()
-    const [user, setUser] = useState<User | undefined>(undefined)
+    const { user, logout, stateNumber, loading } = useAuth()
     const navigate = useNavigate()
     const [theme, setTheme] = useState<'light' | 'dark'>(
         (localStorage.getItem('theme') as 'light' | 'dark') ?? 'dark'
     )
-    const [loading, setLoading] = useState<boolean>(true)
 
     useEffect(() => {
-        profile()
-            .then((res) => {
-                if (res === false) {
-                    setUser(undefined)
-                    return
-                }
-                setUser(res)
-            })
-            .finally(() => {
-                setLoading(false)
-            })
         const theme = localStorage.getItem('theme')
         if (theme !== undefined) {
             setTheme(theme as 'light' | 'dark')
             document.documentElement.setAttribute('data-theme', theme as 'light' | 'dark')
         }
-    }, [stateNumber])
+    }, [])
 
     const toggleTheme = () => {
         if (theme === 'light') {
@@ -42,11 +28,9 @@ function Header() {
             document.documentElement.setAttribute('data-theme', 'light')
         }
     }
-
     if (loading) {
         return <header key={stateNumber} className="bg-clr-bg4 p-5 flex"></header>
     }
-
     return (
         <header key={stateNumber} className="bg-clr-bg4 p-5 flex">
             <a href="#main-content" className="sr-only">
