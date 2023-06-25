@@ -35,7 +35,7 @@ function PublicProfileSection() {
     const { updateUsername } = useUsers()
 
     return (
-        <section className="p-4 w-[min(800px,50%)]">
+        <section>
             <header className="mb-5">
                 <h1 className="text-fs-h1">Public Profile</h1>
                 <hr className="border-clr-text1" />

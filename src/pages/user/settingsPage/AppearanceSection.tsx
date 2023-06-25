@@ -1,5 +1,5 @@
 function AppearanceSection() {
-    return <section className="p-4">Appearance</section>
+    return <section>Appearance</section>
 }
 
 export default AppearanceSection

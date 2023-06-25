@@ -20,7 +20,7 @@ function Sidebar({ sections, currentSection }: Sections) {
                 data-drawer-toggle="sidebar-multi-level-sidebar"
                 aria-controls="sidebar-multi-level-sidebar"
                 type="button"
-                className="inline-flex items-center p-2 mt-2 ml-3 text-sm text-clr-text1 rounded-lg sm:hidden hover:bg-clr-bg3  focus:outline-none focus:ring-2 focus:ring-gray-200 dark:focus:ring-gray-600">
+                className="inline-flex items-center p-2 mt-2 ml-3 text-sm text-clr-text1 rounded-lg hover:bg-clr-bg3 sm:hidden focus:outline-none focus:ring-2 focus:ring-gray-200 dark:focus:ring-gray-600">
                 <span className="sr-only">Open sidebar</span>
                 <svg
                     className="w-6 h-6"
@@ -58,6 +58,9 @@ function Sidebar({ sections, currentSection }: Sections) {
                                             <span className="ml-3 text-clr-link select-none">
                                                 {name}
                                             </span>
+                                            <span className="material-symbols-outlined text-clr-link select-none ml-auto sm:hidden">
+                                                {icon}
+                                            </span>
                                         </>
                                     ) : (
                                         <>
@@ -65,6 +68,9 @@ function Sidebar({ sections, currentSection }: Sections) {
                                                 {icon}
                                             </span>
                                             <span className="ml-3 select-none">{name}</span>
+                                            <span className="material-symbols-outlined select-none ml-auto sm:hidden">
+                                                {icon}
+                                            </span>
                                         </>
                                     )}
                                 </a>

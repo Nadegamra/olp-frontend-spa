@@ -32,7 +32,7 @@ function EmailSection() {
     const [message, setMessage] = useState<string>('')
     const { sendEmailChangeToken } = useUsers()
     return (
-        <section className="p-4 w-[min(800px,50%)]">
+        <section>
             <header className="mb-5">
                 <h1 className="text-fs-h1">Email</h1>
                 <hr className="border-clr-text1" />

@@ -21,7 +21,7 @@ function PasswordSection() {
     const [loading, setLoading] = useState<boolean>(false)
     const { updatePassword } = useUsers()
     return (
-        <section className="p-4 w-[min(800px,50%)]">
+        <section>
             <header className="mb-5">
                 <h1 className="text-fs-h1">Password</h1>
                 <hr className="border-clr-text1" />
