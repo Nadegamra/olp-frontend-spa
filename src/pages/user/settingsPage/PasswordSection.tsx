@@ -57,9 +57,9 @@ function PasswordSection() {
                         type="password"
                         {...register('currentPassword', { required: true })}
                     />
-                    {errors.currentPassword && (
-                        <p className="text-clr-error">Current password is required</p>
-                    )}
+                    <p className="text-clr-error h-6">
+                        {errors.currentPassword && 'Field is required'}
+                    </p>
                     <FormField
                         disabled={loading}
                         id="newPassword"
@@ -68,11 +68,11 @@ function PasswordSection() {
                         type="password"
                         {...register('newPassword', { required: true })}
                     />
-                    {errors.newPassword && (
-                        <p className="text-clr-error">New password is required</p>
-                    )}
+                    <p className="text-clr-error h-6">
+                        {errors.newPassword && 'Field is required'}
+                    </p>
                 </fieldset>
-                <div className="pt-5">
+                <div className="pt-2">
                     <Button disabled={loading} text="Update password" key={'save1'} type="submit" />
                 </div>
             </form>
