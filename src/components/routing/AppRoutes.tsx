@@ -14,6 +14,7 @@ function AppRoutes() {
     const [loading, setLoading] = useState<boolean>(true)
     const [user, setUser] = useState<User | undefined>(undefined)
     useEffect(() => {
+        setLoading(true)
         profile()
             .then((res) => {
                 if (res === false) {

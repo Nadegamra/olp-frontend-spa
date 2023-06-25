@@ -37,9 +37,10 @@ function PublicProfileSection() {
 
     return (
         <section className="p-4 w-[min(800px,50%)]">
-            <h1 className="text-fs-h1">Public Profile</h1>
-            <hr className="border-clr-text2 mb-5" />
-            <h2 className="text-fs-h2">Display Name</h2>
+            <header>
+                <h1 className="text-fs-h1">Public Profile</h1>
+                <hr className="border-clr-text2 mb-5" />
+            </header>
             <form
                 onSubmit={handleSubmit((data) => {
                     setFormLoading(true)
@@ -69,6 +70,9 @@ function PublicProfileSection() {
                 })}>
                 <fieldset className="w-[min(500px,60%)]">
                     <FormField
+                        id="username"
+                        label="Display Name"
+                        text="Display Name"
                         disabled={formLoading}
                         {...register('username', { required: true })}
                     />
