@@ -11,7 +11,7 @@ import axios from 'axios'
 interface AuthState {
     loading: boolean
     user: User | undefined
-    profile: () => Promise<boolean>
+    profile: (lazy?: boolean) => Promise<boolean>
     getRole: () => string
     login: (data: LoginRequestDTO) => Promise<boolean>
     refresh: () => Promise<boolean>
@@ -37,11 +37,16 @@ const useAuth = create<AuthState>()((set, get) => {
     let refreshToken: string | undefined
     let accessExp: Date | undefined
     let userId: string | undefined
+    let user: User | undefined
     ;(() => {
         accessToken = localStorage.getItem('accessToken') ?? undefined
         refreshToken = localStorage.getItem('refreshToken') ?? undefined
         accessExp = accessToken !== undefined ? getExpirationDate(accessToken) : undefined
         userId = localStorage.getItem('userId') ?? undefined
+        user =
+            localStorage.getItem('user') !== null
+                ? JSON.parse(localStorage.getItem('user')!)
+                : undefined
     })()
 
     const saveLoginInfo = (data: LoginResponseDTO) => {
@@ -74,12 +79,17 @@ const useAuth = create<AuthState>()((set, get) => {
         }
         return false
     }
-    const profile = async (): Promise<boolean> => {
+    const profile = async (lazy = false): Promise<boolean> => {
         if (isTokenExpired()) {
             const res = await refresh()
             if (!res) {
                 return false
             }
+        }
+        // use cached user if available if lazy is true
+        if (lazy && user !== undefined) {
+            set((state) => ({ stateNumber: state?.stateNumber + 1 }))
+            return true
         }
         const res = await api.get('profile', {
             headers: { Authorization: `Bearer ${accessToken}` }
@@ -87,6 +97,8 @@ const useAuth = create<AuthState>()((set, get) => {
         if (res.status === 200) {
             const data = res.data as User
             set((state) => ({ user: data, stateNumber: state.stateNumber + 1 }))
+            user = data
+            localStorage.setItem('user', JSON.stringify(data))
             return true
         } else {
             return false
@@ -94,13 +106,13 @@ const useAuth = create<AuthState>()((set, get) => {
     }
 
     ;(async () => {
-        await profile()
+        await profile(true)
         set(() => ({ loading: false }))
     })()
 
     return {
         loading: true,
-        user: undefined,
+        user: user,
         stateNumber: 0,
         profile: profile,
         login: async (dto: LoginRequestDTO): Promise<boolean> => {
@@ -123,10 +135,12 @@ const useAuth = create<AuthState>()((set, get) => {
             localStorage.removeItem('accessToken')
             localStorage.removeItem('refreshToken')
             localStorage.removeItem('userId')
+            localStorage.removeItem('user')
             accessToken = undefined
             refreshToken = undefined
             accessExp = undefined
             userId = undefined
+            user = undefined
             set((state) => ({ stateNumber: state.stateNumber + 1, user: undefined }))
         },
         getAccessToken: async (): Promise<string | undefined> => {

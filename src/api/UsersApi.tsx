@@ -15,10 +15,12 @@ interface UsersState {
 
 const store = ({
     getAccessToken,
-    logout
+    logout,
+    profile
 }: {
     getAccessToken: () => Promise<string | undefined>
     logout: () => void
+    profile: () => Promise<boolean>
 }) =>
     create<UsersState>(() => {
         const api = axios.create({
@@ -79,13 +81,14 @@ const store = ({
             },
             updateUsername: async (newUsername: string) => {
                 const res = await api.put('updateUsername', { newUsername: newUsername }, headers)
+                await profile()
                 return res.status === 200
             }
         }
     })
 
 export default function useUsers() {
-    const { getAccessToken, logout } = useAuth()
+    const { getAccessToken, logout, profile } = useAuth()
 
-    return store({ getAccessToken, logout }).getState()
+    return store({ getAccessToken, logout, profile }).getState()
 }
