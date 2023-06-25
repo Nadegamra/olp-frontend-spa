@@ -32,14 +32,13 @@ function PublicProfileSection() {
     } = useForm<Props>()
     const [formLoading, setFormLoading] = useState<boolean>(false)
     const [message, setMessage] = useState<string>('')
-
     const { updateUsername } = useUsers()
 
     return (
         <section className="p-4 w-[min(800px,50%)]">
-            <header>
+            <header className="mb-5">
                 <h1 className="text-fs-h1">Public Profile</h1>
-                <hr className="border-clr-text2 mb-5" />
+                <hr className="border-clr-text1" />
             </header>
             <form
                 onSubmit={handleSubmit((data) => {
