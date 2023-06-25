@@ -4,6 +4,7 @@ import PublicProfileSection from './settingsPage/PublicProfileSection'
 import PasswordSection from './settingsPage/PasswordSection'
 import EmailSection from './settingsPage/EmailSection'
 import AppearanceSection from './settingsPage/AppearanceSection'
+import AccountSection from './settingsPage/AccountSection'
 
 function SettingsPage() {
     const { section } = useParams()
@@ -28,6 +29,11 @@ function SettingsPage() {
             name: 'Appearance',
             sectionName: 'appearance',
             icon: 'brush'
+        },
+        {
+            name: 'Account',
+            sectionName: 'account',
+            icon: 'person'
         }
     ]
 
@@ -41,6 +47,8 @@ function SettingsPage() {
                 return <EmailSection />
             case 'appearance':
                 return <AppearanceSection />
+            case 'account':
+                return <AccountSection />
         }
     }
 
