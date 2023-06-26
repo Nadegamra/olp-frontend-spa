@@ -1,7 +1,7 @@
 import { useForm } from 'react-hook-form'
 import useAuth from '../../stores/AuthStore'
 import { LoginRequestDTO } from '../../dtos/User'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useState } from 'react'
 import Button from '../../components/forms/Button'
 import Spinner from '../../components/forms/Spinner'
@@ -66,6 +66,9 @@ function LoginPage() {
                         {errors.password?.type == 'required' && 'Password is required'}
                     </p>
                 </fieldset>
+                <Link to={'/forgotPassword'} className="text-center text-clr-text2" type="button">
+                    Forgot password?
+                </Link>
                 <div className="mx-auto mt-7">
                     <Button text="Login" type="submit" disabled={loading} />
                 </div>

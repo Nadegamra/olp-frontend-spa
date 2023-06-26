@@ -59,6 +59,18 @@ const useAuth = create<AuthState>()((set, get) => {
         localStorage.setItem('userId', data.userId)
     }
 
+    const clearLoginInfo = () => {
+        localStorage.removeItem('accessToken')
+        localStorage.removeItem('refreshToken')
+        localStorage.removeItem('userId')
+        localStorage.removeItem('user')
+        accessToken = undefined
+        refreshToken = undefined
+        accessExp = undefined
+        userId = undefined
+        user = undefined
+    }
+
     const isTokenExpired = (): boolean => {
         if (accessExp === undefined) {
             return true
@@ -70,12 +82,20 @@ const useAuth = create<AuthState>()((set, get) => {
         if (userId === undefined || refreshToken === undefined) {
             return false
         }
-        const res = await api.post('refresh-token', new RenewTokenRequestDTO(userId, refreshToken))
-        if (res.status === 200) {
-            saveLoginInfo(res.data as LoginResponseDTO)
-            profile().finally(() => {
-                return true
-            })
+        try {
+            const res = await api.post(
+                'refresh-token',
+                new RenewTokenRequestDTO(userId, refreshToken)
+            )
+            if (res.status === 200) {
+                saveLoginInfo(res.data as LoginResponseDTO)
+                profile().finally(() => {
+                    return true
+                })
+            }
+        } catch (err: any) {
+            clearLoginInfo()
+            set(() => ({ loading: false }))
         }
         return false
     }
@@ -87,6 +107,7 @@ const useAuth = create<AuthState>()((set, get) => {
             }
         }
         // use cached user if available if lazy is true
+        // TODO: expiry timer for cached user
         if (lazy && user !== undefined) {
             set((state) => ({ stateNumber: state?.stateNumber + 1 }))
             return true
@@ -106,7 +127,7 @@ const useAuth = create<AuthState>()((set, get) => {
     }
 
     ;(async () => {
-        await profile(true)
+        await profile() //true
         set(() => ({ loading: false }))
     })()
 
@@ -132,15 +153,7 @@ const useAuth = create<AuthState>()((set, get) => {
         },
         isTokenExpired: isTokenExpired,
         logout: () => {
-            localStorage.removeItem('accessToken')
-            localStorage.removeItem('refreshToken')
-            localStorage.removeItem('userId')
-            localStorage.removeItem('user')
-            accessToken = undefined
-            refreshToken = undefined
-            accessExp = undefined
-            userId = undefined
-            user = undefined
+            clearLoginInfo()
             set((state) => ({ stateNumber: state.stateNumber + 1, user: undefined }))
         },
         getAccessToken: async (): Promise<string | undefined> => {

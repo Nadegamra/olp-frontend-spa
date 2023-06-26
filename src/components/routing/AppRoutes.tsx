@@ -6,6 +6,7 @@ import ConditionalRoute from './ConditionalRoute'
 import LoginPage from '../../pages/public/LoginPage'
 import RegisterPage from '../../pages/public/RegisterPage'
 import PageNotFoundPage from '../../pages/public/PageNotFoundPage'
+import ForgotPasswordPage from '../../pages/public/ForgotPasswordPage'
 
 function AppRoutes() {
     const { user, loading } = useAuth()
@@ -21,6 +22,7 @@ function AppRoutes() {
                 <Route element={<ConditionalRoute condition={user === undefined} redirect="/" />}>
                     <Route path="/login" element={<LoginPage />} />
                     <Route path="/register" element={<RegisterPage />} />
+                    <Route path="/forgotPassword" element={<ForgotPasswordPage />} />
                 </Route>
                 <Route path="*" element={<PageNotFoundPage />} />
             </Routes>

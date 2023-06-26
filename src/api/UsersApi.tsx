@@ -37,52 +37,92 @@ const store = ({
         })
         return {
             changeEmail: async (token: string) => {
-                const res = await api.post('changeEmail', { token: token }, headers)
-                return res.status === 200
+                try {
+                    const res = await api.post('changeEmail', { token: token }, headers)
+                    return res.status === 200
+                } catch (err) {
+                    return false
+                }
             },
             changePassword: async (token: string, newPassword: string) => {
-                const res = await api.post(
-                    'changePassword',
-                    { token: token, newPassword: newPassword },
-                    headers
-                )
-                return res.status === 200
+                try {
+                    const res = await api.post(
+                        'changePassword',
+                        { token: token, newPassword: newPassword },
+                        headers
+                    )
+                    return res.status === 200
+                } catch (err) {
+                    return false
+                }
             },
             confirmEmail: async (token: string) => {
-                const res = await api.post('confirmEmail', { token: token }, headers)
-                return res.status === 200
+                try {
+                    const res = await api.post('confirmEmail', { token: token }, headers)
+                    return res.status === 200
+                } catch (err) {
+                    return false
+                }
             },
             deleteUser: async () => {
-                const res = await api.delete('deleteUser', headers)
-                if (res.status === 200) {
-                    logout()
+                try {
+                    const res = await api.delete('deleteUser', headers)
+                    if (res.status === 200) {
+                        logout()
+                    }
+                    return res.status === 200
+                } catch (err) {
+                    return false
                 }
-                return res.status === 200
             },
             sendEmailChangeToken: async (email: string) => {
-                const res = await api.post('sendEmailChangeToken', { emailAddress: email }, headers)
-                return res.status === 200
+                try {
+                    const res = await api.post(
+                        'sendEmailChangeToken',
+                        { emailAddress: email },
+                        headers
+                    )
+                    return res.status === 200
+                } catch (err) {
+                    return false
+                }
             },
             sendPasswordResetToken: async (email: string) => {
-                const res = await api.post(
-                    'sendPasswordResetToken',
-                    { emailAddress: email },
-                    headers
-                )
-                return res.status === 200
+                try {
+                    const res = await api.post(
+                        'sendPasswordResetToken',
+                        { emailAddress: email },
+                        headers
+                    )
+                    return res.status === 200
+                } catch (err) {
+                    return false
+                }
             },
             updatePassword: async (oldPassword: string, newPassword: string) => {
-                const res = await api.put(
-                    'updatePassword',
-                    { oldPassword: oldPassword, newPassword: newPassword },
-                    headers
-                )
-                return res.status === 200
+                try {
+                    const res = await api.put(
+                        'updatePassword',
+                        { oldPassword: oldPassword, newPassword: newPassword },
+                        headers
+                    )
+                    return res.status === 200
+                } catch (err) {
+                    return false
+                }
             },
             updateUsername: async (newUsername: string) => {
-                const res = await api.put('updateUsername', { newUsername: newUsername }, headers)
-                await profile()
-                return res.status === 200
+                try {
+                    const res = await api.put(
+                        'updateUsername',
+                        { newUsername: newUsername },
+                        headers
+                    )
+                    await profile()
+                    return res.status === 200
+                } catch (err) {
+                    return false
+                }
             }
         }
     })

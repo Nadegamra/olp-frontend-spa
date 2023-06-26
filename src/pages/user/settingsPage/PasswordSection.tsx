@@ -35,14 +35,15 @@ function PasswordSection() {
                         message: ''
                     })
                     updatePassword(data.currentPassword, data.newPassword)
-                        .then(() => {
-                            setMessage('Password updated successfully')
-                        })
-                        .catch(() => {
-                            setError('root', {
-                                type: 'validate',
-                                message: 'An error has occurred'
-                            })
+                        .then((res) => {
+                            if (res) {
+                                setMessage('Password updated successfully')
+                            } else {
+                                setError('root', {
+                                    type: 'validate',
+                                    message: 'An error has occurred'
+                                })
+                            }
                         })
                         .finally(() => {
                             setLoading(false)

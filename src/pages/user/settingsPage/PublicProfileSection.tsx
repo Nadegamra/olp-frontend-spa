@@ -44,19 +44,15 @@ function PublicProfileSection() {
                         message: ''
                     })
                     updateUsername(data.username)
-                        .then(() => {
-                            setMessage('Username updated successfully')
-                            setError('root', {
-                                type: 'validate',
-                                message: ''
-                            })
-                        })
-                        .catch(() => {
-                            setMessage('')
-                            setError('root', {
-                                type: 'validate',
-                                message: 'An error has occurred'
-                            })
+                        .then((res) => {
+                            if (res) {
+                                setMessage('Username updated successfully')
+                            } else {
+                                setError('root', {
+                                    type: 'validate',
+                                    message: 'An error has occurred'
+                                })
+                            }
                         })
                         .finally(() => {
                             setFormLoading(false)

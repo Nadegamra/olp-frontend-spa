@@ -11,9 +11,7 @@ function AccountSection() {
             </header>
             <label htmlFor="accountDelButton" className="font-semibold pb-3 text-clr-error">
                 <p className="pb-2">This will queue the account for deletion.</p>
-                <p className="pb-2">
-                    The account can be recovered by logging in within 30 days of deletion.
-                </p>
+                <p className="pb-2">The account can be recovered by logging in within 30 days.</p>
                 <Button
                     text="Delete Account"
                     id="accountDelButton"
