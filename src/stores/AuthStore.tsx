@@ -148,8 +148,16 @@ const useAuth = create<AuthState>()((set, get) => {
         },
         refresh: refresh,
         register: async (dto: RegisterDTO): Promise<boolean> => {
-            const res = await api.post('register', dto)
-            return res.status === 200
+            try {
+                const res = await api.post('register', {
+                    email: dto.email,
+                    password: dto.password,
+                    role: dto.role
+                })
+                return res.status === 200
+            } catch (err) {
+                return false
+            }
         },
         isTokenExpired: isTokenExpired,
         logout: () => {

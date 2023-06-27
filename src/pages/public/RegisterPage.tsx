@@ -24,8 +24,7 @@ function RegisterPage() {
         setError
     } = useForm<IRegisterInfo>()
 
-    const { login, register: registerUser } = useAuth()
-    const navigate = useNavigate()
+    const { register: registerUser } = useAuth()
     const [loading, setLoading] = useState(false)
     const [message, setMessage] = useState('')
     return (

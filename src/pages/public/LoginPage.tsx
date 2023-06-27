@@ -26,19 +26,25 @@ function LoginPage() {
     return (
         <section className="p-5 flex flex-col items-center">
             <form
-                className="m-auto bg-clr-bg2 flex flex-col p-7 rounded-md"
+                className="m-auto bg-clr-bg2 flex flex-col p-7 rounded-md mb-7"
                 onSubmit={handleSubmit(async (data) => {
                     setLoading(true)
-                    const res = await login(new LoginRequestDTO(data.email, data.password, false))
-                    setLoading(false)
-                    if (res) {
-                        navigate('/')
-                        return
+                    try {
+                        const res = await login(
+                            new LoginRequestDTO(data.email, data.password, false)
+                        )
+                        setLoading(false)
+                        if (res) {
+                            navigate('/')
+                            return
+                        }
+                    } catch (err) {
+                        setLoading(false)
+                        setError('root', {
+                            type: 'validate',
+                            message: 'Login credentials are incorrect'
+                        })
                     }
-                    setError('root', {
-                        type: 'validate',
-                        message: 'Login credentials are incorrect'
-                    })
                 })}>
                 <h1 className="text-center pb-3 text-fs-h1">Login</h1>
                 <fieldset className="flex flex-col">
@@ -72,10 +78,14 @@ function LoginPage() {
                 <div className="mx-auto mt-7">
                     <Button text="Login" type="submit" disabled={loading} />
                 </div>
-                {errors.root && <p role="alert">{errors.root.message}</p>}
             </form>
+            {errors.root && (
+                <p className="text-clr-error" role="alert">
+                    {errors.root.message}
+                </p>
+            )}
             {loading && (
-                <div className="mx-auto mt-7">
+                <div className="mx-auto">
                     <Spinner />
                 </div>
             )}

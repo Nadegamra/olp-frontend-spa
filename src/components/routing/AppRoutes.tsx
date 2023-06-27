@@ -7,6 +7,9 @@ import LoginPage from '../../pages/public/LoginPage'
 import RegisterPage from '../../pages/public/RegisterPage'
 import PageNotFoundPage from '../../pages/public/PageNotFoundPage'
 import ForgotPasswordPage from '../../pages/public/ForgotPasswordPage'
+import ChangeEmailPage from '../../pages/public/ChangeEmailPage'
+import ChangePasswordPage from '../../pages/public/ChangePasswordPage'
+import ConfirmEmailPage from '../../pages/public/ConfirmEmailPage'
 
 function AppRoutes() {
     const { user, loading } = useAuth()
@@ -15,6 +18,7 @@ function AppRoutes() {
         return (
             <Routes>
                 <Route path="/" element={<HomePage />} />
+                <Route path="/changeEmail/:token" element={<ChangeEmailPage />} />
                 <Route element={<ConditionalRoute condition={user !== undefined} redirect="/" />}>
                     <Route path="/settings" element={<SettingsPage />} />
                     <Route path="/settings/:section" element={<SettingsPage />} />
@@ -23,6 +27,8 @@ function AppRoutes() {
                     <Route path="/login" element={<LoginPage />} />
                     <Route path="/register" element={<RegisterPage />} />
                     <Route path="/forgotPassword" element={<ForgotPasswordPage />} />
+                    <Route path="/changePassword/:token" element={<ChangePasswordPage />} />
+                    <Route path="/confirmEmail/:token" element={<ConfirmEmailPage />} />
                 </Route>
                 <Route path="*" element={<PageNotFoundPage />} />
             </Routes>
