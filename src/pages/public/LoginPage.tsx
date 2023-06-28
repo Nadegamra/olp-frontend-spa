@@ -26,6 +26,7 @@ function LoginPage() {
     return (
         <section className="p-5 flex flex-col items-center">
             <form
+                aria-label="Login Form"
                 className="m-auto bg-clr-bg2 flex flex-col p-7 rounded-md mb-7"
                 onSubmit={handleSubmit(async (data) => {
                     setLoading(true)
@@ -76,7 +77,9 @@ function LoginPage() {
                     Forgot password?
                 </Link>
                 <div className="mx-auto mt-7">
-                    <Button text="Login" type="submit" disabled={loading} />
+                    <Button type="submit" disabled={loading}>
+                        Login
+                    </Button>
                 </div>
             </form>
             {errors.root && (

@@ -30,10 +30,11 @@ function EmailSection() {
             <label htmlFor="currentEmail" className="font-semibold">
                 Current Email
             </label>
-            <p id="currentEmail" className="pb-3 pl-3 h-9">
+            <div id="currentEmail" className="pb-3 pl-3 h-9">
                 {user?.email}
-            </p>
+            </div>
             <form
+                aria-label="Form for Emailing a link to change your email address"
                 onSubmit={handleSubmit((data) => {
                     setLoading(true)
                     sendEmailChangeToken(data.newEmail)
@@ -63,23 +64,21 @@ function EmailSection() {
                         type="email"
                         {...register('newEmail', { required: true })}
                     />
+                    <p className="text-clr-error h-6">{errors.newEmail && 'Field is required'}</p>
                 </fieldset>
-                <Button
-                    disabled={loading}
-                    text="Send Confirmation Email"
-                    key={'save1'}
-                    type="submit"
-                />
+                <Button disabled={loading} key={'save1'} type="submit">
+                    Send Confirmation Email
+                </Button>
             </form>
             {errors.root && (
-                <output role="alert" className="text-clr-error" aria-live="polite">
+                <span role="alert" className="text-clr-error" aria-live="polite">
                     {errors.root.message}
-                </output>
+                </span>
             )}
             {message !== '' && (
-                <output role="alert" className="text-clr-success" aria-live="polite">
+                <span role="alert" className="text-clr-success" aria-live="polite">
                     {message}
-                </output>
+                </span>
             )}
             {loading && (
                 <div className="mx-auto">

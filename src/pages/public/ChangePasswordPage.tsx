@@ -18,7 +18,6 @@ function ChangePasswordPage() {
     const {
         register,
         handleSubmit,
-        reset,
         watch,
         formState: { errors },
         setError
@@ -28,23 +27,29 @@ function ChangePasswordPage() {
     return (
         <section className="p-5 flex flex-col items-center">
             <form
+                aria-label="Change Password Form"
                 className="m-auto bg-clr-bg2 flex flex-col p-7 rounded-md mb-7"
                 onSubmit={handleSubmit((data) => {
+                    setLoading(true)
                     setMessage('')
                     setError('root', {
                         type: 'validate',
                         message: ''
                     })
-                    changePassword(token ?? '', data.password).then((res) => {
-                        if (res) {
-                            setMessage('Password changed successfully')
-                            return
-                        }
-                        setError('root', {
-                            type: 'validate',
-                            message: 'An error has occurred'
+                    changePassword(token ?? '', data.password)
+                        .then((res) => {
+                            if (res) {
+                                setMessage('Password changed successfully')
+                                return
+                            }
+                            setError('root', {
+                                type: 'validate',
+                                message: 'An error has occurred'
+                            })
                         })
-                    })
+                        .finally(() => {
+                            setLoading(false)
+                        })
                 })}>
                 <header>
                     <h1 className="text-center pb-3 text-fs-h1">Enter new password</h1>
@@ -73,7 +78,9 @@ function ChangePasswordPage() {
                         </p>
                     </fieldset>
                     <div className="mx-auto w-max">
-                        <Button text="Change Password" type="submit" key={'submit'} />
+                        <Button type="submit" key={'submit'}>
+                            Change Password
+                        </Button>
                     </div>
                 </header>
             </form>

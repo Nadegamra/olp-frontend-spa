@@ -23,6 +23,7 @@ function SendPasswordResetPage() {
     return (
         <section className="p-5 flex flex-col items-center">
             <form
+                aria-label="Send Password Reset Form"
                 className="m-auto bg-clr-bg2 flex flex-col p-7 rounded-md mb-7"
                 onSubmit={handleSubmit((data) => {
                     setLoading(true)
@@ -51,7 +52,9 @@ function SendPasswordResetPage() {
                     />
                 </fieldset>
                 <div className="w-max m-auto">
-                    <Button text="Send Email" type="submit" key={'submit'} />
+                    <Button type="submit" key={'submit'}>
+                        Send Email
+                    </Button>
                 </div>
             </form>
             {errors.root && (

@@ -27,6 +27,7 @@ function PasswordSection() {
                 <hr className="border-clr-text1" />
             </header>
             <form
+                aria-label="Form for changing your password"
                 onSubmit={handleSubmit((data) => {
                     setLoading(true)
                     setMessage('')
@@ -74,7 +75,9 @@ function PasswordSection() {
                     </p>
                 </fieldset>
                 <div className="pt-2">
-                    <Button disabled={loading} text="Update password" key={'save1'} type="submit" />
+                    <Button disabled={loading} key={'save1'} type="submit">
+                        Update Password
+                    </Button>
                 </div>
             </form>
             {errors.root && (

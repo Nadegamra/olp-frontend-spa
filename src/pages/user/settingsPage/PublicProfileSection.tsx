@@ -36,6 +36,7 @@ function PublicProfileSection() {
                 <hr className="border-clr-text1" />
             </header>
             <form
+                aria-label="Form for updating your public profile"
                 onSubmit={handleSubmit((data) => {
                     setFormLoading(true)
                     setMessage('')
@@ -68,7 +69,9 @@ function PublicProfileSection() {
                     />
                 </fieldset>
                 <div className="pt-5">
-                    <Button text="Update profile" key={'save1'} type="submit" />
+                    <Button key={'save1'} type="submit">
+                        Update Profile
+                    </Button>
                 </div>
             </form>
             {errors.root && (

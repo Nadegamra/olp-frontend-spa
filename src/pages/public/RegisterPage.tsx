@@ -30,6 +30,7 @@ function RegisterPage() {
     return (
         <section className="p-5 flex flex-col items-center">
             <form
+                aria-label="Register Form"
                 className="m-auto bg-clr-bg2 flex flex-col p-7 rounded-md mb-7"
                 onSubmit={handleSubmit(async (data) => {
                     setMessage('')
@@ -118,7 +119,9 @@ function RegisterPage() {
                     </p>
                 </fieldset>
                 <div className="mx-auto mt-3">
-                    <Button text="Register" type="submit" disabled={loading} />
+                    <Button type="submit" disabled={loading}>
+                        Register
+                    </Button>
                 </div>
             </form>
             {errors.root && (
