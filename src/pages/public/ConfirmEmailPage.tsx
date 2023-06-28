@@ -9,12 +9,10 @@ function ConfirmEmailPage() {
     const [isSuccess, setIsSuccess] = useState<boolean | undefined>()
     const { confirmEmail } = useUsers()
     useEffect(() => {
-        if (loading) {
-            confirmEmail(token ?? '').then((res) => {
-                setIsSuccess(res)
-                setLoading(false)
-            })
-        }
+        confirmEmail(token ?? '').then((res) => {
+            setIsSuccess(res)
+            setLoading(false)
+        })
     }, [])
 
     return (

@@ -53,7 +53,7 @@ function PasswordSection() {
                     <FormField
                         disabled={loading}
                         id="currentPassword"
-                        label="Current Password"
+                        label="currentPassword"
                         text="Current Password"
                         type="password"
                         {...register('currentPassword', { required: true })}

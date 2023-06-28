@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 export interface SidebarSection {
     name: string
@@ -43,8 +43,8 @@ function Sidebar({ sections, currentSection }: Sections) {
                     <ul className="space-y-2 font-medium">
                         {sections.map(({ icon, name, sectionName }) => (
                             <li key={sectionName}>
-                                <a
-                                    onClick={() => navigate(`/settings/${sectionName}`)}
+                                <Link
+                                    to={`/settings/${sectionName}`}
                                     className={
                                         currentSection?.toUpperCase() === sectionName.toUpperCase()
                                             ? 'flex items-center p-2 text-clr-text1 rounded-lg bg-clr-bg2 hover:bg-clr-bg1 cursor-pointer'
@@ -73,7 +73,7 @@ function Sidebar({ sections, currentSection }: Sections) {
                                             </span>
                                         </>
                                     )}
-                                </a>
+                                </Link>
                             </li>
                         ))}
                     </ul>
