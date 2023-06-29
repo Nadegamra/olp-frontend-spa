@@ -38,14 +38,20 @@ function ChangePasswordPage() {
                     })
                     changePassword(token ?? '', data.password)
                         .then((res) => {
-                            if (res) {
+                            if (res === true) {
                                 setMessage('Password changed successfully')
                                 return
+                            } else if (res === false) {
+                                setError('root', {
+                                    type: 'validate',
+                                    message: 'An error has occurred'
+                                })
+                            } else {
+                                setError('root', {
+                                    type: 'validate',
+                                    message: res
+                                })
                             }
-                            setError('root', {
-                                type: 'validate',
-                                message: 'An error has occurred'
-                            })
                         })
                         .finally(() => {
                             setLoading(false)
@@ -57,6 +63,7 @@ function ChangePasswordPage() {
                         <FormField
                             text="Password"
                             label="password"
+                            type="password"
                             {...register('password', { required: true })}
                         />
                         <p className="h-6 text-clr-error" role="alert">
@@ -65,6 +72,7 @@ function ChangePasswordPage() {
                         <FormField
                             text="Repeat Password"
                             label="repeatPassword"
+                            type="password"
                             {...register('repeatPassword', {
                                 validate: (val) => {
                                     if (val !== watch('password')) {
@@ -85,7 +93,10 @@ function ChangePasswordPage() {
                 </header>
             </form>
             {errors.root && (
-                <p role="alert" className="text-clr-error text-center" aria-live="polite">
+                <p
+                    role="alert"
+                    className="text-clr-error text-center whitespace-pre-wrap"
+                    aria-live="polite">
                     {errors.root.message}
                 </p>
             )}

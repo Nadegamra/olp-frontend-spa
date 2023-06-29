@@ -36,7 +36,7 @@ function PublicProfileSection() {
                 <hr className="border-clr-text1" />
             </header>
             <form
-                aria-label="Form for updating your public profile"
+                aria-label="Form for changing your public profile"
                 onSubmit={handleSubmit((data) => {
                     setFormLoading(true)
                     setMessage('')
@@ -46,12 +46,17 @@ function PublicProfileSection() {
                     })
                     updateUsername(data.username)
                         .then((res) => {
-                            if (res) {
+                            if (res === true) {
                                 setMessage('Username updated successfully')
-                            } else {
+                            } else if (res === false) {
                                 setError('root', {
                                     type: 'validate',
                                     message: 'An error has occurred'
+                                })
+                            } else {
+                                setError('root', {
+                                    type: 'validate',
+                                    message: res
                                 })
                             }
                         })

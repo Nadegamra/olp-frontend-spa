@@ -37,12 +37,17 @@ function PasswordSection() {
                     })
                     updatePassword(data.currentPassword, data.newPassword)
                         .then((res) => {
-                            if (res) {
+                            if (res === true) {
                                 setMessage('Password updated successfully')
-                            } else {
+                            } else if (res === false) {
                                 setError('root', {
                                     type: 'validate',
                                     message: 'An error has occurred'
+                                })
+                            } else {
+                                setError('root', {
+                                    type: 'validate',
+                                    message: res
                                 })
                             }
                         })
@@ -81,7 +86,7 @@ function PasswordSection() {
                 </div>
             </form>
             {errors.root && (
-                <p role="alert" className="text-clr-error" aria-live="polite">
+                <p role="alert" className="text-clr-error whitespace-pre-wrap" aria-live="polite">
                     {errors.root.message}
                 </p>
             )}

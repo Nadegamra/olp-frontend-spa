@@ -40,12 +40,17 @@ function RegisterPage() {
                         new RegisterDTO(data.email, data.password, data.role)
                     )
                     setLoading(false)
-                    if (res) {
+                    if (res === true) {
                         setMessage('Please check your email to confirm your account')
-                    } else {
+                    } else if (res === false) {
                         setError('root', {
                             type: 'validate',
                             message: 'An error has occurred while registering'
+                        })
+                    } else {
+                        setError('root', {
+                            type: 'validate',
+                            message: res
                         })
                     }
                 })}

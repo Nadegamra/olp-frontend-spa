@@ -4,13 +4,13 @@ import axios from 'axios'
 
 interface UsersState {
     changeEmail: (token: string) => Promise<boolean>
-    changePassword: (token: string, newPassword: string) => Promise<boolean>
+    changePassword: (token: string, newPassword: string) => Promise<boolean | string>
     confirmEmail: (token: string) => Promise<boolean>
     deleteUser: () => Promise<boolean>
-    sendEmailChangeToken: (email: string) => Promise<boolean>
+    sendEmailChangeToken: (email: string) => Promise<boolean | string>
     sendPasswordResetToken: (email: string) => Promise<boolean>
-    updatePassword: (oldPassword: string, newPassword: string) => Promise<boolean>
-    updateUsername: (newUsername: string) => Promise<boolean>
+    updatePassword: (oldPassword: string, newPassword: string) => Promise<boolean | string>
+    updateUsername: (newUsername: string) => Promise<boolean | string>
 }
 
 const store = ({
@@ -52,8 +52,12 @@ const store = ({
                         headers
                     )
                     return res.status === 200
-                } catch (err) {
-                    return false
+                } catch (err: any) {
+                    const errObj: object = err.response.data.errors
+                    const errArr = Object.values(errObj).reduce((acc, curr) => {
+                        return acc.concat(curr)
+                    }, [])
+                    return errArr.join('\n')
                 }
             },
             confirmEmail: async (token: string) => {
@@ -83,8 +87,12 @@ const store = ({
                         headers
                     )
                     return res.status === 200
-                } catch (err) {
-                    return false
+                } catch (err: any) {
+                    const errObj: object = err.response.data.errors
+                    const errArr = Object.values(errObj).reduce((acc, curr) => {
+                        return acc.concat(curr)
+                    }, [])
+                    return errArr.join('\n')
                 }
             },
             sendPasswordResetToken: async (email: string) => {
@@ -107,8 +115,12 @@ const store = ({
                         headers
                     )
                     return res.status === 200
-                } catch (err) {
-                    return false
+                } catch (err: any) {
+                    const errObj: object = err.response.data.errors
+                    const errArr = Object.values(errObj).reduce((acc, curr) => {
+                        return acc.concat(curr)
+                    }, [])
+                    return errArr.join('\n')
                 }
             },
             updateUsername: async (newUsername: string) => {
@@ -120,8 +132,12 @@ const store = ({
                     )
                     await profile()
                     return res.status === 200
-                } catch (err) {
-                    return false
+                } catch (err: any) {
+                    const errObj: object = err.response.data.errors
+                    const errArr = Object.values(errObj).reduce((acc, curr) => {
+                        return acc.concat(curr)
+                    }, [])
+                    return errArr.join('\n')
                 }
             }
         }

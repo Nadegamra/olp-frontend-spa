@@ -13,9 +13,9 @@ interface AuthState {
     user: User | undefined
     profile: (lazy?: boolean) => Promise<boolean>
     getRole: () => string
-    login: (data: LoginRequestDTO) => Promise<boolean>
+    login: (data: LoginRequestDTO) => Promise<boolean | string>
     refresh: () => Promise<boolean>
-    register: (data: RegisterDTO) => Promise<boolean>
+    register: (data: RegisterDTO) => Promise<boolean | string>
     isTokenExpired: () => boolean
     logout: () => void
     getAccessToken: () => Promise<string | undefined>
@@ -137,14 +137,22 @@ const useAuth = create<AuthState>()((set, get) => {
         stateNumber: 0,
         profile: profile,
         login: async (dto: LoginRequestDTO): Promise<boolean> => {
-            const res = await api.post('login', dto)
-            if (res.status === 200) {
-                saveLoginInfo(res.data as LoginResponseDTO)
-                profile().finally(() => {
-                    return true
-                })
+            try {
+                const res = await api.post('login', dto)
+                if (res.status === 200) {
+                    saveLoginInfo(res.data as LoginResponseDTO)
+                    profile().finally(() => {
+                        return true
+                    })
+                }
+                return false
+            } catch (err: any) {
+                const errObj: object = err.response.data.errors
+                const errArr = Object.values(errObj).reduce((acc, curr) => {
+                    return acc.concat(curr)
+                }, [])
+                return errArr.join('\n')
             }
-            return false
         },
         refresh: refresh,
         register: async (dto: RegisterDTO): Promise<boolean> => {
@@ -155,8 +163,12 @@ const useAuth = create<AuthState>()((set, get) => {
                     role: dto.role
                 })
                 return res.status === 200
-            } catch (err) {
-                return false
+            } catch (err: any) {
+                const errObj: object = err.response.data.errors
+                const errArr = Object.values(errObj).reduce((acc, curr) => {
+                    return acc.concat(curr)
+                }, [])
+                return errArr.join('\n')
             }
         },
         isTokenExpired: isTokenExpired,

@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import useAuth from '../../../stores/AuthStore'
-import { useForm } from 'react-hook-form'
+import { set, useForm } from 'react-hook-form'
 import FormField from '../../../components/forms/FormField'
 import Button from '../../../components/forms/Button'
 import useUsers from '../../../api/UsersApi'
@@ -39,17 +39,23 @@ function EmailSection() {
                     setLoading(true)
                     sendEmailChangeToken(data.newEmail)
                         .then((res) => {
-                            if (res === false) {
-                                setError('newEmail', {
-                                    type: 'manual',
+                            if (res === true) {
+                                setMessage(
+                                    'A confirmation email has been sent to your new email address'
+                                )
+                            } else if (res === false) {
+                                setError('root', {
+                                    type: 'validate',
                                     message: 'Email already in use'
                                 })
                                 setLoading(false)
                                 return
+                            } else {
+                                setError('root', {
+                                    type: 'validate',
+                                    message: res
+                                })
                             }
-                            setMessage(
-                                'A confirmation email has been sent to your new email address'
-                            )
                         })
                         .finally(() => {
                             setLoading(false)
@@ -71,7 +77,10 @@ function EmailSection() {
                 </Button>
             </form>
             {errors.root && (
-                <span role="alert" className="text-clr-error" aria-live="polite">
+                <span
+                    role="alert"
+                    className="text-clr-error whitespace-pre-wrap"
+                    aria-live="polite">
                     {errors.root.message}
                 </span>
             )}

@@ -30,20 +30,22 @@ function LoginPage() {
                 className="m-auto bg-clr-bg2 flex flex-col p-7 rounded-md mb-7"
                 onSubmit={handleSubmit(async (data) => {
                     setLoading(true)
-                    try {
-                        const res = await login(
-                            new LoginRequestDTO(data.email, data.password, false)
-                        )
-                        setLoading(false)
-                        if (res) {
-                            navigate('/')
-                            return
-                        }
-                    } catch (err) {
+
+                    const res = await login(new LoginRequestDTO(data.email, data.password, false))
+                    setLoading(false)
+                    if (res === true) {
+                        navigate('/')
+                        return
+                    } else if (res === false) {
+                        setError('root', {
+                            type: 'validate',
+                            message: 'An error has occurred'
+                        })
+                    } else {
                         setLoading(false)
                         setError('root', {
                             type: 'validate',
-                            message: 'Login credentials are incorrect'
+                            message: res
                         })
                     }
                 })}>
