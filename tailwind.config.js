@@ -10,27 +10,31 @@ export default {
  ],
  theme: {
   colors: {
-      'bg-primary': `var(${'--color-bg-primary'})`,
-      'bg-secondary': `var(${'--color-bg-secondary'})`,
-      'bg-tertiary': `var(${'--color-bg-tertiary'})`,
-      'bg-extra': `var(${'--color-bg-extra'})`,
-      't-primary': `var(${'--color-text-primary'})`,
-      't-secondary': `var(${'--color-text-secondary'})`,
-      't-tertiary': `var(${'--color-text-tertiary'})`,
-      't-hover': `var(${'--color-text-hover'})`,
+      'clr-bg1': `var(${'--color-bg-primary'})`,
+      'clr-bg2': `var(${'--color-bg-secondary'})`,
+      'clr-bg3': `var(${'--color-bg-tertiary'})`,
+      'clr-bg4': `var(${'--color-bg-quaternary'})`,
+      'clr-bg-extra': `var(${'--color-bg-extra'})`,
+      'clr-text1': `var(${'--color-text-primary'})`,
+      'clr-text2': `var(${'--color-text-secondary'})`,
+      'clr-text3': `var(${'--color-text-tertiary'})`,
+      'clr-link': `var(${'--color-text-link'})`,
+      'clr-hover': `var(${'--color-text-hover'})`,
+      'clr-border': `var(${'--color-border'})`,
+      'clr-success': 'rgb(34, 139, 34)',
+      'clr-error': 'rgb(139, 0, 0)',
       'white': 'rgb(255,255,255)',
-      'black': 'rgb(0,0,0)',
-      'success': 'rgb(34, 139, 34)',
-      'error': 'rgb(139, 0, 0)'
+      'black': 'rgb(0,0,0)'
 
   },
   fontFamily: {
       'ff-primary': `var(${'--font-family-primary'})`,
   },
   fontSize: {
-      'fs-h1': "25px",
-      'fs-h2': "16px",
-      'fs-primary': "12px",
+      'fs-h1': "24px",
+      'fs-h2': "18px",
+      'fs-h3': "14px",
+      'fs-h4': "12px",
   },
  }
 }

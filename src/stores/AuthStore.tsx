@@ -9,13 +9,17 @@ import {
 import axios from 'axios'
 
 interface AuthState {
-    user?: User
-    role?: string
-    login: (data: LoginRequestDTO) => Promise<boolean>
+    loading: boolean
+    user: User | undefined
+    profile: (lazy?: boolean) => Promise<boolean>
+    getRole: () => string
+    login: (data: LoginRequestDTO) => Promise<boolean | string>
     refresh: () => Promise<boolean>
-    register: (data: RegisterDTO) => Promise<boolean>
+    register: (data: RegisterDTO) => Promise<boolean | string>
     isTokenExpired: () => boolean
     logout: () => void
+    getAccessToken: () => Promise<string | undefined>
+    stateNumber: number
 }
 
 const api = axios.create({
@@ -28,24 +32,21 @@ const getExpirationDate = (accessToken: string): Date => {
     return new Date(payload.exp * 1000)
 }
 
-const getRole = (accessToken: string): string => {
-    const parts = accessToken.split('.')
-    const payload = JSON.parse(window.atob(parts[1]))
-    return payload.role
-}
-
 const useAuth = create<AuthState>()((set, get) => {
     let accessToken: string | undefined
     let refreshToken: string | undefined
     let accessExp: Date | undefined
     let userId: string | undefined
     let user: User | undefined
-    let role: string | undefined
     ;(() => {
         accessToken = localStorage.getItem('accessToken') ?? undefined
         refreshToken = localStorage.getItem('refreshToken') ?? undefined
         accessExp = accessToken !== undefined ? getExpirationDate(accessToken) : undefined
         userId = localStorage.getItem('userId') ?? undefined
+        user =
+            localStorage.getItem('user') !== null
+                ? JSON.parse(localStorage.getItem('user')!)
+                : undefined
     })()
 
     const saveLoginInfo = (data: LoginResponseDTO) => {
@@ -56,7 +57,18 @@ const useAuth = create<AuthState>()((set, get) => {
         accessExp = getExpirationDate(accessToken)
         userId = data.userId
         localStorage.setItem('userId', data.userId)
-        role = getRole(accessToken)
+    }
+
+    const clearLoginInfo = () => {
+        localStorage.removeItem('accessToken')
+        localStorage.removeItem('refreshToken')
+        localStorage.removeItem('userId')
+        localStorage.removeItem('user')
+        accessToken = undefined
+        refreshToken = undefined
+        accessExp = undefined
+        userId = undefined
+        user = undefined
     }
 
     const isTokenExpired = (): boolean => {
@@ -70,75 +82,117 @@ const useAuth = create<AuthState>()((set, get) => {
         if (userId === undefined || refreshToken === undefined) {
             return false
         }
-        const res = await api.post('refresh-token', new RenewTokenRequestDTO(userId, refreshToken))
-        if (res.status < 400) {
-            saveLoginInfo(res.data as LoginResponseDTO)
-            const res2 = await profile()
-            if (res2 !== false) {
-                user = res2
+        try {
+            const res = await api.post(
+                'refresh-token',
+                new RenewTokenRequestDTO(userId, refreshToken)
+            )
+            if (res.status === 200) {
+                saveLoginInfo(res.data as LoginResponseDTO)
+                profile().finally(() => {
+                    return true
+                })
             }
-            return true
+        } catch (err: any) {
+            clearLoginInfo()
+            set(() => ({ loading: false }))
         }
         return false
     }
-
-    const profile = async (): Promise<User | false> => {
+    const profile = async (lazy = false): Promise<boolean> => {
         if (isTokenExpired()) {
             const res = await refresh()
             if (!res) {
-                return res
+                return false
             }
+        }
+        // use cached user if available if lazy is true
+        // TODO: expiry timer for cached user
+        if (lazy && user !== undefined) {
+            set((state) => ({ stateNumber: state?.stateNumber + 1 }))
+            return true
         }
         const res = await api.get('profile', {
             headers: { Authorization: `Bearer ${accessToken}` }
         })
-        if (res.status < 400) {
+        if (res.status === 200) {
             const data = res.data as User
-            set(() => ({ user: data }))
-            return data
+            set((state) => ({ user: data, stateNumber: state.stateNumber + 1 }))
+            user = data
+            localStorage.setItem('user', JSON.stringify(data))
+            return true
         } else {
             return false
         }
     }
+
     ;(async () => {
-        const res = await profile()
-        if (res !== false) {
-            user = res
-        }
+        await profile() //true
+        set(() => ({ loading: false }))
     })()
 
     return {
-        role: role,
+        loading: true,
         user: user,
-        login: async (dto: LoginRequestDTO) => {
-            const res = await api.post('login', dto)
-            if (res.status < 400) {
-                saveLoginInfo(res.data as LoginResponseDTO)
-                const res2 = await profile()
-                if (res2 !== false) {
-                    user = res2
+        stateNumber: 0,
+        profile: profile,
+        login: async (dto: LoginRequestDTO): Promise<boolean> => {
+            try {
+                const res = await api.post('login', dto)
+                if (res.status === 200) {
+                    saveLoginInfo(res.data as LoginResponseDTO)
+                    profile().finally(() => {
+                        return true
+                    })
                 }
-                return true
+                return false
+            } catch (err: any) {
+                const errObj: object = err.response.data.errors
+                const errArr = Object.values(errObj).reduce((acc, curr) => {
+                    return acc.concat(curr)
+                }, [])
+                return errArr.join('\n')
             }
-            return false
         },
         refresh: refresh,
         register: async (dto: RegisterDTO): Promise<boolean> => {
-            const res = await api.post('register', dto)
-            return res.status < 400
+            try {
+                const res = await api.post('register', {
+                    email: dto.email,
+                    password: dto.password,
+                    role: dto.role
+                })
+                return res.status === 200
+            } catch (err: any) {
+                const errObj: object = err.response.data.errors
+                const errArr = Object.values(errObj).reduce((acc, curr) => {
+                    return acc.concat(curr)
+                }, [])
+                return errArr.join('\n')
+            }
         },
         isTokenExpired: isTokenExpired,
         logout: () => {
-            localStorage.removeItem('accessToken')
-            localStorage.removeItem('refreshToken')
-            localStorage.removeItem('userId')
-            accessToken = undefined
-            refreshToken = undefined
-            accessExp = undefined
-            userId = undefined
-            user = undefined
-            role = undefined
-            set({ user: undefined, role: undefined })
+            clearLoginInfo()
+            set((state) => ({ stateNumber: state.stateNumber + 1, user: undefined }))
+        },
+        getAccessToken: async (): Promise<string | undefined> => {
+            if (isTokenExpired()) {
+                const refreshSucceeded = await refresh()
+                if (refreshSucceeded) {
+                    return accessToken
+                }
+                return undefined
+            }
+            return accessToken
+        },
+        getRole: (): string => {
+            if (accessToken === undefined) {
+                return ''
+            }
+            const parts = accessToken.split('.')
+            const payload = JSON.parse(window.atob(parts[1]))
+            return payload.role
         }
     }
 })

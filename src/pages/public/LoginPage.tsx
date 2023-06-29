@@ -1,11 +1,11 @@
 import { useForm } from 'react-hook-form'
-import useAuth from '../stores/AuthStore'
-import { LoginRequestDTO } from '../dtos/User'
-import { useNavigate } from 'react-router-dom'
+import useAuth from '../../stores/AuthStore'
+import { LoginRequestDTO } from '../../dtos/User'
+import { Link, useNavigate } from 'react-router-dom'
 import { useState } from 'react'
-import Button from '../components/ui/elements/Button'
-import Spinner from '../components/ui/elements/Spinner'
-import FormField from '../components/ui/elements/FormField'
+import Button from '../../components/forms/Button'
+import Spinner from '../../components/forms/Spinner'
+import FormField from '../../components/forms/FormField'
 
 interface ILoginInfo {
     email: string
@@ -26,19 +26,28 @@ function LoginPage() {
     return (
         <section className="p-5 flex flex-col items-center">
             <form
-                className="m-auto bg-bg-secondary flex flex-col p-7 rounded-md"
+                aria-label="Login Form"
+                className="m-auto bg-clr-bg2 flex flex-col p-7 rounded-md mb-7"
                 onSubmit={handleSubmit(async (data) => {
                     setLoading(true)
+
                     const res = await login(new LoginRequestDTO(data.email, data.password, false))
                     setLoading(false)
-                    if (res) {
-                        navigate('/profile')
+                    if (res === true) {
+                        navigate('/')
                         return
+                    } else if (res === false) {
+                        setError('root', {
+                            type: 'validate',
+                            message: 'An error has occurred'
+                        })
+                    } else {
+                        setLoading(false)
+                        setError('root', {
+                            type: 'validate',
+                            message: res
+                        })
                     }
-                    setError('root', {
-                        type: 'validate',
-                        message: 'Login credentials are incorrect'
-                    })
                 })}>
                 <h1 className="text-center pb-3 text-fs-h1">Login</h1>
                 <fieldset className="flex flex-col">
@@ -66,13 +75,22 @@ function LoginPage() {
                         {errors.password?.type == 'required' && 'Password is required'}
                     </p>
                 </fieldset>
+                <Link to={'/forgotPassword'} className="text-center text-clr-text2" type="button">
+                    Forgot password?
+                </Link>
                 <div className="mx-auto mt-7">
-                    <Button text="Login" type="submit" disabled={loading} />
+                    <Button type="submit" disabled={loading}>
+                        Login
+                    </Button>
                 </div>
-                {errors.root && <p role="alert">{errors.root.message}</p>}
             </form>
+            {errors.root && (
+                <p className="text-clr-error" role="alert">
+                    {errors.root.message}
+                </p>
+            )}
             {loading && (
-                <div className="mx-auto mt-7">
+                <div className="mx-auto">
                     <Spinner />
                 </div>
             )}

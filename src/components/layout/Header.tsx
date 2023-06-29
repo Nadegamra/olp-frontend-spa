@@ -1,9 +1,9 @@
 import { Link, useNavigate } from 'react-router-dom'
-import useAuth from '../../../stores/AuthStore'
+import useAuth from '../../stores/AuthStore'
 import { useEffect, useState } from 'react'
 
 function Header() {
-    const { user, role, logout } = useAuth()
+    const { user, logout, stateNumber, loading } = useAuth()
     const navigate = useNavigate()
     const [theme, setTheme] = useState<'light' | 'dark'>(
         (localStorage.getItem('theme') as 'light' | 'dark') ?? 'dark'
@@ -17,7 +17,6 @@ function Header() {
         }
     }, [])
 
-    //Toggle light/dark mode function
     const toggleTheme = () => {
         if (theme === 'light') {
             setTheme('dark')
@@ -29,47 +28,56 @@ function Header() {
             document.documentElement.setAttribute('data-theme', 'light')
         }
     }
-
+    if (loading) {
+        return <header key={stateNumber} className="bg-clr-bg4 p-5 flex"></header>
+    }
     return (
-        <header className="bg-bg-secondary p-5 flex">
+        <header key={stateNumber} className="bg-clr-bg4 p-5 flex">
             <a href="#main-content" className="sr-only">
                 Skip to main content
             </a>
-            <Link className="select-none" to={'/'}>
+            <Link className="select-none hover:text-clr-hover" to={'/'}>
                 Home
             </Link>
             <div className="flex-1" />
             <nav role="navigation" aria-label="Main Navigation">
                 <ul className="flex gap-7">
-                    <button
-                        onClick={toggleTheme}
-                        className="select-none"
-                        aria-label={
-                            theme === 'light' ? 'Switch to dark mode' : 'Switch to light mode'
-                        }>
-                        {theme === 'light' ? (
-                            <span className="material-symbols-outlined">light_mode</span>
-                        ) : (
-                            <span className="material-symbols-outlined">dark_mode</span>
-                        )}
-                    </button>
+                    <li>
+                        <button
+                            onClick={toggleTheme}
+                            className="select-none hover:text-clr-hover"
+                            aria-label={
+                                theme === 'light' ? 'Switch to dark mode' : 'Switch to light mode'
+                            }>
+                            {theme === 'light' ? (
+                                <span className="material-symbols-outlined">light_mode</span>
+                            ) : (
+                                <span className="material-symbols-outlined">dark_mode</span>
+                            )}
+                        </button>
+                    </li>
                     {user === undefined && (
-                        <li>
+                        <li className="select-none hover:text-clr-hover">
                             <Link to={'/login'}>Login</Link>
                         </li>
                     )}
+                    {user === undefined && (
+                        <li className="select-none hover:text-clr-hover">
+                            <Link to={'/register'}>Register</Link>
+                        </li>
+                    )}
                     {user !== undefined && (
-                        <li className="select-none">
-                            <Link to={'/profile'}>
-                                <span className="material-symbols-outlined">person</span>
+                        <li className="select-none hover:text-clr-hover">
+                            <Link to={'/settings/public'}>
+                                <span className="material-symbols-outlined">settings</span>
                             </Link>
                         </li>
                     )}
                     {user !== undefined && (
                         <li>
                             <button
-                                role="logout"
-                                className="select-none"
+                                role="button"
+                                className="select-none hover:text-clr-hover"
                                 onClick={() => {
                                     logout()
                                     navigate('/')
