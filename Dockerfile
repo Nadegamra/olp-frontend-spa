@@ -1,5 +1,5 @@
 #----------------------------
-FROM node:20-alpine AS base
+FROM node:19-alpine AS base
 ENV PATH /app/node_modules/.bin:$PATH
 WORKDIR /app
 COPY package*.json ./
