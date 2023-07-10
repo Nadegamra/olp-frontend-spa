@@ -11,7 +11,7 @@ interface CreatorsAPIMetadata {
 const store = ({ getAccessToken }: { getAccessToken: () => Promise<string | undefined> }) =>
     create<CreatorsAPIMetadata>()((set, get) => {
         const api = axios.create({
-            baseURL: 'https://localhost:44396/creator'
+            baseURL: 'https://localhost:44398/creator'
         })
 
         let headers = {}

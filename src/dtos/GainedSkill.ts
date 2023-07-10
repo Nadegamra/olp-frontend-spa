@@ -1,18 +1,18 @@
 import { SkillResponse } from './Skill'
 
-export class CourseRequirement {
+export class GainedSkill {
     id: number
     courseId: number
-    skillId?: number
-    skill?: SkillResponse
-    customDescription?: string
+    skillId: number
+    skill: SkillResponse
+    customDescription: string
 
     constructor(
         id: number,
         courseId: number,
-        skillId?: number,
-        skill?: SkillResponse,
-        customDescription?: string
+        skillId: number,
+        skill: SkillResponse,
+        customDescription: string
     ) {
         this.id = id
         this.courseId = courseId
@@ -22,7 +22,21 @@ export class CourseRequirement {
     }
 }
 
-export class CourseRequirementCreateRequest {
+export class GainedSkillResponse {
+    id: number
+    courseId: number
+    skillId: number
+    customDescription: string
+
+    constructor(id: number, courseId: number, skillId: number, customDescription: string) {
+        this.id = id
+        this.courseId = courseId
+        this.skillId = skillId
+        this.customDescription = customDescription
+    }
+}
+
+export class GainedSkillCreateRequest {
     courseId: number
     skillId: number
     customDescription: string
@@ -34,7 +48,7 @@ export class CourseRequirementCreateRequest {
     }
 }
 
-export class CourseRequirementDeleteRequest {
+export class GainedSkillDeleteRequest {
     courseId: number
     id: number
 
@@ -44,13 +58,11 @@ export class CourseRequirementDeleteRequest {
     }
 }
 
-export class CourseRequirementUpdateRequest {
-    courseId: number
+export class GainedSkillUpdateRequest {
     id: number
     customDescription: string
 
-    constructor(courseId: number, id: number, customDescription: string) {
-        this.courseId = courseId
+    constructor(id: number, customDescription: string) {
         this.id = id
         this.customDescription = customDescription
     }
