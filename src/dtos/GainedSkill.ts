@@ -60,10 +60,12 @@ export class GainedSkillDeleteRequest {
 
 export class GainedSkillUpdateRequest {
     id: number
+    courseId: number
     customDescription: string
 
-    constructor(id: number, customDescription: string) {
+    constructor(id: number, courseId: number, customDescription: string) {
         this.id = id
+        this.courseId = courseId
         this.customDescription = customDescription
     }
 }
