@@ -10,9 +10,10 @@ import ForgotPasswordPage from '../../pages/public/ForgotPasswordPage'
 import ChangeEmailPage from '../../pages/public/ChangeEmailPage'
 import ChangePasswordPage from '../../pages/public/ChangePasswordPage'
 import ConfirmEmailPage from '../../pages/public/ConfirmEmailPage'
+import CreateCoursePage from '../../pages/creator/CreateCoursePage'
 
 function AppRoutes() {
-    const { user, loading } = useAuth()
+    const { user, loading, role } = useAuth()
 
     if (!loading) {
         return (
@@ -29,6 +30,15 @@ function AppRoutes() {
                     <Route path="/forgotPassword" element={<ForgotPasswordPage />} />
                     <Route path="/changePassword/:token" element={<ChangePasswordPage />} />
                     <Route path="/confirmEmail/:token" element={<ConfirmEmailPage />} />
+                </Route>
+                <Route
+                    element={
+                        <ConditionalRoute
+                            condition={user !== undefined && role === 'CREATOR'}
+                            redirect="/"
+                        />
+                    }>
+                    <Route path="/addCourse" element={<CreateCoursePage />} />
                 </Route>
                 <Route path="*" element={<PageNotFoundPage />} />
             </Routes>

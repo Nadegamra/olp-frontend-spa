@@ -11,8 +11,8 @@ import axios from 'axios'
 interface AuthState {
     loading: boolean
     user: User | undefined
+    role: string | undefined
     profile: (lazy?: boolean) => Promise<boolean>
-    getRole: () => string
     login: (data: LoginRequestDTO) => Promise<boolean | string>
     refresh: () => Promise<boolean>
     register: (data: RegisterDTO) => Promise<boolean | string>
@@ -38,6 +38,7 @@ const useAuth = create<AuthState>()((set, get) => {
     let accessExp: Date | undefined
     let userId: string | undefined
     let user: User | undefined
+    let role: string | undefined
     ;(() => {
         accessToken = localStorage.getItem('accessToken') ?? undefined
         refreshToken = localStorage.getItem('refreshToken') ?? undefined
@@ -47,6 +48,7 @@ const useAuth = create<AuthState>()((set, get) => {
             localStorage.getItem('user') !== null
                 ? JSON.parse(localStorage.getItem('user')!)
                 : undefined
+        role = localStorage.getItem('role') ?? undefined
     })()
 
     const saveLoginInfo = (data: LoginResponseDTO) => {
@@ -64,6 +66,7 @@ const useAuth = create<AuthState>()((set, get) => {
         localStorage.removeItem('refreshToken')
         localStorage.removeItem('userId')
         localStorage.removeItem('user')
+        localStorage.removeItem('role')
         accessToken = undefined
         refreshToken = undefined
         accessExp = undefined
@@ -106,8 +109,6 @@ const useAuth = create<AuthState>()((set, get) => {
                 return false
             }
         }
-        // use cached user if available if lazy is true
-        // TODO: expiry timer for cached user
         if (lazy && user !== undefined) {
             set((state) => ({ stateNumber: state?.stateNumber + 1 }))
             return true
@@ -120,6 +121,12 @@ const useAuth = create<AuthState>()((set, get) => {
             set((state) => ({ user: data, stateNumber: state.stateNumber + 1 }))
             user = data
             localStorage.setItem('user', JSON.stringify(data))
+            if (accessToken === undefined) {
+                return false
+            }
+            const parts = accessToken.split('.')
+            const payload = JSON.parse(window.atob(parts[1]))
+            localStorage.setItem('role', payload.role)
             return true
         } else {
             return false
@@ -127,13 +134,14 @@ const useAuth = create<AuthState>()((set, get) => {
     }
 
     ;(async () => {
-        await profile() //true
+        await profile()
         set(() => ({ loading: false }))
     })()
 
     return {
         loading: true,
         user: user,
+        role: role,
         stateNumber: 0,
         profile: profile,
         login: async (dto: LoginRequestDTO): Promise<boolean> => {
@@ -185,14 +193,6 @@ const useAuth = create<AuthState>()((set, get) => {
                 return undefined
             }
             return accessToken
-        },
-        getRole: (): string => {
-            if (accessToken === undefined) {
-                return ''
-            }
-            const parts = accessToken.split('.')
-            const payload = JSON.parse(window.atob(parts[1]))
-            return payload.role
         }
     }
 })
