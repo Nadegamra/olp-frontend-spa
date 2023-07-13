@@ -3,6 +3,7 @@ import FormField from '../../components/forms/InputField'
 import FormTextarea from '../../components/forms/TextArea'
 import { CourseCreateRequest } from '../../dtos/Course'
 import Radio from '../../components/forms/Radio'
+import Button from '../../components/forms/Button'
 
 function CreateCoursePage() {
     const {
@@ -13,7 +14,11 @@ function CreateCoursePage() {
     } = useForm<CourseCreateRequest>()
     return (
         <section className="flex flex-col items-center content-center">
-            <form className="bg-clr-bg2 my-10 p-10 rounded-md">
+            <form
+                className="bg-clr-bg2 my-10 p-10 rounded-md"
+                onSubmit={handleSubmit((data) => {
+                    console.log(data)
+                })}>
                 <header className="pb-10">
                     <h1 className="text-fs-h1 text-center">Create new course</h1>
                 </header>
@@ -27,6 +32,7 @@ function CreateCoursePage() {
                                 type="text"
                                 {...register('name', { required: true })}
                             />
+                            {errors.name && <div className="text-clr-error">Field is required</div>}
                         </div>
                         <div>
                             <FormField
@@ -36,6 +42,9 @@ function CreateCoursePage() {
                                 type="number"
                                 {...register('lengthInDays', { required: true })}
                             />
+                            {errors.lengthInDays && (
+                                <div className="text-clr-error">Field is required</div>
+                            )}
                         </div>
                     </div>
                     <div className="flex flex-row pb-5">
@@ -44,9 +53,13 @@ function CreateCoursePage() {
                                 placeholder="39.99"
                                 label="price"
                                 text="Course Price"
+                                step="0.01"
                                 type="number"
                                 {...register('price', { required: true })}
                             />
+                            {errors.price && (
+                                <div className="text-clr-error">Field is required</div>
+                            )}
                         </div>
                         <div className="flex-1">
                             <FormTextarea
@@ -55,6 +68,9 @@ function CreateCoursePage() {
                                 text="Short Description"
                                 {...register('shortDescription', { required: true })}
                             />
+                            {errors.shortDescription && (
+                                <div className="text-clr-error">Field is required</div>
+                            )}
                         </div>
                     </div>
                     <div className="pb-5">
@@ -64,6 +80,9 @@ function CreateCoursePage() {
                             text="Detailed Description"
                             {...register('detailedDescription', { required: true })}
                         />
+                        {errors.detailedDescription && (
+                            <div className="text-clr-error">Field is required</div>
+                        )}
                     </div>
                     <div className="flex flex-row pb-5">
                         <div className="flex-[3]">
@@ -73,56 +92,91 @@ function CreateCoursePage() {
                                     <Radio
                                         label="Online"
                                         value={0}
-                                        {...register('activityFormat')}
+                                        {...register('activityFormat', { required: true })}
                                     />
                                 </div>
                                 <div className="text-center flex-1 px-1">
-                                    <Radio label="Live" value={0} {...register('activityFormat')} />
+                                    <Radio
+                                        label="Live"
+                                        value={1}
+                                        {...register('activityFormat', { required: true })}
+                                    />
                                 </div>
                                 <div className="text-center flex-1">
                                     <Radio
                                         label="Mixed"
-                                        value={0}
-                                        {...register('activityFormat')}
+                                        value={2}
+                                        {...register('activityFormat', { required: true })}
                                     />
                                 </div>
                             </div>
+                            {errors.activityFormat && (
+                                <div className="text-clr-error">Field is required</div>
+                            )}
                         </div>
                         <div className="w-1 border-l" />
                         <div className="flex-[2]">
                             <h2 className="text-fs-h2 text-center block pb-1">Schedule Type</h2>
                             <div className="flex flex-row pb-4">
                                 <div className="text-center flex-1 px-1">
-                                    <Radio label="Fixed" value={0} {...register('scheduleType')} />
+                                    <Radio
+                                        label="Fixed"
+                                        value={0}
+                                        {...register('scheduleType', { required: true })}
+                                    />
                                 </div>
                                 <div className="text-center flex-1">
                                     <Radio
                                         label="Flexible"
-                                        value={0}
-                                        {...register('scheduleType')}
+                                        value={1}
+                                        {...register('scheduleType', { required: true })}
                                     />
                                 </div>
                             </div>
+                            {errors.scheduleType && (
+                                <div className="text-clr-error">Field is required</div>
+                            )}
                         </div>
                     </div>
                     <h2 className="text-fs-h2 text-center block pb-1">Difficulty Level</h2>
                     <div className="flex flex-row">
                         <div className="text-center flex-1 pb-4">
-                            <Radio label="Beginner" value={0} {...register('difficulty')} />
+                            <Radio
+                                label="Beginner"
+                                value={0}
+                                {...register('difficulty', { required: true })}
+                            />
                         </div>
                         <div className="text-center flex-1 px-1">
-                            <Radio label="Intermediate" value={0} {...register('difficulty')} />
+                            <Radio
+                                label="Intermediate"
+                                value={1}
+                                {...register('difficulty', { required: true })}
+                            />
                         </div>
                         <div className="text-center flex-1 px-1">
-                            <Radio label="Advanced" value={0} {...register('difficulty')} />
+                            <Radio
+                                label="Advanced"
+                                value={2}
+                                {...register('difficulty', { required: true })}
+                            />
                         </div>
                         <div className="text-center flex-1 px-1">
-                            <Radio label="Expert" value={0} {...register('difficulty')} />
+                            <Radio
+                                label="Expert"
+                                value={3}
+                                {...register('difficulty', { required: true })}
+                            />
                         </div>
                         <div className="text-center flex-1">
-                            <Radio label="Master" value={0} {...register('difficulty')} />
+                            <Radio
+                                label="Master"
+                                value={4}
+                                {...register('difficulty', { required: true })}
+                            />
                         </div>
                     </div>
+                    {errors.difficulty && <div className="text-clr-error">Field is required</div>}
 
                     <div className="flex flex-row mb-5 h-16">
                         <div className="flex-1">
@@ -133,7 +187,7 @@ function CreateCoursePage() {
                                 className="bg-clr-bg3 rounded-sm"
                                 type="checkbox"
                                 id="gr_cert"
-                                {...register('grantsCertificate', { required: true })}
+                                {...register('grantsCertificate')}
                             />
                         </div>
                         {watch('grantsCertificate') && (
@@ -142,13 +196,17 @@ function CreateCoursePage() {
                                     placeholder="59.99"
                                     label="price"
                                     text="Certificate Price"
+                                    step="0.01"
                                     type="number"
-                                    {...register('certificatePrice', { required: true })}
+                                    {...register('certificatePrice')}
                                 />
                             </div>
                         )}
                     </div>
                 </fieldset>
+                <div className="text-center">
+                    <Button type="submit">Create</Button>
+                </div>
             </form>
         </section>
     )
