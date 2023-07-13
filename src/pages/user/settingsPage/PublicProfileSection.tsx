@@ -1,6 +1,6 @@
 import { useForm } from 'react-hook-form'
 import Button from '../../../components/forms/Button'
-import FormField from '../../../components/forms/FormField'
+import FormField from '../../../components/forms/InputField'
 import useAuth from '../../../stores/AuthStore'
 import { useEffect, useState } from 'react'
 import Spinner from '../../../components/forms/Spinner'

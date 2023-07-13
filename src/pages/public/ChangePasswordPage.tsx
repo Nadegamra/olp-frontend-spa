@@ -1,7 +1,7 @@
 import { useParams } from 'react-router-dom'
 import useUsers from '../../api/UsersApi'
 import { useForm } from 'react-hook-form'
-import FormField from '../../components/forms/FormField'
+import FormField from '../../components/forms/InputField'
 import Button from '../../components/forms/Button'
 import { useState } from 'react'
 import Spinner from '../../components/forms/Spinner'

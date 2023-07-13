@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom'
 import { useState } from 'react'
 import Button from '../../components/forms/Button'
 import Spinner from '../../components/forms/Spinner'
-import FormField from '../../components/forms/FormField'
+import FormField from '../../components/forms/InputField'
 import CustomRadio from '../../components/forms/Radio'
 
 interface IRegisterInfo {

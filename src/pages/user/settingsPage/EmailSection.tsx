@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import useAuth from '../../../stores/AuthStore'
 import { set, useForm } from 'react-hook-form'
-import FormField from '../../../components/forms/FormField'
+import FormField from '../../../components/forms/InputField'
 import Button from '../../../components/forms/Button'
 import useUsers from '../../../api/UsersApi'
 import Spinner from '../../../components/forms/Spinner'
