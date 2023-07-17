@@ -1,6 +1,8 @@
 import { create } from 'zustand'
-import useAuth from '../stores/AuthStore'
+// import useAuth from '../stores/AuthStore'
 import axios from 'axios'
+import { useAppDispatch, useAppSelector } from '../app/hooks'
+import { sessionEnded } from '../features/auth/AuthSlice'
 
 interface UsersState {
     changeEmail: (token: string) => Promise<boolean>
@@ -144,7 +146,14 @@ const store = ({
     })
 
 export default function useUsers() {
-    const { getAccessToken, logout, profile } = useAuth()
+    const dispatch = useAppDispatch()
+    const accessToken = useAppSelector((state) => state.auth.accessToken)
+
+    const logout = () => dispatch(sessionEnded(undefined))
+    const profile = async () => {
+        return true
+    }
+    const getAccessToken = async () => accessToken
 
     return store({ getAccessToken, logout, profile }).getState()
 }

@@ -1,11 +1,12 @@
 import { useForm } from 'react-hook-form'
-import useAuth from '../../stores/AuthStore'
+// import useAuth from '../../stores/AuthStore'
 import { LoginRequestDTO } from '../../dtos/User'
 import { Link, useNavigate } from 'react-router-dom'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Button from '../../components/forms/Button'
 import Spinner from '../../components/forms/Spinner'
 import FormField from '../../components/forms/InputField'
+import { useLoginMutation } from '../../features/api/ApiSlice'
 
 interface ILoginInfo {
     email: string
@@ -13,16 +14,27 @@ interface ILoginInfo {
 }
 
 function LoginPage() {
+    const navigate = useNavigate()
+    const [loading, setLoading] = useState(false)
     const {
         register,
         formState: { errors },
         handleSubmit,
         setError
     } = useForm<ILoginInfo>()
+    const [reduxLogin, { isLoading, isError, isSuccess }] = useLoginMutation()
+    useEffect(() => {
+        if (isSuccess) {
+            navigate('/')
+        }
+        if (isError) {
+            setError('root', {
+                type: 'validate',
+                message: 'An error has occurred'
+            })
+        }
+    }, [isSuccess, isError])
 
-    const { login } = useAuth()
-    const navigate = useNavigate()
-    const [loading, setLoading] = useState(false)
     return (
         <section className="p-5 flex flex-col items-center">
             <form
@@ -30,24 +42,7 @@ function LoginPage() {
                 className="m-auto bg-clr-bg2 flex flex-col p-7 rounded-md mb-7"
                 onSubmit={handleSubmit(async (data) => {
                     setLoading(true)
-
-                    const res = await login(new LoginRequestDTO(data.email, data.password, false))
-                    setLoading(false)
-                    if (res === true) {
-                        navigate('/')
-                        return
-                    } else if (res === false) {
-                        setError('root', {
-                            type: 'validate',
-                            message: 'An error has occurred'
-                        })
-                    } else {
-                        setLoading(false)
-                        setError('root', {
-                            type: 'validate',
-                            message: res
-                        })
-                    }
+                    await reduxLogin(new LoginRequestDTO(data.email, data.password, false))
                 })}>
                 <h1 className="text-center pb-3 text-fs-h1">Login</h1>
                 <fieldset className="flex flex-col">
@@ -89,7 +84,7 @@ function LoginPage() {
                     {errors.root.message}
                 </p>
             )}
-            {loading && (
+            {isLoading && (
                 <div className="mx-auto">
                     <Spinner />
                 </div>

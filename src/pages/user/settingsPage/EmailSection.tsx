@@ -5,13 +5,14 @@ import FormField from '../../../components/forms/InputField'
 import Button from '../../../components/forms/Button'
 import useUsers from '../../../api/UsersApi'
 import Spinner from '../../../components/forms/Spinner'
+import { useAppSelector } from '../../../app/hooks'
 
 interface Props {
     newEmail: string
 }
 
 function EmailSection() {
-    const { user } = useAuth()
+    const user = useAppSelector((state) => state.auth.user)
     const {
         register,
         handleSubmit,

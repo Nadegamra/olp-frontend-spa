@@ -5,13 +5,14 @@ import useAuth from '../../../stores/AuthStore'
 import { useEffect, useState } from 'react'
 import Spinner from '../../../components/forms/Spinner'
 import useUsers from '../../../api/UsersApi'
+import { useAppSelector } from '../../../app/hooks'
 
 interface Props {
     username: string
 }
 
 function PublicProfileSection() {
-    const { user } = useAuth()
+    const user = useAppSelector((state) => state.auth.user)
     useEffect(() => {
         const defaultValues: Props = {
             username: user?.username ?? ''

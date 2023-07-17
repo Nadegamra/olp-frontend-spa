@@ -24,7 +24,7 @@ function RegisterPage() {
         setError
     } = useForm<IRegisterInfo>()
 
-    const { register: registerUser } = useAuth()
+    // const { register: registerUser } = useAuth()
     const [loading, setLoading] = useState(false)
     const [message, setMessage] = useState('')
     return (
@@ -36,23 +36,23 @@ function RegisterPage() {
                     setMessage('')
                     setLoading(true)
 
-                    const res = await registerUser(
-                        new RegisterDTO(data.email, data.password, data.role)
-                    )
-                    setLoading(false)
-                    if (res === true) {
-                        setMessage('Please check your email to confirm your account')
-                    } else if (res === false) {
-                        setError('root', {
-                            type: 'validate',
-                            message: 'An error has occurred while registering'
-                        })
-                    } else {
-                        setError('root', {
-                            type: 'validate',
-                            message: res
-                        })
-                    }
+                    // const res = await registerUser(
+                    //     new RegisterDTO(data.email, data.password, data.role)
+                    // )
+                    // setLoading(false)
+                    // if (res === true) {
+                    //     setMessage('Please check your email to confirm your account')
+                    // } else if (res === false) {
+                    //     setError('root', {
+                    //         type: 'validate',
+                    //         message: 'An error has occurred while registering'
+                    //     })
+                    // } else {
+                    //     setError('root', {
+                    //         type: 'validate',
+                    //         message: res
+                    //     })
+                    // }
                 })}
                 aria-busy={loading}>
                 <h1 className="text-center pb-3 text-fs-h1">Register</h1>
