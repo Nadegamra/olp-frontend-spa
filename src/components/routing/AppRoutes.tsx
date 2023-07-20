@@ -1,7 +1,6 @@
 import { Route, Routes } from 'react-router-dom'
 import HomePage from '../../pages/public/HomePage'
 import SettingsPage from '../../pages/user/SettingsPage'
-import useAuth from '../../stores/AuthStore'
 import ConditionalRoute from './ConditionalRoute'
 import LoginPage from '../../pages/public/LoginPage'
 import RegisterPage from '../../pages/public/RegisterPage'
@@ -11,7 +10,8 @@ import ChangeEmailPage from '../../pages/public/ChangeEmailPage'
 import ChangePasswordPage from '../../pages/public/ChangePasswordPage'
 import ConfirmEmailPage from '../../pages/public/ConfirmEmailPage'
 import CreateCoursePage from '../../pages/creator/CreateCoursePage'
-import { useAppSelector } from '../../app/hooks'
+import { useAppDispatch, useAppSelector } from '../../app/hooks'
+import apiSlice from '../../features/api/ApiSliceAuth'
 
 function AppRoutes() {
     const { user, role } = useAppSelector((state) => state.auth)

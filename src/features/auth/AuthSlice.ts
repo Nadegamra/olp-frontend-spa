@@ -1,5 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { LoginResponseDTO, User } from '../../dtos/User'
+import { User } from '../../dtos/User'
+import apiSlice from '../api/ApiSliceAuth'
+import apiSliceUsers from '../api/ApiSliceUsers'
 
 interface AuthState {
     user: User | undefined
@@ -32,23 +34,49 @@ const authSlice = createSlice({
             state.refreshToken = undefined
             localStorage.removeItem('refreshToken')
         },
-        sessionRefreshed: (state, action: { payload: LoginResponseDTO }) => {
-            state.accessToken = action.payload.accessToken
-            localStorage.setItem('accessToken', action.payload.accessToken)
-            state.refreshToken = action.payload.refreshToken
-            localStorage.setItem('refreshToken', action.payload.refreshToken)
-            const parts = action.payload.accessToken.split('.')
+        sessionRefreshed: (state, { payload }) => {
+            state.accessToken = payload.accessToken
+            localStorage.setItem('accessToken', payload.accessToken)
+            state.refreshToken = payload.refreshToken
+            localStorage.setItem('refreshToken', payload.refreshToken)
+            const parts = payload.accessToken.split('.')
             const tokenContents = JSON.parse(window.atob(parts[1]))
             state.role = tokenContents.role
             localStorage.setItem('role', tokenContents.role)
-        },
-        personalDataFetched: (state, action: { payload: User }) => {
-            state.user = action.payload
-            localStorage.setItem('user', JSON.stringify(action.payload))
         }
+    },
+    extraReducers(builder) {
+        builder.addMatcher(apiSlice.endpoints.login.matchFulfilled, (state, { payload }) => {
+            state.accessToken = payload.accessToken
+            localStorage.setItem('accessToken', payload.accessToken)
+            state.refreshToken = payload.refreshToken
+            localStorage.setItem('refreshToken', payload.refreshToken)
+            const parts = payload.accessToken.split('.')
+            const tokenContents = JSON.parse(window.atob(parts[1]))
+            state.role = tokenContents.role
+            localStorage.setItem('role', tokenContents.role)
+        }),
+            builder.addMatcher(apiSlice.endpoints.profile.matchFulfilled, (state, { payload }) => {
+                state.user = payload
+                localStorage.setItem('user', JSON.stringify(payload))
+            }),
+            builder.addMatcher(
+                apiSliceUsers.endpoints.updateUsername.matchFulfilled,
+                (
+                    state,
+                    {
+                        meta: {
+                            arg: { originalArgs }
+                        }
+                    }
+                ) => {
+                    state.user!.username = originalArgs
+                    localStorage.setItem('user', JSON.stringify(state.user))
+                }
+            )
     }
 })
 
 export default authSlice.reducer
 
-export const { sessionRefreshed, sessionEnded, personalDataFetched } = authSlice.actions
+export const { sessionEnded, sessionRefreshed } = authSlice.actions

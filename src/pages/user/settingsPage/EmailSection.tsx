@@ -1,11 +1,10 @@
 import { useState } from 'react'
-import useAuth from '../../../stores/AuthStore'
-import { set, useForm } from 'react-hook-form'
+import { useForm } from 'react-hook-form'
 import FormField from '../../../components/forms/InputField'
 import Button from '../../../components/forms/Button'
-import useUsers from '../../../api/UsersApi'
 import Spinner from '../../../components/forms/Spinner'
 import { useAppSelector } from '../../../app/hooks'
+import { useSendEmailChangeTokenMutation } from '../../../features/api/ApiSliceUsers'
 
 interface Props {
     newEmail: string
@@ -19,9 +18,10 @@ function EmailSection() {
         formState: { errors },
         setError
     } = useForm<Props>()
-    const [loading, setLoading] = useState<boolean>(false)
+
     const [message, setMessage] = useState<string>('')
-    const { sendEmailChangeToken } = useUsers()
+    const [sendEmailChangeToken, { isLoading }] = useSendEmailChangeTokenMutation()
+
     return (
         <section>
             <header className="mb-5">
@@ -37,34 +37,31 @@ function EmailSection() {
             <form
                 aria-label="Form for Emailing a link to change your email address"
                 onSubmit={handleSubmit((data) => {
-                    setLoading(true)
                     sendEmailChangeToken(data.newEmail)
+                        .unwrap()
                         .then((res) => {
-                            if (res === true) {
-                                setMessage(
-                                    'A confirmation email has been sent to your new email address'
-                                )
-                            } else if (res === false) {
+                            setMessage(
+                                'A confirmation email has been sent to your new email address'
+                            )
+                        })
+                        .catch((error) => {
+                            if (error === false) {
                                 setError('root', {
                                     type: 'validate',
                                     message: 'Email already in use'
                                 })
-                                setLoading(false)
                                 return
                             } else {
                                 setError('root', {
                                     type: 'validate',
-                                    message: res
+                                    message: error
                                 })
                             }
-                        })
-                        .finally(() => {
-                            setLoading(false)
                         })
                 })}>
                 <fieldset className="w-[min(500px,60%)] mb-5">
                     <FormField
-                        disabled={loading}
+                        disabled={isLoading}
                         id="newEmail"
                         label="New Email"
                         text="New Email"
@@ -73,7 +70,7 @@ function EmailSection() {
                     />
                     <p className="text-clr-error h-6">{errors.newEmail && 'Field is required'}</p>
                 </fieldset>
-                <Button disabled={loading} key={'save1'} type="submit">
+                <Button disabled={isLoading} key={'save1'} type="submit">
                     Send Confirmation Email
                 </Button>
             </form>
@@ -90,7 +87,7 @@ function EmailSection() {
                     {message}
                 </span>
             )}
-            {loading && (
+            {isLoading && (
                 <div className="mx-auto">
                     <Spinner />
                 </div>

@@ -12,7 +12,6 @@ interface UsersState {
     sendEmailChangeToken: (email: string) => Promise<boolean | string>
     sendPasswordResetToken: (email: string) => Promise<boolean>
     updatePassword: (oldPassword: string, newPassword: string) => Promise<boolean | string>
-    updateUsername: (newUsername: string) => Promise<boolean | string>
 }
 
 const store = ({
@@ -116,23 +115,6 @@ const store = ({
                         { oldPassword: oldPassword, newPassword: newPassword },
                         headers
                     )
-                    return res.status === 200
-                } catch (err: any) {
-                    const errObj: object = err.response.data.errors
-                    const errArr = Object.values(errObj).reduce((acc, curr) => {
-                        return acc.concat(curr)
-                    }, [])
-                    return errArr.join('\n')
-                }
-            },
-            updateUsername: async (newUsername: string) => {
-                try {
-                    const res = await api.put(
-                        'updateUsername',
-                        { newUsername: newUsername },
-                        headers
-                    )
-                    await profile()
                     return res.status === 200
                 } catch (err: any) {
                     const errObj: object = err.response.data.errors
