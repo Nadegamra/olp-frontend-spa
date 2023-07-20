@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit'
 import { User } from '../../dtos/User'
 import apiSlice from '../api/ApiSliceAuth'
 import apiSliceUsers from '../api/ApiSliceUsers'
+import endSessionIfExpired from './endSessionIfExpired'
 
 interface AuthState {
     user: User | undefined
@@ -9,6 +10,8 @@ interface AuthState {
     accessToken: string | undefined
     refreshToken: string | undefined
 }
+
+endSessionIfExpired()
 
 const initialState: AuthState = {
     user:
