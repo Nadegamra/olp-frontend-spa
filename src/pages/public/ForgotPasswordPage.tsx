@@ -1,24 +1,21 @@
 import { useForm } from 'react-hook-form'
-import useUsers from '../../api/UsersApi'
 import Button from '../../components/forms/Button'
 import FormField from '../../components/forms/InputField'
-import { useState } from 'react'
 import Spinner from '../../components/forms/Spinner'
+import { useSendPasswordResetTokenMutation } from '../../features/api/ApiSliceUsers'
+import { toast } from 'react-toastify'
 
 interface Props {
     email: string
 }
 
 function SendPasswordResetPage() {
-    const { sendPasswordResetToken } = useUsers()
+    const [sendPasswordResetToken, { isLoading }] = useSendPasswordResetTokenMutation()
     const {
         register,
         formState: { errors },
-        handleSubmit,
-        setError
+        handleSubmit
     } = useForm<Props>()
-    const [loading, setLoading] = useState(false)
-    const [message, setMessage] = useState('')
 
     return (
         <section className="p-5 flex flex-col items-center">
@@ -26,18 +23,14 @@ function SendPasswordResetPage() {
                 aria-label="Send Password Reset Form"
                 className="m-auto bg-clr-bg2 flex flex-col p-7 rounded-md mb-7"
                 onSubmit={handleSubmit((data) => {
-                    setLoading(true)
-                    sendPasswordResetToken(data.email).then((res) => {
-                        setLoading(false)
-                        if (res) {
-                            setMessage('Email sent')
-                            return
-                        }
-                        setError('root', {
-                            type: 'validate',
-                            message: 'Email not found'
+                    sendPasswordResetToken(data.email)
+                        .unwrap()
+                        .then(() => {
+                            toast.success('Email sent')
                         })
-                    })
+                        .catch(() => {
+                            toast.error('Email not found')
+                        })
                 })}>
                 <header className="pb-4">
                     <h1 className="text-fs-h1 text-center">Forgot Password</h1>
@@ -62,12 +55,7 @@ function SendPasswordResetPage() {
                     {errors.root.message}
                 </p>
             )}
-            {message !== '' && (
-                <p role="alert" className="text-clr-success text-center" aria-live="polite">
-                    {message}
-                </p>
-            )}
-            {loading && (
+            {isLoading && (
                 <div className="mx-auto">
                     <Spinner />
                 </div>

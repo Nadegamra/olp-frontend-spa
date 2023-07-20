@@ -6,7 +6,7 @@ import {
     CourseUpdateRequest
 } from '../dtos/Course'
 import axios from 'axios'
-import useAuth from '../stores/AuthStore'
+import { useAppSelector } from '../app/hooks'
 
 interface CoursesAPIMetadata {
     createCourse: (request: CourseCreateRequest) => Promise<CourseResponse | false>
@@ -97,6 +97,7 @@ const store = ({ getAccessToken }: { getAccessToken: () => Promise<string | unde
     })
 
 export default function useCourses() {
-    const { getAccessToken } = useAuth()
+    const accessToken = useAppSelector((state) => state.auth.accessToken)
+    const getAccessToken = async () => accessToken
     return store({ getAccessToken }).getState()
 }

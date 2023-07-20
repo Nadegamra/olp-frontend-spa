@@ -1,7 +1,7 @@
 import { create } from 'zustand'
 import { SetCourseImageRequest } from '../dtos/CourseImage'
 import axios from 'axios'
-import useAuth from '../stores/AuthStore'
+import { useAppSelector } from '../app/hooks'
 
 interface ImagesApiMetadata {
     setCourseImage: (request: SetCourseImageRequest) => Promise<boolean>
@@ -41,6 +41,7 @@ const ImagesApi = ({ getAccessToken }: { getAccessToken: () => Promise<string | 
     })
 
 export default function useImages() {
-    const { getAccessToken } = useAuth()
+    const accessToken = useAppSelector((state) => state.auth.accessToken)
+    const getAccessToken = async () => accessToken
     return ImagesApi({ getAccessToken }).getState()
 }

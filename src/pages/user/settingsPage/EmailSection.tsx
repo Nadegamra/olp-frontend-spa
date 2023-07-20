@@ -1,10 +1,10 @@
-import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import FormField from '../../../components/forms/InputField'
 import Button from '../../../components/forms/Button'
 import Spinner from '../../../components/forms/Spinner'
 import { useAppSelector } from '../../../app/hooks'
 import { useSendEmailChangeTokenMutation } from '../../../features/api/ApiSliceUsers'
+import { toast } from 'react-toastify'
 
 interface Props {
     newEmail: string
@@ -15,11 +15,9 @@ function EmailSection() {
     const {
         register,
         handleSubmit,
-        formState: { errors },
-        setError
+        formState: { errors }
     } = useForm<Props>()
 
-    const [message, setMessage] = useState<string>('')
     const [sendEmailChangeToken, { isLoading }] = useSendEmailChangeTokenMutation()
 
     return (
@@ -39,24 +37,13 @@ function EmailSection() {
                 onSubmit={handleSubmit((data) => {
                     sendEmailChangeToken(data.newEmail)
                         .unwrap()
-                        .then((res) => {
-                            setMessage(
+                        .then(() => {
+                            toast.success(
                                 'A confirmation email has been sent to your new email address'
                             )
                         })
                         .catch((error) => {
-                            if (error === false) {
-                                setError('root', {
-                                    type: 'validate',
-                                    message: 'Email already in use'
-                                })
-                                return
-                            } else {
-                                setError('root', {
-                                    type: 'validate',
-                                    message: error
-                                })
-                            }
+                            toast.error(error === false ? 'Email already in use' : error)
                         })
                 })}>
                 <fieldset className="w-[min(500px,60%)] mb-5">
@@ -74,19 +61,6 @@ function EmailSection() {
                     Send Confirmation Email
                 </Button>
             </form>
-            {errors.root && (
-                <span
-                    role="alert"
-                    className="text-clr-error whitespace-pre-wrap"
-                    aria-live="polite">
-                    {errors.root.message}
-                </span>
-            )}
-            {message !== '' && (
-                <span role="alert" className="text-clr-success" aria-live="polite">
-                    {message}
-                </span>
-            )}
             {isLoading && (
                 <div className="mx-auto">
                     <Spinner />

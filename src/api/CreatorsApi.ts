@@ -1,7 +1,7 @@
 import { create } from 'zustand'
 import { CreatorResponse, CreatorUpdateRequest } from '../dtos/Creator'
 import axios from 'axios'
-import useAuth from '../stores/AuthStore'
+import { useAppSelector } from '../app/hooks'
 
 interface CreatorsAPIMetadata {
     updateCreator: (request: CreatorUpdateRequest) => Promise<boolean>
@@ -43,6 +43,7 @@ const store = ({ getAccessToken }: { getAccessToken: () => Promise<string | unde
     })
 
 export default function useCreators() {
-    const { getAccessToken } = useAuth()
+    const accessToken = useAppSelector((state) => state.auth.accessToken)
+    const getAccessToken = async () => accessToken
     return store({ getAccessToken }).getState()
 }

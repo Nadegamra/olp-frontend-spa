@@ -44,7 +44,7 @@ const apiSliceUsers = apiSlice.injectEndpoints({
         sendEmailChangeToken: build.mutation<undefined, string>({
             query: (email: string) => ({
                 url: 'https://localhost:44396/auth/sendEmailChangeToken',
-                body: JSON.stringify({ emailAddess: email }),
+                body: JSON.stringify({ emailAddress: email }),
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -54,7 +54,7 @@ const apiSliceUsers = apiSlice.injectEndpoints({
         sendPasswordResetToken: build.mutation<undefined, string>({
             query: (email: string) => ({
                 url: 'https://localhost:44396/auth/sendPasswordResetToken',
-                body: JSON.stringify({ emailAddess: email }),
+                body: JSON.stringify({ emailAddress: email }),
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

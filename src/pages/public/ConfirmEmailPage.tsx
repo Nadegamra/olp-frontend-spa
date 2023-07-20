@@ -1,28 +1,23 @@
-import { useEffect, useState } from 'react'
-import useUsers from '../../api/UsersApi'
+import { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import Spinner from '../../components/forms/Spinner'
+import { useConfirmEmailMutation } from '../../features/api/ApiSliceUsers'
 
 function ConfirmEmailPage() {
     const { token } = useParams()
-    const [loading, setLoading] = useState<boolean>(true)
-    const [isSuccess, setIsSuccess] = useState<boolean | undefined>()
-    const { confirmEmail } = useUsers()
+    const [confirmEmail, { isLoading, isSuccess }] = useConfirmEmailMutation()
     useEffect(() => {
-        confirmEmail(token ?? '').then((res) => {
-            setIsSuccess(res)
-            setLoading(false)
-        })
+        confirmEmail(token ?? '').unwrap()
     }, [])
 
     return (
         <section className="p-5 flex flex-col items-center">
-            {loading && (
+            {isLoading && (
                 <div className="mx-auto mt-16">
                     <Spinner />
                 </div>
             )}
-            {!loading && isSuccess !== undefined && (
+            {!isLoading && (
                 <div className="m-auto bg-clr-bg2 flex flex-col p-7 mt-10 rounded-md">
                     {isSuccess
                         ? 'Email Address has been successfully confirmed'

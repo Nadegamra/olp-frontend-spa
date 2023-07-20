@@ -1,7 +1,7 @@
 import { create } from 'zustand'
 import axios from 'axios'
-import useAuth from '../stores/AuthStore'
 import { CourseSubtitleCreateRequest, CourseSubtitleDeleteRequest } from '../dtos/CourseSubtitle'
+import { useAppSelector } from '../app/hooks'
 
 interface SubtitlesApiMetadata {
     addCourseSubtitle: (request: CourseSubtitleCreateRequest) => Promise<boolean>
@@ -46,6 +46,7 @@ const SubtitlesApi = ({ getAccessToken }: { getAccessToken: () => Promise<string
     })
 
 export default function useSubtitles() {
-    const { getAccessToken } = useAuth()
+    const accessToken = useAppSelector((state) => state.auth.accessToken)
+    const getAccessToken = async () => accessToken
     return SubtitlesApi({ getAccessToken }).getState()
 }

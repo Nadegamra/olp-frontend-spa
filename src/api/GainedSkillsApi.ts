@@ -1,11 +1,11 @@
 import axios from 'axios'
 import { create } from 'zustand'
-import useAuth from '../stores/AuthStore'
 import {
     GainedSkillCreateRequest,
     GainedSkillDeleteRequest,
     GainedSkillUpdateRequest
 } from '../dtos/GainedSkill'
+import { useAppSelector } from '../app/hooks'
 
 interface GainedSkillsApiMetadata {
     addGainedSkill: (request: GainedSkillCreateRequest) => Promise<boolean>
@@ -67,6 +67,7 @@ const GainedSkillsApi = ({
     })
 
 export default function useGainedSkills() {
-    const { getAccessToken } = useAuth()
+    const accessToken = useAppSelector((state) => state.auth.accessToken)
+    const getAccessToken = async () => accessToken
     return GainedSkillsApi({ getAccessToken }).getState()
 }

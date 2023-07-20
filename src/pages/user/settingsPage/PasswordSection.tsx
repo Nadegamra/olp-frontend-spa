@@ -1,7 +1,6 @@
 import { useForm } from 'react-hook-form'
 import FormField from '../../../components/forms/InputField'
 import Button from '../../../components/forms/Button'
-import { useState } from 'react'
 import Spinner from '../../../components/forms/Spinner'
 import { useUpdatePasswordMutation } from '../../../features/api/ApiSliceUsers'
 import { toast } from 'react-toastify'

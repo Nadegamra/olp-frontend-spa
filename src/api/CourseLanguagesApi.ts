@@ -1,7 +1,7 @@
 import { create } from 'zustand'
 import axios from 'axios'
-import useAuth from '../stores/AuthStore'
 import { CourseLanguageCreateRequest, CourseLanguageDeleteRequest } from '../dtos/CourseLanguage'
+import { useAppSelector } from '../app/hooks'
 
 interface LanguagesApiMetadata {
     addCourseLanguage: (request: CourseLanguageCreateRequest) => Promise<boolean>
@@ -46,6 +46,8 @@ const LanguagesApi = ({ getAccessToken }: { getAccessToken: () => Promise<string
     })
 
 export default function useLanguages() {
-    const { getAccessToken } = useAuth()
+    const accessToken = useAppSelector((state) => state.auth.accessToken)
+    const getAccessToken = async () => accessToken
+
     return LanguagesApi({ getAccessToken }).getState()
 }

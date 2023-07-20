@@ -1,11 +1,11 @@
 import axios from 'axios'
 import { create } from 'zustand'
-import useAuth from '../stores/AuthStore'
 import {
     CourseRequirementCreateRequest,
     CourseRequirementDeleteRequest,
     CourseRequirementUpdateRequest
 } from '../dtos/CourseRequirement'
+import { useAppSelector } from '../app/hooks'
 
 interface CourseRequirementsApiMetadata {
     addCourseRequirement: (request: CourseRequirementCreateRequest) => Promise<boolean>
@@ -67,6 +67,8 @@ const CourseRequirementsApi = ({
     })
 
 export default function useCourseRequirements() {
-    const { getAccessToken } = useAuth()
+    const accessToken = useAppSelector((state) => state.auth.accessToken)
+    const getAccessToken = async () => accessToken
+
     return CourseRequirementsApi({ getAccessToken }).getState()
 }

@@ -1,7 +1,7 @@
 import { create } from 'zustand'
 import { SkillCreateRequest, SkillResponse, SkillUpdateRequest } from '../dtos/Skill'
 import axios from 'axios'
-import useAuth from '../stores/AuthStore'
+import { useAppSelector } from '../app/hooks'
 
 interface SkillsAPIMetadata {
     createSkill: (request: SkillCreateRequest) => Promise<SkillResponse | false>
@@ -71,6 +71,7 @@ const skillsAPI = ({ getAccessToken }: { getAccessToken: () => Promise<string | 
     })
 
 export default function useSkills() {
-    const { getAccessToken } = useAuth()
+    const accessToken = useAppSelector((state) => state.auth.accessToken)
+    const getAccessToken = async () => accessToken
     return skillsAPI({ getAccessToken }).getState()
 }

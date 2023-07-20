@@ -22,7 +22,7 @@ function LoginPage() {
         handleSubmit,
         setError
     } = useForm<ILoginInfo>()
-    const [reduxLogin, { isLoading, isError, isSuccess }] = useLoginMutation()
+    const [login, { isLoading, isError, isSuccess }] = useLoginMutation()
     const dispatch = useAppDispatch()
     return (
         <section className="p-5 flex flex-col items-center">
@@ -30,7 +30,7 @@ function LoginPage() {
                 aria-label="Login Form"
                 className="m-auto bg-clr-bg2 flex flex-col p-7 rounded-md mb-7"
                 onSubmit={handleSubmit(async (data) => {
-                    await reduxLogin(new LoginRequestDTO(data.email, data.password, false))
+                    await login(new LoginRequestDTO(data.email, data.password, false))
                         .unwrap()
                         .then(() => {
                             dispatch(apiSlice.endpoints.profile.initiate(undefined))
