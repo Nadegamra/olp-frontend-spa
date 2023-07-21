@@ -78,7 +78,7 @@ function CreateCoursePage() {
                             <div className="text-clr-error">Field is required</div>
                         )}
                     </div>
-                    <div className="flex-[3]">
+                    <div>
                         <h2 className="text-fs-h2 text-center block pb-1">Activity Format</h2>
                         <div className="flex flex-row pb-4">
                             <div className="text-center flex-1 px-1">
@@ -107,7 +107,7 @@ function CreateCoursePage() {
                             <div className="text-clr-error">Field is required</div>
                         )}
                     </div>
-                    <div className="flex-[2]">
+                    <div>
                         <h2 className="text-fs-h2 text-center block pb-1">Schedule Type</h2>
                         <div className="flex flex-row pb-4">
                             <div className="text-center flex-1 px-1">
