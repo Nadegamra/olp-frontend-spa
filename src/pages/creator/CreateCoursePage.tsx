@@ -7,6 +7,11 @@ import Button from '../../components/forms/Button'
 import { useCreateCourseMutation } from '../../features/api/ApiSliceCourses'
 import { toast } from 'react-toastify'
 import Spinner from '../../components/forms/Spinner'
+import RadioArray from '../../components/forms/RadioArray'
+import { ScheduleRadioInfo } from '../../dtos/enums/ScheduleType'
+import { DifficultyRadioInfo } from '../../dtos/enums/Difficulty'
+import { ActivityFormatRadioInfo } from '../../dtos/enums/ActivityFormat'
+import Checkbox from '../../components/forms/Checkbox'
 
 function CreateCoursePage() {
     const {
@@ -86,112 +91,36 @@ function CreateCoursePage() {
                         />
                     </div>
                     <div>
-                        <h2 className="text-fs-h2 text-center block pb-1">Activity Format</h2>
-                        <div className="flex flex-row pb-4">
-                            <div className="text-center flex-1 px-1">
-                                <Radio
-                                    label="Online"
-                                    value={0}
-                                    {...register('activityFormat', { required: true })}
-                                />
-                            </div>
-                            <div className="text-center flex-1 px-1">
-                                <Radio
-                                    label="Live"
-                                    value={1}
-                                    {...register('activityFormat', { required: true })}
-                                />
-                            </div>
-                            <div className="text-center flex-1">
-                                <Radio
-                                    label="Mixed"
-                                    value={2}
-                                    {...register('activityFormat', { required: true })}
-                                />
-                            </div>
-                        </div>
-                        {/* {errors.activityFormat && (
-                            <div className="text-clr-error">Field is required</div>
-                        )} */}
+                        <RadioArray
+                            headerText="Activity Format"
+                            radiosInfo={ActivityFormatRadioInfo}
+                            error={errors.activityFormat && 'Field is required'}
+                            {...register('activityFormat', { required: true })}
+                        />
                     </div>
                     <div>
-                        <h2 className="text-fs-h2 text-center block pb-1">Schedule Type</h2>
-                        <div className="flex flex-row pb-4">
-                            <div className="text-center flex-1 px-1">
-                                <Radio
-                                    label="Fixed"
-                                    value={0}
-                                    {...register('scheduleType', { required: true })}
-                                />
-                            </div>
-                            <div className="text-center flex-1">
-                                <Radio
-                                    label="Flexible"
-                                    value={1}
-                                    {...register('scheduleType', { required: true })}
-                                />
-                            </div>
-                        </div>
-                        {/* {errors.scheduleType && (
-                            <div className="text-clr-error">Field is required</div>
-                        )} */}
+                        <RadioArray
+                            headerText="Schedule Type"
+                            radiosInfo={ScheduleRadioInfo}
+                            error={errors.scheduleType && 'Field is required'}
+                            {...register('scheduleType', { required: true })}
+                        />
                     </div>
                     <div>
-                        <h2 className="text-fs-h2 text-center block pb-1">Difficulty Level</h2>
-                        <div className="flex flex-row">
-                            <div className="text-center flex-1 pb-4">
-                                <Radio
-                                    label="Beginner"
-                                    value={0}
-                                    {...register('difficulty', { required: true })}
-                                />
-                            </div>
-                            <div className="text-center flex-1 px-1">
-                                <Radio
-                                    label="Intermediate"
-                                    value={1}
-                                    {...register('difficulty', { required: true })}
-                                />
-                            </div>
-                            <div className="text-center flex-1 px-1">
-                                <Radio
-                                    label="Advanced"
-                                    value={2}
-                                    {...register('difficulty', { required: true })}
-                                />
-                            </div>
-                            <div className="text-center flex-1 px-1">
-                                <Radio
-                                    label="Expert"
-                                    value={3}
-                                    {...register('difficulty', { required: true })}
-                                />
-                            </div>
-                            <div className="text-center flex-1">
-                                <Radio
-                                    label="Master"
-                                    value={4}
-                                    {...register('difficulty', { required: true })}
-                                />
-                            </div>
-                            {/* {errors.difficulty && (
-                                <div className="text-clr-error">Field is required</div>
-                            )} */}
-                        </div>
+                        <RadioArray
+                            headerText="Difficulty Level"
+                            radiosInfo={DifficultyRadioInfo}
+                            error={errors.difficulty && 'Field is required'}
+                            {...register('difficulty', { required: true })}
+                        />
                     </div>
                     <div className="flex flex-row">
                         <div className="pr-5">
-                            <label className="font-medium mb-2" htmlFor="gr_cert">
-                                Grants Certificate?
-                            </label>
-                            <div className="mx-auto text-center">
-                                <input
-                                    className="bg-clr-bg3 rounded-sm"
-                                    type="checkbox"
-                                    id="gr_cert"
-                                    {...register('grantsCertificate')}
-                                />
-                            </div>
+                            <Checkbox
+                                text="Grants Certificate?"
+                                label="gr_cert"
+                                {...register('grantsCertificate')}
+                            />
                         </div>
                         <div className={watch('grantsCertificate') ? 'flex-1' : 'flex-1 invisible'}>
                             <FormField

@@ -53,7 +53,7 @@ function Header() {
                             aria-label={
                                 theme === 'light' ? 'Switch to dark mode' : 'Switch to light mode'
                             }>
-                            {theme === 'light' ? (
+                            {theme !== 'light' ? (
                                 <span className="material-symbols-outlined">light_mode</span>
                             ) : (
                                 <span className="material-symbols-outlined">dark_mode</span>
