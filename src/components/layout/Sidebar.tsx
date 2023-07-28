@@ -9,9 +9,10 @@ export interface SidebarSection {
 interface Sections {
     sections: SidebarSection[]
     currentSection?: string
+    pageUrl: string
 }
 
-function Sidebar({ sections, currentSection }: Sections) {
+function Sidebar({ sections, currentSection, pageUrl }: Sections) {
     const navigate = useNavigate()
     return (
         <>
@@ -44,7 +45,7 @@ function Sidebar({ sections, currentSection }: Sections) {
                         {sections.map(({ icon, name, sectionName }) => (
                             <li key={sectionName}>
                                 <Link
-                                    to={`/settings/${sectionName}`}
+                                    to={`${pageUrl}/${sectionName}`}
                                     className={
                                         currentSection?.toUpperCase() === sectionName.toUpperCase()
                                             ? 'flex items-center p-2 text-clr-text1 rounded-lg bg-clr-bg2 hover:bg-clr-bg1 cursor-pointer'

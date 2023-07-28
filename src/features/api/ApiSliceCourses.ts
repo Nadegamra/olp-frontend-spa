@@ -46,14 +46,14 @@ const apiSliceCourses = apiSlice.injectEndpoints({
             query: () => ({
                 url: `https://localhost:44398/courses/owned`,
                 method: 'GET'
-            })
+            }),
+            transformResponse: (response: { items: CourseResponseOwner[] }, meta, arg) => {
+                return response.items
+            }
         }),
-        updateCourse: build.mutation<
-            CourseResponseOwner,
-            { id: number; request: CourseUpdateRequest }
-        >({
-            query: ({ id, request }) => ({
-                url: `https://localhost:44398/courses/${id}`,
+        updateCourse: build.mutation<CourseResponseOwner, { request: CourseUpdateRequest }>({
+            query: ({ request }) => ({
+                url: `https://localhost:44398/courses/${request.id}`,
                 method: 'PUT',
                 body: JSON.stringify(request),
                 headers: {

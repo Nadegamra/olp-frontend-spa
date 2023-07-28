@@ -1,17 +1,19 @@
 import React from 'react'
+import FormError from './FormError'
 
 interface Props {
     text: string
     label: string
     placeholder: string
     name?: string
+    error: string
     onChange?: React.ChangeEventHandler<HTMLTextAreaElement>
     onBlur?: React.FocusEventHandler<HTMLTextAreaElement>
     [x: string]: any
 }
 
 const TextArea = React.forwardRef<HTMLTextAreaElement, Props>(
-    ({ text, label, placeholder, ...rest }, ref) => {
+    ({ text, label, placeholder, error, ...rest }, ref) => {
         return (
             <>
                 <label htmlFor={label} className="block mb-2 font-medium">
@@ -23,6 +25,7 @@ const TextArea = React.forwardRef<HTMLTextAreaElement, Props>(
                     placeholder={placeholder}
                     ref={ref}
                     {...rest}></textarea>
+                <FormError error={error} />
             </>
         )
     }

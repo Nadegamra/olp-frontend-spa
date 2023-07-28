@@ -10,8 +10,9 @@ import ChangeEmailPage from '../../pages/public/ChangeEmailPage'
 import ChangePasswordPage from '../../pages/public/ChangePasswordPage'
 import ConfirmEmailPage from '../../pages/public/ConfirmEmailPage'
 import CreateCoursePage from '../../pages/creator/CreateCoursePage'
-import { useAppDispatch, useAppSelector } from '../../app/hooks'
-import apiSlice from '../../features/api/ApiSliceAuth'
+import { useAppSelector } from '../../app/hooks'
+import MyCoursesPage from '../../pages/creator/MyCoursesPage'
+import MyCourseEditPage from '../../pages/creator/MyCourseEditPage'
 
 function AppRoutes() {
     const { user, role } = useAppSelector((state) => state.auth)
@@ -38,6 +39,10 @@ function AppRoutes() {
                     />
                 }>
                 <Route path="/addCourse" element={<CreateCoursePage />} />
+                <Route path="/myCourses" element={<MyCoursesPage />} />
+
+                <Route path="/myCourses/:id/" element={<MyCourseEditPage />} />
+                <Route path="/myCourses/:id/:section" element={<MyCourseEditPage />} />
             </Route>
             <Route path="*" element={<PageNotFoundPage />} />
         </Routes>

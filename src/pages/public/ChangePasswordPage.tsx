@@ -46,10 +46,8 @@ function ChangePasswordPage() {
                             label="password"
                             type="password"
                             {...register('password', { required: true })}
+                            error={errors.password && 'Password is required'}
                         />
-                        <p className="h-6 text-clr-error" role="alert">
-                            {errors.password && 'Password is required'}
-                        </p>
                         <FormField
                             text="Repeat Password"
                             label="repeatPassword"
@@ -61,10 +59,8 @@ function ChangePasswordPage() {
                                     }
                                 }
                             })}
+                            error={errors.repeatPassword?.message}
                         />
-                        <p className="h-6 text-clr-error" role="alert">
-                            {errors.repeatPassword?.message}
-                        </p>
                     </fieldset>
                     <div className="mx-auto w-max">
                         <Button type="submit" key={'submit'}>

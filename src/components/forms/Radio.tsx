@@ -1,15 +1,17 @@
 import React from 'react'
+import FormError from './FormError'
 
 interface Props {
     id: string
     label: string
     helperText?: string
     value: number
+    error: string
     [x: string]: any
 }
 
 const CustomRadio = React.forwardRef<HTMLInputElement, Props>(
-    ({ id, label, helperText, value, ...rest }, ref) => {
+    ({ id, label, helperText, value, error, ...rest }, ref) => {
         return (
             <>
                 <label htmlFor={id} className="block mb-1 font-medium">
@@ -27,6 +29,7 @@ const CustomRadio = React.forwardRef<HTMLInputElement, Props>(
                     className="text-clr-link bg-clr-bg2 border-clr-border focus:ring-blue-500 focus:ring-2"
                     {...rest}
                 />
+                <FormError error={error} />
             </>
         )
     }

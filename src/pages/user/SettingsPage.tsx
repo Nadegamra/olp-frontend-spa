@@ -54,7 +54,7 @@ function SettingsPage() {
 
     return (
         <section className="flex">
-            <Sidebar sections={sections} currentSection={section} />
+            <Sidebar sections={sections} currentSection={section} pageUrl="/settings" />
             <div className="ml-[-200px] sm:ml-0 p-4 w-full sm:w-[min(800px,50%)]">
                 <SectionContent />
             </div>

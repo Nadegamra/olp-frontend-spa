@@ -47,10 +47,8 @@ function RegisterPage() {
                         type="email"
                         disabled={isLoading}
                         {...register('email', { required: true })}
+                        error={errors.email?.type === 'required' && 'Email is required'}
                     />
-                    <p className="text-clr-error h-5 mb-2" role="alert">
-                        {errors.email?.type == 'required' && 'Email is required'}
-                    </p>
                     <div className="flex flex-col sm:flex-row pb-5 sm:pb-3 gap-2">
                         <div className="flex flex-col">
                             <FormField
@@ -60,10 +58,10 @@ function RegisterPage() {
                                 type="password"
                                 disabled={isLoading}
                                 {...register('password', { required: true })}
+                                error={
+                                    errors.password?.type === 'required' && 'Password is required'
+                                }
                             />
-                            <p className="text-clr-error h-5" role="alert">
-                                {errors.password?.type == 'required' && 'Password is required'}
-                            </p>
                         </div>
                         <div className="flex flex-col">
                             <FormField
@@ -76,13 +74,13 @@ function RegisterPage() {
                                     required: true,
                                     validate: (value) => value === watch('password')
                                 })}
+                                error={
+                                    errors.repeatPassword?.type == 'validate'
+                                        ? 'Passwords must match'
+                                        : errors.repeatPassword?.type == 'required' &&
+                                          'Password is required'
+                                }
                             />
-                            <p className="text-clr-error h-5" role="alert">
-                                {errors.repeatPassword?.type == 'validate'
-                                    ? 'Passwords must match'
-                                    : errors.repeatPassword?.type == 'required' &&
-                                      'Password is required'}
-                            </p>
                         </div>
                     </div>
                     <div className="flex gap-2">

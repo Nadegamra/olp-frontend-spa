@@ -42,6 +42,7 @@ function SendPasswordResetPage() {
                         placeholder="email@example.com"
                         type="email"
                         {...register('email', { required: true })}
+                        error={errors.email && 'Field is required'}
                     />
                 </fieldset>
                 <div className="w-max m-auto">
@@ -50,11 +51,6 @@ function SendPasswordResetPage() {
                     </Button>
                 </div>
             </form>
-            {errors.root && (
-                <p role="alert" className="text-clr-error text-center" aria-live="polite">
-                    {errors.root.message}
-                </p>
-            )}
             {isLoading && (
                 <div className="mx-auto">
                     <Spinner />

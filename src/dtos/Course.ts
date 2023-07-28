@@ -142,34 +142,49 @@ export class CourseCreateRequest {
     }
 }
 
+interface CourseUpdateRequestArgs {
+    id: number
+    name?: string
+    shortDescription?: string
+    detailedDescription?: string
+    lengthInDays?: number
+    price?: number
+    grantsCertificate?: boolean
+    certificatePrice?: number
+    activityFormat?: ActivityFormat
+    scheduleType?: ScheduleType
+    difficulty?: Difficulty
+    isHidden?: boolean
+}
+
 export class CourseUpdateRequest {
     id: number
-    name: string
-    shortDescription: string
-    detailedDescription: string
-    lengthInDays: number
-    price: number
-    grantsCertificate: boolean
-    certificatePrice: number
-    activityFormat: ActivityFormat
-    scheduleType: ScheduleType
-    difficulty: Difficulty
-    isHidden: boolean
+    name?: string
+    shortDescription?: string
+    detailedDescription?: string
+    lengthInDays?: number
+    price?: number
+    grantsCertificate?: boolean
+    certificatePrice?: number
+    activityFormat?: ActivityFormat
+    scheduleType?: ScheduleType
+    difficulty?: Difficulty
+    isHidden?: boolean
 
-    constructor(
-        id: number,
-        name: string,
-        shortDescription: string,
-        detailedDescription: string,
-        lengthInDays: number,
-        price: number,
-        grantsCertificate: boolean,
-        certificatePrice: number,
-        activityFormat: ActivityFormat,
-        scheduleType: ScheduleType,
-        difficulty: Difficulty,
-        isHidden: boolean
-    ) {
+    constructor({
+        id,
+        name,
+        shortDescription,
+        detailedDescription,
+        lengthInDays,
+        price,
+        grantsCertificate,
+        certificatePrice,
+        activityFormat,
+        scheduleType,
+        difficulty,
+        isHidden
+    }: CourseUpdateRequestArgs) {
         this.id = id
         this.name = name
         this.shortDescription = shortDescription

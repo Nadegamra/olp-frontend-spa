@@ -1,13 +1,12 @@
 import { useForm } from 'react-hook-form'
-// import useAuth from '../../stores/AuthStore'
 import { LoginRequestDTO } from '../../dtos/User'
 import { Link, useNavigate } from 'react-router-dom'
-import { useEffect, useState } from 'react'
 import Button from '../../components/forms/Button'
 import Spinner from '../../components/forms/Spinner'
 import FormField from '../../components/forms/InputField'
 import apiSlice, { useLoginMutation } from '../../features/api/ApiSliceAuth'
 import { useAppDispatch } from '../../app/hooks'
+import { toast } from 'react-toastify'
 
 interface ILoginInfo {
     email: string
@@ -19,10 +18,9 @@ function LoginPage() {
     const {
         register,
         formState: { errors },
-        handleSubmit,
-        setError
+        handleSubmit
     } = useForm<ILoginInfo>()
-    const [login, { isLoading, isError, isSuccess }] = useLoginMutation()
+    const [login, { isLoading }] = useLoginMutation()
     const dispatch = useAppDispatch()
     return (
         <section className="p-5 flex flex-col items-center">
@@ -34,13 +32,11 @@ function LoginPage() {
                         .unwrap()
                         .then(() => {
                             dispatch(apiSlice.endpoints.profile.initiate(undefined))
+                            toast.success('Logged in successfully')
                             navigate('/')
                         })
                         .catch(() => {
-                            setError('root', {
-                                type: 'validate',
-                                message: 'An error has occurred'
-                            })
+                            toast.error('An error has occured')
                         })
                 })}>
                 <h1 className="text-center pb-3 text-fs-h1">Login</h1>
@@ -53,10 +49,8 @@ function LoginPage() {
                         type="email"
                         disabled={isLoading}
                         {...register('email', { required: true })}
+                        error={errors.email?.type === 'required' && 'Email is required'}
                     />
-                    <p className="text-error h-5" role="alert">
-                        {errors.email?.type == 'required' && 'Email is required'}
-                    </p>
                     <FormField
                         placeholder="password"
                         label="password"
@@ -64,10 +58,8 @@ function LoginPage() {
                         type="password"
                         disabled={isLoading}
                         {...register('password', { required: true })}
+                        error={errors.password?.type === 'required' && 'Password is required'}
                     />
-                    <p className="text-error h-3" role="alert">
-                        {errors.password?.type == 'required' && 'Password is required'}
-                    </p>
                 </fieldset>
                 <Link to={'/forgotPassword'} className="text-center text-clr-text2" type="button">
                     Forgot password?
@@ -78,11 +70,6 @@ function LoginPage() {
                     </Button>
                 </div>
             </form>
-            {errors.root && (
-                <p className="text-clr-error" role="alert">
-                    {errors.root.message}
-                </p>
-            )}
             {isLoading && (
                 <div className="mx-auto">
                     <Spinner />

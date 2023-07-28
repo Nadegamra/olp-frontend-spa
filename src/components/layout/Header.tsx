@@ -4,7 +4,7 @@ import { useAppDispatch, useAppSelector } from '../../app/hooks'
 import { sessionEnded } from '../../features/auth/AuthSlice'
 
 function Header() {
-    const { user } = useAppSelector((state) => state.auth)
+    const { user, role } = useAppSelector((state) => state.auth)
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
     const [theme, setTheme] = useState<'light' | 'dark'>(
@@ -41,6 +41,11 @@ function Header() {
             <div className="flex-1" />
             <nav role="navigation" aria-label="Main Navigation">
                 <ul className="flex gap-7">
+                    {user !== undefined && role === 'CREATOR' && (
+                        <li className="select-none hover:text-clr-hover">
+                            <Link to={'/myCourses'}>My Courses</Link>
+                        </li>
+                    )}
                     <li>
                         <button
                             onClick={toggleTheme}

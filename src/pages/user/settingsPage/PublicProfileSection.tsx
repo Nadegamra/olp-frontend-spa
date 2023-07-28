@@ -12,7 +12,12 @@ interface Props {
 }
 
 function PublicProfileSection() {
-    const { handleSubmit, register, reset } = useForm<Props>()
+    const {
+        handleSubmit,
+        register,
+        reset,
+        formState: { errors }
+    } = useForm<Props>()
     const user = useAppSelector((state) => state.auth.user)
 
     useEffect(() => {
@@ -50,6 +55,7 @@ function PublicProfileSection() {
                         disabled={isLoading}
                         type="text"
                         {...register('username', { required: true })}
+                        error={errors.username && 'Field is required'}
                     />
                 </fieldset>
                 <div className="pt-5">

@@ -54,8 +54,8 @@ function EmailSection() {
                         text="New Email"
                         type="email"
                         {...register('newEmail', { required: true })}
+                        error={errors.newEmail && 'Field is required'}
                     />
-                    <p className="text-clr-error h-6">{errors.newEmail && 'Field is required'}</p>
                 </fieldset>
                 <Button disabled={isLoading} key={'save1'} type="submit">
                     Send Confirmation Email
