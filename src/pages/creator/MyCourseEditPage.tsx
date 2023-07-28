@@ -3,6 +3,9 @@ import { useGetUserCourseQuery } from '../../features/api/ApiSliceCourses'
 import Sidebar, { SidebarSection } from '../../components/layout/Sidebar'
 import DescriptionSection from './myCourseEditPage/DescriptionSection'
 import { CourseResponseOwner } from '../../dtos/Course'
+import PricingSection from './myCourseEditPage/PricingSection'
+import CertificatesSection from './myCourseEditPage/CertificatesSection'
+import SchedulingSection from './myCourseEditPage/SchedulingSection'
 
 function MyCourseEditPage() {
     const { id, section } = useParams()
@@ -46,11 +49,11 @@ function MyCourseEditPage() {
             case 'description':
                 return <DescriptionSection data={data} />
             case 'pricing':
-                return <section>Pricing</section> //Price
+                return <PricingSection data={data} />
             case 'certificates':
-                return <section>Certificates</section> //GrantsCert,CertPrice
+                return <CertificatesSection data={data} />
             case 'scheduling':
-                return <section>Scheduling</section> //LengthInDays, ActivityFormat, ScheduleType
+                return <SchedulingSection data={data} />
             case 'skills':
                 return <section>Skills</section> //Difficulty, Requirements, GainedSkills
             case 'language':

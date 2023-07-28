@@ -1,7 +1,7 @@
 import { RadioNode } from '../../components/forms/RadioArray'
 
 export enum ActivityFormat {
-    Online,
+    Online = 0,
     Live,
     Mixed
 }
