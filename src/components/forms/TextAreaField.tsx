@@ -12,7 +12,7 @@ interface Props {
     [x: string]: any
 }
 
-const TextArea = React.forwardRef<HTMLTextAreaElement, Props>(
+const TextAreaField = React.forwardRef<HTMLTextAreaElement, Props>(
     ({ text, label, placeholder, error, ...rest }, ref) => {
         return (
             <>
@@ -31,4 +31,4 @@ const TextArea = React.forwardRef<HTMLTextAreaElement, Props>(
     }
 )
 
-export default TextArea
+export default TextAreaField

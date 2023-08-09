@@ -23,11 +23,29 @@ export class SkillResponse {
 export class SkillUpdateRequest {
     id: number
     name: string
-    desciption: string
+    description: string
 
-    constructor(id: number, name: string, desciption: string) {
+    constructor(id: number, name: string, description: string) {
         this.id = id
         this.name = name
-        this.desciption = desciption
+        this.description = description
+    }
+}
+
+export class SkillListRequest {
+    skip: number
+    take: number
+
+    constructor(skip: number, take: number) {
+        this.skip = skip
+        this.take = take
+    }
+}
+
+export class SkillCountResponse {
+    count: number
+
+    constructor(count: number) {
+        this.count = count
     }
 }

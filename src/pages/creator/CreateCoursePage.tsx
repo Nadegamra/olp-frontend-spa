@@ -1,6 +1,6 @@
 import { useForm } from 'react-hook-form'
 import FormField from '../../components/forms/InputField'
-import FormTextarea from '../../components/forms/TextArea'
+import FormTextarea from '../../components/forms/TextAreaField'
 import { CourseCreateRequest } from '../../dtos/Course'
 import Button from '../../components/forms/Button'
 import { useCreateCourseMutation } from '../../features/api/ApiSliceCourses'

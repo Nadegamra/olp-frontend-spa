@@ -1,6 +1,6 @@
 import { useForm } from 'react-hook-form'
 import InputField from '../../../components/forms/InputField'
-import TextArea from '../../../components/forms/TextArea'
+import TextAreaField from '../../../components/forms/TextAreaField'
 import Button from '../../../components/forms/Button'
 import { useUpdateCourseMutation } from '../../../features/api/ApiSliceCourses'
 import { CourseResponseOwner, CourseUpdateRequest } from '../../../dtos/Course'
@@ -68,14 +68,14 @@ function DescriptionSection({
                         {...register('name', { required: true })}
                         error={errors.name && 'Field is required'}
                     />
-                    <TextArea
+                    <TextAreaField
                         text="Short Description"
                         label="shortDescription"
                         placeholder="A Short Description of the course"
                         {...register('shortDescription', { required: true })}
                         error={errors.shortDescription && 'Field is required'}
                     />
-                    <TextArea
+                    <TextAreaField
                         text="Detailed Description"
                         label="detailedDescription"
                         placeholder="A Detailed Description of the course"

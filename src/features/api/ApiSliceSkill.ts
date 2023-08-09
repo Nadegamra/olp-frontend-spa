@@ -1,4 +1,10 @@
-import { SkillCreateRequest, SkillResponse, SkillUpdateRequest } from '../../dtos/Skill'
+import {
+    SkillCountResponse,
+    SkillCreateRequest,
+    SkillListRequest,
+    SkillResponse,
+    SkillUpdateRequest
+} from '../../dtos/Skill'
 import apiSlice from './ApiSliceAuth'
 
 const apiSliceSkills = apiSlice.injectEndpoints({
@@ -11,13 +17,15 @@ const apiSliceSkills = apiSlice.injectEndpoints({
                 headers: {
                     'Content-Type': 'application/json'
                 }
-            })
+            }),
+            invalidatesTags: ['SKILL']
         }),
         deleteSkill: builder.mutation<undefined, number>({
             query: (id) => ({
                 url: `https://localhost:44398/skills/${id}`,
                 method: 'DELETE'
-            })
+            }),
+            invalidatesTags: ['SKILL']
         }),
         getSkill: builder.query<SkillResponse, number>({
             query: (id) => ({
@@ -26,22 +34,34 @@ const apiSliceSkills = apiSlice.injectEndpoints({
                 headers: {
                     'Content-Type': 'application/json'
                 }
-            })
+            }),
+            providesTags: ['SKILL']
         }),
-        getSkillList: builder.query<SkillResponse[], undefined>({
-            query: () => ({
-                url: `https://localhost:44398/skills`,
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            })
+        getSkillList: builder.query<SkillResponse[], { skip: number; take: number }>({
+            query: (request) => ({
+                url: `https://localhost:44398/skills?skip=${request.skip}&take=${request.take}`,
+                method: 'GET'
+            }),
+            transformResponse: (response: { items: SkillResponse[] }, meta, arg) => {
+                return response.items
+            },
+            providesTags: ['SKILL']
         }),
         updateSkill: builder.mutation<SkillResponse, SkillUpdateRequest>({
             query: (request) => ({
                 url: `https://localhost:44398/skills/${request.id}`,
                 method: 'PUT',
                 body: JSON.stringify(request),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }),
+            invalidatesTags: ['SKILL']
+        }),
+        getSkillsCount: builder.query<SkillCountResponse, undefined>({
+            query: () => ({
+                url: 'https://localhost:44398/skillsCount',
+                method: 'GET',
                 headers: {
                     'Content-Type': 'application/json'
                 }
@@ -57,5 +77,6 @@ export const {
     useDeleteSkillMutation,
     useGetSkillQuery,
     useGetSkillListQuery,
-    useUpdateSkillMutation
+    useUpdateSkillMutation,
+    useGetSkillsCountQuery
 } = apiSliceSkills
