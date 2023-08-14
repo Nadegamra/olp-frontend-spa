@@ -3,6 +3,7 @@ import {
     SkillCreateRequest,
     SkillListRequest,
     SkillResponse,
+    SkillSuggestion,
     SkillUpdateRequest
 } from '../../dtos/Skill'
 import apiSlice from './ApiSliceAuth'
@@ -66,6 +67,15 @@ const apiSliceSkills = apiSlice.injectEndpoints({
                     'Content-Type': 'application/json'
                 }
             })
+        }),
+        getSkillsSuggestions: builder.query<SkillSuggestion[], string>({
+            query: (name) => ({
+                url:
+                    name === ''
+                        ? `https://localhost:44398/skills/suggestions`
+                        : `https://localhost:44398/skills/suggestions?name=${name}`,
+                method: 'GET'
+            })
         })
     })
 })
@@ -78,5 +88,6 @@ export const {
     useGetSkillQuery,
     useGetSkillListQuery,
     useUpdateSkillMutation,
-    useGetSkillsCountQuery
+    useGetSkillsCountQuery,
+    useGetSkillsSuggestionsQuery
 } = apiSliceSkills

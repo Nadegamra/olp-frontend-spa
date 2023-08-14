@@ -49,7 +49,7 @@ function MyCourseEditPage() {
     const SectionContent = ({ data }: { data: CourseResponseOwner }) => {
         switch (section) {
             case 'description':
-                return <DescriptionSection data={data} />
+                return <DescriptionSection data={data} /> // Image
             case 'pricing':
                 return <PricingSection data={data} />
             case 'certificates':
