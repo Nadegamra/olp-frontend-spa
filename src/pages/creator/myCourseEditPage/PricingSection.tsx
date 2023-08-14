@@ -30,7 +30,7 @@ function PricingSection({ data: { price } }: { data: CourseResponseOwner }) {
     const [updateCourse, { isLoading }] = useUpdateCourseMutation()
     return (
         <section>
-            <h1 className="text-fs-h1">Description</h1>
+            <h1 className="text-fs-h1">Pricing</h1>
             <hr className="border-clr-text1" />
             <form
                 className="mt-5"

@@ -38,7 +38,7 @@ function CertificatesSection({
     const [updateCourse, { isLoading }] = useUpdateCourseMutation()
     return (
         <section>
-            <h1 className="text-fs-h1">Description</h1>
+            <h1 className="text-fs-h1">Certificates</h1>
             <hr className="border-clr-text1" />
             <form
                 className="mt-5"

@@ -22,25 +22,30 @@ const apiSliceCourses = apiSlice.injectEndpoints({
             query: (id) => ({
                 url: `https://localhost:44398/courses/${id}`,
                 method: 'DELETE'
-            })
+            }),
+            invalidatesTags: (result, error, arg) => [{ type: 'COURSE', id: arg }]
         }),
         getCourse: build.query<CourseResponse, number>({
             query: (id) => ({
                 url: `https//localhost:44398/courses/${id}`,
                 method: 'GET'
-            })
+            }),
+            providesTags: (result, error, arg) => [{ type: 'COURSE', id: arg }]
         }),
         getCourseList: build.query<CourseResponse[], undefined>({
             query: () => ({
                 url: `https://localhost:44398/courses`,
                 method: 'GET'
-            })
+            }),
+            providesTags: (result, error, arg) =>
+                result ? [...result.map(({ id }) => ({ type: 'COURSE' as const, id }))] : ['COURSE']
         }),
         getUserCourse: build.query<CourseResponseOwner, number>({
             query: (id) => ({
                 url: `https://localhost:44398/courses/owned/${id}`,
                 method: 'GET'
-            })
+            }),
+            providesTags: (result, error, arg) => [{ type: 'COURSE', id: arg }]
         }),
         getUserCourseList: build.query<CourseResponseOwner[], undefined>({
             query: () => ({
@@ -49,7 +54,9 @@ const apiSliceCourses = apiSlice.injectEndpoints({
             }),
             transformResponse: (response: { items: CourseResponseOwner[] }, meta, arg) => {
                 return response.items
-            }
+            },
+            providesTags: (result, error, arg) =>
+                result ? [...result.map(({ id }) => ({ type: 'COURSE' as const, id }))] : ['COURSE']
         }),
         updateCourse: build.mutation<CourseResponseOwner, { request: CourseUpdateRequest }>({
             query: ({ request }) => ({
@@ -59,7 +66,8 @@ const apiSliceCourses = apiSlice.injectEndpoints({
                 headers: {
                     'Content-Type': 'application/json'
                 }
-            })
+            }),
+            invalidatesTags: (result, error, arg) => [{ type: 'COURSE', id: arg.request.id }]
         })
     })
 })

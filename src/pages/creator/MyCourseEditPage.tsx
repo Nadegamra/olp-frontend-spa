@@ -6,6 +6,8 @@ import { CourseResponseOwner } from '../../dtos/Course'
 import PricingSection from './myCourseEditPage/PricingSection'
 import CertificatesSection from './myCourseEditPage/CertificatesSection'
 import SchedulingSection from './myCourseEditPage/SchedulingSection'
+import SkillsSection from './myCourseEditPage/SkillsSection'
+import LanguageSection from './myCourseEditPage/LanguageSection'
 
 function MyCourseEditPage() {
     const { id, section } = useParams()
@@ -53,11 +55,11 @@ function MyCourseEditPage() {
             case 'certificates':
                 return <CertificatesSection data={data} />
             case 'scheduling':
-                return <SchedulingSection data={data} />
+                return <SchedulingSection data={data} /> // Next course instances (fixed schedules)
             case 'skills':
-                return <section>Skills</section> //Difficulty, Requirements, GainedSkills
+                return <SkillsSection data={data} /> //Difficulty, Requirements, GainedSkills
             case 'language':
-                return <section>Language</section> //Languages, Subtitles
+                return <LanguageSection data={data} /> //Languages, Subtitles
         }
     }
 
