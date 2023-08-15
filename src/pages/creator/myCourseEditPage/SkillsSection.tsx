@@ -1,7 +1,7 @@
 import { useForm } from 'react-hook-form'
 import { CourseResponseOwner, CourseUpdateRequest } from '../../../dtos/Course'
 import { Difficulty, DifficultyRadioInfo } from '../../../dtos/enums/Difficulty'
-import { useUpdateCourseMutation } from '../../../features/api/ApiSliceCourses'
+import { useGetCourseQuery, useUpdateCourseMutation } from '../../../features/api/ApiSliceCourses'
 import { useParams } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
@@ -24,15 +24,18 @@ function SkillsSection({ data: { difficulty } }: { data: CourseResponseOwner }) 
         reset,
         formState: { errors }
     } = useForm<Props>()
-    const { data, isFetching } = useGetSkillsSuggestionsQuery(search)
+    const {
+        data: skills,
+        isFetching: isFetchingSkills,
+        isSuccess: isSuccessSkills
+    } = useGetSkillsSuggestionsQuery(search)
+    const { data } = useGetCourseQuery(parseInt(id ?? '-1'))
+
     useEffect(() => {
         reset({
             difficulty
         })
-        if (!isFetching) {
-            console.log(data)
-        }
-    }, [data, isFetching])
+    }, [skills, isFetchingSkills])
 
     const [updateCourse, { isLoading }] = useUpdateCourseMutation()
     return (
@@ -69,12 +72,29 @@ function SkillsSection({ data: { difficulty } }: { data: CourseResponseOwner }) 
             </form>
             {isLoading && <Spinner />}
             <InputField
-                text={'Search'}
+                text={'Search skills'}
                 label={'Search'}
                 value={search}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearch(e.target.value)}
             />
-            {!isFetching && data?.map((sugg) => <div key={sugg.id}>{sugg.name}</div>)}
+            <div className="block mb-2 font-medium">Requirements</div>
+
+            <div className="block mb-2 font-medium">Gained Skills</div>
+            <div className="border border-clr-text3 rounded-md p-3 grid grid-cols-1 grid-rows-10 gap-3 auto-cols-max">
+                {!isFetchingSkills &&
+                    isSuccessSkills &&
+                    (skills?.length > 0 ? (
+                        skills?.map((sugg) => (
+                            <div className="flex p-3 bg-clr-bg2" key={sugg.id}>
+                                <span>{sugg.name}</span>
+                                <span className="flex-1" />
+                                <span className="material-symbols-outlined">add</span>
+                            </div>
+                        ))
+                    ) : (
+                        <div>No results found</div>
+                    ))}
+            </div>
         </section>
     )
 }
