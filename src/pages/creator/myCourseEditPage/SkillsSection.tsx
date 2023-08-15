@@ -29,7 +29,7 @@ function SkillsSection({ data: { difficulty } }: { data: CourseResponseOwner }) 
         isFetching: isFetchingSkills,
         isSuccess: isSuccessSkills
     } = useGetSkillsSuggestionsQuery(search)
-    const { data } = useGetCourseQuery(parseInt(id ?? '-1'))
+    // const { data: course } = useGetCourseQuery(parseInt(id ?? '-1'))
 
     useEffect(() => {
         reset({
@@ -77,9 +77,6 @@ function SkillsSection({ data: { difficulty } }: { data: CourseResponseOwner }) 
                 value={search}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearch(e.target.value)}
             />
-            <div className="block mb-2 font-medium">Requirements</div>
-
-            <div className="block mb-2 font-medium">Gained Skills</div>
             <div className="border border-clr-text3 rounded-md p-3 grid grid-cols-1 grid-rows-10 gap-3 auto-cols-max">
                 {!isFetchingSkills &&
                     isSuccessSkills &&
@@ -95,6 +92,8 @@ function SkillsSection({ data: { difficulty } }: { data: CourseResponseOwner }) 
                         <div>No results found</div>
                     ))}
             </div>
+            <div className="block mb-2 font-medium">Requirements</div>
+            <div className="block mb-2 font-medium">Gained Skills</div>
         </section>
     )
 }
