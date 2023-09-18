@@ -3,7 +3,7 @@ import { RegisterDTO, UserRole } from '../../dtos/User'
 import Button from '../../components/forms/Button'
 import Spinner from '../../components/forms/Spinner'
 import FormField from '../../components/forms/InputField'
-import CustomRadio from '../../components/forms/Radio'
+import CustomRadio from '../../components/forms/CustomRadio'
 import { useRegisterMutation } from '../../features/api/ApiSliceAuth'
 import { toast } from 'react-toastify'
 
@@ -85,7 +85,7 @@ function RegisterPage() {
                     </div>
                     <div className="flex gap-2">
                         <CustomRadio
-                            label="Creator"
+                            label="Educator"
                             id="role1"
                             helperText="Can create new courses"
                             value={UserRole.Creator}

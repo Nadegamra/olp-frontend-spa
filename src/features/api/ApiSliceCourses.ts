@@ -42,14 +42,14 @@ const apiSliceCourses = apiSlice.injectEndpoints({
         }),
         getUserCourse: build.query<CourseResponseOwner, number>({
             query: (id) => ({
-                url: `https://localhost:44398/courses/owned/${id}`,
+                url: `https://localhost:44398/courses/personal/${id}`,
                 method: 'GET'
             }),
             providesTags: (result, error, arg) => [{ type: 'COURSE', id: arg }]
         }),
         getUserCourseList: build.query<CourseResponseOwner[], undefined>({
             query: () => ({
-                url: `https://localhost:44398/courses/owned`,
+                url: `https://localhost:44398/courses/personal`,
                 method: 'GET'
             }),
             transformResponse: (response: { items: CourseResponseOwner[] }, meta, arg) => {

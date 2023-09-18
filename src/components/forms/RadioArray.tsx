@@ -1,6 +1,6 @@
 import React from 'react'
 import FormError from './FormError'
-import Radio from './Radio'
+import Radio from './CustomRadio'
 
 export interface RadioNode {
     label: string

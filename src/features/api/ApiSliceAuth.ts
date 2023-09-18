@@ -26,7 +26,7 @@ const apiSlice = createApi({
         register: builder.mutation<undefined, RegisterDTO>({
             query: (request: RegisterDTO) => ({
                 url: 'https://localhost:44396/auth/register',
-                body: request,
+                body: JSON.stringify(request),
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
