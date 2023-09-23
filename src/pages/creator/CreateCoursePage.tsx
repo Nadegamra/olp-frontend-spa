@@ -11,6 +11,7 @@ import { ScheduleRadioInfo } from '../../dtos/enums/ScheduleType'
 import { DifficultyRadioInfo } from '../../dtos/enums/Difficulty'
 import { ActivityFormatRadioInfo } from '../../dtos/enums/ActivityFormat'
 import Checkbox from '../../components/forms/Checkbox'
+import { useNavigate } from 'react-router-dom'
 
 function CreateCoursePage() {
     const {
@@ -18,7 +19,12 @@ function CreateCoursePage() {
         handleSubmit,
         watch,
         formState: { errors }
-    } = useForm<CourseCreateRequest>()
+    } = useForm<CourseCreateRequest>({
+        defaultValues: {
+            certificatePrice: 0.0
+        }
+    })
+    const navigate = useNavigate()
 
     const [createCourse, { isLoading }] = useCreateCourseMutation()
 
@@ -31,6 +37,7 @@ function CreateCoursePage() {
                         .unwrap()
                         .then(() => {
                             toast.success('Course created successfully')
+                            navigate('/myCourses')
                         })
                         .catch(() => {
                             toast.error('An error has occured')
