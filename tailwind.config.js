@@ -7,7 +7,6 @@ export default {
     "./src/**/*.{js,jsx,ts,tsx}",
     "./index.html",
     "./node_modules/flowbite-react/**/*.{js,jsx,ts,tsx}",
-    "./node_modules/flowbite/**/*.{js,jsx,ts,tsx}",
   ],
   theme: {
     colors: {

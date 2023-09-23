@@ -1,4 +1,5 @@
 import {
+    GainedSkill,
     GainedSkillCreateRequest,
     GainedSkillDeleteRequest,
     GainedSkillUpdateRequest
@@ -7,6 +8,12 @@ import apiSlice from './ApiSliceAuth'
 
 const apiSliceGainedSkills = apiSlice.injectEndpoints({
     endpoints: (builder) => ({
+        getGainedSkillList: builder.query<GainedSkill[], number>({
+            query: (courseId) => ({
+                url: `https://localhost:44398/courses/${courseId}/gained`,
+                method: 'GET'
+            })
+        }),
         addGainedSkill: builder.mutation<undefined, GainedSkillCreateRequest>({
             query: (request) => ({
                 url: `https://localhost:44398/courses/${request.courseId}/gained`,
@@ -43,6 +50,7 @@ const apiSliceGainedSkills = apiSlice.injectEndpoints({
 export default apiSliceGainedSkills
 
 export const {
+    useGetGainedSkillListQuery,
     useAddGainedSkillMutation,
     useRemoveGainedSkillMutation,
     useUpdateGainedSkillMutation

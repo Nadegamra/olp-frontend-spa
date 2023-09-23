@@ -3,15 +3,15 @@ import { SkillResponse } from './Skill'
 export class CourseRequirement {
     id: number
     courseId: number
-    skillId?: number
-    skill?: SkillResponse
+    skillId: number
+    skill: SkillResponse
     customDescription?: string
 
     constructor(
         id: number,
         courseId: number,
-        skillId?: number,
-        skill?: SkillResponse,
+        skillId: number,
+        skill: SkillResponse,
         customDescription?: string
     ) {
         this.id = id
