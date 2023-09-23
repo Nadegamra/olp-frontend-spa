@@ -10,6 +10,7 @@ import Button from '../../../components/forms/Button'
 import Spinner from '../../../components/forms/Spinner'
 import { useGetSkillsSuggestionsQuery } from '../../../features/api/ApiSliceSkill'
 import InputField from '../../../components/forms/InputField'
+import Modal from '../../../components/layout/Modal'
 
 interface Props {
     difficulty: Difficulty
@@ -71,29 +72,37 @@ function SkillsSection({ data: { difficulty } }: { data: CourseResponseOwner }) 
                 <Button type="submit">Save Changes</Button>
             </form>
             {isLoading && <Spinner />}
-            <InputField
-                text={'Search skills'}
-                label={'Search'}
-                value={search}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearch(e.target.value)}
-            />
-            <div className="border border-clr-text3 rounded-md p-3 grid grid-cols-1 grid-rows-10 gap-3 auto-cols-max">
-                {!isFetchingSkills &&
-                    isSuccessSkills &&
-                    (skills?.length > 0 ? (
-                        skills?.map((sugg) => (
-                            <div className="flex p-3 bg-clr-bg2" key={sugg.id}>
-                                <span>{sugg.name}</span>
-                                <span className="flex-1" />
-                                <span className="material-symbols-outlined">add</span>
-                            </div>
-                        ))
-                    ) : (
-                        <div>No results found</div>
-                    ))}
-            </div>
-            <div className="block mb-2 font-medium">Requirements</div>
             <div className="block mb-2 font-medium">Gained Skills</div>
+            {/* TODO: Display current course skills */}
+            <Modal toggleButtonText="Add Skills">
+                <div className="bg-clr-bg3 p-10 rounded-xl border">
+                    <InputField
+                        text={'Search skills'}
+                        label={'Search'}
+                        value={search}
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                            setSearch(e.target.value)
+                        }
+                    />
+                    <div className="border border-clr-text3 rounded-md p-3 grid grid-cols-1 grid-rows-10 gap-3 auto-cols-max">
+                        {!isFetchingSkills &&
+                            isSuccessSkills &&
+                            (skills?.length > 0 ? (
+                                skills?.map((sugg) => (
+                                    <div className="flex p-3 bg-clr-bg2" key={sugg.id}>
+                                        <span>{sugg.name}</span>
+                                        <span className="flex-1" />
+                                        <span className="material-symbols-outlined">add</span>
+                                    </div>
+                                ))
+                            ) : (
+                                <div>No results found</div>
+                            ))}
+                    </div>
+                </div>
+            </Modal>
+            <div className="block mb-2 font-medium">Requirements</div>
+            {/* TODO: Display current required course skills */}
         </section>
     )
 }

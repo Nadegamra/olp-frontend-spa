@@ -72,8 +72,10 @@ const apiSliceSkills = apiSlice.injectEndpoints({
             query: (name) => ({
                 url:
                     name === ''
-                        ? `https://localhost:44398/skills/suggestions`
-                        : `https://localhost:44398/skills/suggestions?name=${name}`,
+                        ? `https://localhost:44398/skills/suggestions?name=`
+                        : `https://localhost:44398/skills/suggestions?name=${encodeURIComponent(
+                              name
+                          )}`,
                 method: 'GET'
             })
         })
