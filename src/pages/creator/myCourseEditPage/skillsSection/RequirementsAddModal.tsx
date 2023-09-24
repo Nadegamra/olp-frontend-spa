@@ -1,11 +1,12 @@
 import { useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { useGetSkillsSuggestionsQuery } from '../../../../features/api/ApiSliceSkill'
-import { useAddGainedSkillMutation } from '../../../../features/api/ApiSliceGainedSkills'
 import Button from '../../../../components/forms/Button'
 import { Modal } from 'flowbite-react'
 import InputField from '../../../../components/forms/InputField'
 import { GainedSkillCreateRequest } from '../../../../dtos/GainedSkill'
+import { useAddCourseRequirementMutation } from '../../../../features/api/ApiSliceCourseRequirements'
+import { CourseRequirementCreateRequest } from '../../../../dtos/CourseRequirement'
 
 function RequirementsAddModal() {
     const { id } = useParams()
@@ -15,12 +16,12 @@ function RequirementsAddModal() {
         isFetching: isFetchingSkills,
         isSuccess: isSuccessSkills
     } = useGetSkillsSuggestionsQuery(search)
-    const [addGainedSkill] = useAddGainedSkillMutation()
+    const [addRequirement] = useAddCourseRequirementMutation()
     const [openModal, setOpenModal] = useState<string | undefined>()
     const props = { openModal, setOpenModal }
     return (
         <>
-            <Button onClick={() => props.setOpenModal('default')}>Add Skills</Button>
+            <Button onClick={() => props.setOpenModal('default')}>Search Skills</Button>
             <Modal
                 dismissible
                 show={props.openModal === 'default'}
@@ -50,11 +51,11 @@ function RequirementsAddModal() {
                                             <span
                                                 className="material-symbols-outlined cursor-pointer"
                                                 onClick={() => {
-                                                    addGainedSkill(
-                                                        new GainedSkillCreateRequest(
+                                                    addRequirement(
+                                                        new CourseRequirementCreateRequest(
                                                             parseInt(id ?? '-1'),
-                                                            sugg.id,
-                                                            ''
+                                                            '',
+                                                            sugg.id
                                                         )
                                                     )
                                                 }}>

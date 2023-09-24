@@ -5,6 +5,7 @@ import RequirementsList from './skillsSection/RequirementsList'
 import GainedSkillsAddModal from './skillsSection/GainedSkillsAddModal'
 import RequirementsAddModal from './skillsSection/RequirementsAddModal'
 import GainedSkillsAddCustomForm from './skillsSection/GainedSkillAddCustomForm'
+import RequirementsAddCustomForm from './skillsSection/RequirementsAddCustomForm'
 
 function SkillsSection({ data }: { data: CourseResponseOwner }) {
     return (
@@ -20,6 +21,7 @@ function SkillsSection({ data }: { data: CourseResponseOwner }) {
             <h1 className="text-fs-h2 pb-3">Requirements</h1>
             <RequirementsList />
             <RequirementsAddModal />
+            <RequirementsAddCustomForm />
         </section>
     )
 }

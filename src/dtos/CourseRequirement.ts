@@ -5,14 +5,14 @@ export class CourseRequirement {
     courseId: number
     skillId: number
     skill: SkillResponse
-    customDescription?: string
+    customDescription: string
 
     constructor(
         id: number,
         courseId: number,
         skillId: number,
         skill: SkillResponse,
-        customDescription?: string
+        customDescription: string
     ) {
         this.id = id
         this.courseId = courseId
@@ -24,10 +24,10 @@ export class CourseRequirement {
 
 export class CourseRequirementCreateRequest {
     courseId: number
-    skillId: number
+    skillId?: number
     customDescription: string
 
-    constructor(courseId: number, skillId: number, customDescription: string) {
+    constructor(courseId: number, customDescription: string, skillId?: number) {
         this.courseId = courseId
         this.skillId = skillId
         this.customDescription = customDescription
