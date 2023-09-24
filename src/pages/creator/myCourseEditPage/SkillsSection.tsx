@@ -1,7 +1,9 @@
 import { CourseResponseOwner } from '../../../dtos/Course'
 import DifficultyForm from './skillsSection/DifficultyForm'
-import CourseGainedSkillsList from './skillsSection/CourseGainedSkillsList'
-import CourseRequirementsList from './skillsSection/CourseRequirementsList'
+import CourseGainedSkillsList from './skillsSection/GainedSkillsList'
+import RequirementsList from './skillsSection/RequirementsList'
+import GainedSkillsAddModal from './skillsSection/GainedSkillsAddModal'
+import RequirementsAddModal from './skillsSection/RequirementsAddModal'
 
 function SkillsSection({ data }: { data: CourseResponseOwner }) {
     return (
@@ -11,8 +13,11 @@ function SkillsSection({ data }: { data: CourseResponseOwner }) {
             <DifficultyForm data={data} />
             <h1 className="text-fs-h2 pb-3">Gained Skills</h1>
             <CourseGainedSkillsList />
+            <GainedSkillsAddModal />
+            {/* TODO: Prevent duplicates from being addable */}
             <h1 className="text-fs-h2 pb-3">Requirements</h1>
-            <CourseRequirementsList />
+            <RequirementsList />
+            <RequirementsAddModal />
         </section>
     )
 }
