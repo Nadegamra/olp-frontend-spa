@@ -20,7 +20,7 @@ function GainedSkillsAddModal() {
     const props = { openModal, setOpenModal }
     return (
         <>
-            <Button onClick={() => props.setOpenModal('default')}>Add Skills</Button>
+            <Button onClick={() => props.setOpenModal('default')}>Search skills</Button>
             <Modal
                 dismissible
                 show={props.openModal === 'default'}
@@ -53,8 +53,8 @@ function GainedSkillsAddModal() {
                                                     addGainedSkill(
                                                         new GainedSkillCreateRequest(
                                                             parseInt(id ?? '-1'),
-                                                            sugg.id,
-                                                            ''
+                                                            '',
+                                                            sugg.id
                                                         )
                                                     )
                                                 }}>

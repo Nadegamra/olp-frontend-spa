@@ -4,6 +4,7 @@ import CourseGainedSkillsList from './skillsSection/GainedSkillsList'
 import RequirementsList from './skillsSection/RequirementsList'
 import GainedSkillsAddModal from './skillsSection/GainedSkillsAddModal'
 import RequirementsAddModal from './skillsSection/RequirementsAddModal'
+import GainedSkillsAddCustomForm from './skillsSection/GainedSkillAddCustomForm'
 
 function SkillsSection({ data }: { data: CourseResponseOwner }) {
     return (
@@ -14,6 +15,7 @@ function SkillsSection({ data }: { data: CourseResponseOwner }) {
             <h1 className="text-fs-h2 pb-3">Gained Skills</h1>
             <CourseGainedSkillsList />
             <GainedSkillsAddModal />
+            <GainedSkillsAddCustomForm />
             {/* TODO: Prevent duplicates from being addable */}
             <h1 className="text-fs-h2 pb-3">Requirements</h1>
             <RequirementsList />

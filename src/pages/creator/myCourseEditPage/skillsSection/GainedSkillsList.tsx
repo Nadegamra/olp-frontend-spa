@@ -1,12 +1,17 @@
 import { useParams } from 'react-router-dom'
-import { useGetGainedSkillListQuery } from '../../../../features/api/ApiSliceGainedSkills'
+import {
+    useGetGainedSkillListQuery,
+    useRemoveGainedSkillMutation
+} from '../../../../features/api/ApiSliceGainedSkills'
+import { GainedSkillDeleteRequest } from '../../../../dtos/GainedSkill'
+import GainedSkillEditCustomForm from './GainedSkillEditCustomForm'
 
 function CourseGainedSkillsList() {
     const { id } = useParams()
     const { isSuccess: isSuccessGained, data: gainedSkills } = useGetGainedSkillListQuery(
         parseInt(id ?? '-1')
     )
-
+    const [removeGainedSkill] = useRemoveGainedSkillMutation()
     return (
         <>
             <div className="border p-5 rounded-lg mb-5 grid grid-cols-1 gap-2">
@@ -14,10 +19,22 @@ function CourseGainedSkillsList() {
                     gainedSkills.length > 0 &&
                     gainedSkills.map((skill) => (
                         <div key={skill.id} className="flex p-3 bg-clr-bg2 ">
-                            <span>{skill.skill.name}</span>
+                            <span>
+                                {skill.skill !== null ? skill.skill.name : skill.customDescription}
+                            </span>
                             <span className="flex-1" />
-                            <span className="material-symbols-outlined pr-3">edit</span>
-                            <span className="material-symbols-outlined">delete</span>
+                            {skill.customDescription !== '' && (
+                                <GainedSkillEditCustomForm gainedSkill={skill} />
+                            )}
+                            <span
+                                className="material-symbols-outlined cursor-pointer"
+                                onClick={() =>
+                                    removeGainedSkill(
+                                        new GainedSkillDeleteRequest(skill.courseId, skill.id)
+                                    )
+                                }>
+                                delete
+                            </span>
                         </div>
                     ))) || <div>Nothing here</div>}
             </div>

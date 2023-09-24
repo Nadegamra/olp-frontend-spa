@@ -38,10 +38,10 @@ export class GainedSkillResponse {
 
 export class GainedSkillCreateRequest {
     courseId: number
-    skillId: number
+    skillId?: number
     customDescription: string
 
-    constructor(courseId: number, skillId: number, customDescription: string) {
+    constructor(courseId: number, customDescription: string, skillId?: number) {
         this.courseId = courseId
         this.skillId = skillId
         this.customDescription = customDescription
