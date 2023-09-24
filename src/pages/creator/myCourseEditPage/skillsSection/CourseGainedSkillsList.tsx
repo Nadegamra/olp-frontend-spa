@@ -8,6 +8,7 @@ import InputField from '../../../../components/forms/InputField'
 import { useState } from 'react'
 import { useGetSkillsSuggestionsQuery } from '../../../../features/api/ApiSliceSkill'
 import { GainedSkillCreateRequest } from '../../../../dtos/GainedSkill'
+import 'flowbite'
 
 function CourseGainedSkillsList() {
     const { id } = useParams()
@@ -32,7 +33,7 @@ function CourseGainedSkillsList() {
                         </div>
                     ))) || <div>Nothing here</div>}
             </div>
-            <Modal toggleButtonText="Add Skills">
+            <Modal id="gainedSkillsModal" toggleButtonText="Add Skills">
                 <div className="bg-clr-bg3 p-10 rounded-xl border w-max">
                     <div className="border p-5 rounded-lg mb-5 w-[500px] h-[200px]">
                         {isSuccessGained &&

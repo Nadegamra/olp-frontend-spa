@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import InputField from '../../../../components/forms/InputField'
 import Modal from '../../../../components/layout/Modal'
-import { useGetGainedSkillListQuery } from '../../../../features/api/ApiSliceGainedSkills'
 import { useGetSkillsSuggestionsQuery } from '../../../../features/api/ApiSliceSkill'
 import { useParams } from 'react-router-dom'
 import {
@@ -9,6 +8,7 @@ import {
     useGetCourseRequirementListQuery
 } from '../../../../features/api/ApiSliceCourseRequirements'
 import { CourseRequirementCreateRequest } from '../../../../dtos/CourseRequirement'
+import 'flowbite'
 
 function CourseRequirementsList() {
     const { id } = useParams()
@@ -32,7 +32,7 @@ function CourseRequirementsList() {
                         </div>
                     ))) || <div>Nothing here</div>}
             </div>
-            <Modal toggleButtonText="Add Skills">
+            <Modal id={'requirementsModal'} toggleButtonText="Add Required Skills">
                 <div className="bg-clr-bg3 p-10 rounded-xl border w-max">
                     <div className="border p-5 rounded-lg mb-5 w-[500px] h-[200px]">
                         {isSuccessRequirements &&
