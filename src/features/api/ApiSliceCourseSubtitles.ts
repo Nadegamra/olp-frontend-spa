@@ -1,4 +1,8 @@
-import { CourseSubtitleCreateRequest, CourseSubtitleDeleteRequest } from '../../dtos/CourseSubtitle'
+import {
+    CourseSubtitle,
+    CourseSubtitleCreateRequest,
+    CourseSubtitleDeleteRequest
+} from '../../dtos/CourseSubtitle'
 import apiSlice from './ApiSliceAuth'
 
 const apiSliceCourseSubtitles = apiSlice.injectEndpoints({
@@ -22,11 +26,20 @@ const apiSliceCourseSubtitles = apiSlice.injectEndpoints({
                     'Content-Type': 'application/json'
                 }
             })
+        }),
+        getCourseSubtitleList: builder.query<CourseSubtitle[], number>({
+            query: (courseId) => ({
+                url: `https://localhost:44398/courses/${courseId}/subtitles`,
+                method: 'GET'
+            })
         })
     })
 })
 
 export default apiSliceCourseSubtitles
 
-export const { useAddCourseSubtitleMutation, useRemoveCourseSubtitleMutation } =
-    apiSliceCourseSubtitles
+export const {
+    useAddCourseSubtitleMutation,
+    useRemoveCourseSubtitleMutation,
+    useGetCourseSubtitleListQuery
+} = apiSliceCourseSubtitles

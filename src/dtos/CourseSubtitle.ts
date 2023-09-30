@@ -1,24 +1,26 @@
-import { Language } from './enums/Language'
+import { Language } from './Language'
 
 export class CourseSubtitle {
     id: number
     courseId: number
+    languageId: number
     language: Language
 
-    constructor(id: number, courseId: number, language: Language) {
+    constructor(id: number, courseId: number, languageId: number, language: Language) {
         this.id = id
         this.courseId = courseId
+        this.languageId = languageId
         this.language = language
     }
 }
 
 export class CourseSubtitleCreateRequest {
     courseId: number
-    language: Language
+    languageId: number
 
-    constructor(courseId: number, language: Language) {
+    constructor(courseId: number, languageId: number) {
         this.courseId = courseId
-        this.language = language
+        this.languageId = languageId
     }
 }
 

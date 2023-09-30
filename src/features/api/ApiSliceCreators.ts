@@ -6,7 +6,7 @@ const apiSliceCreators = apiSlice.injectEndpoints({
     endpoints: (builder) => ({
         updateCreator: builder.mutation<undefined, CreatorUpdateRequest>({
             query: (request) => ({
-                url: `https//localhost:44398/creator`,
+                url: `https://localhost:44398/creator`,
                 method: 'PUT',
                 body: JSON.stringify(request),
                 headers: {
