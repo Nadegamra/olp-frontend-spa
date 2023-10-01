@@ -10,11 +10,11 @@ function LanguageSection({ data }: { data: CourseResponseOwner }) {
         <section>
             <h1 className="text-fs-h1">Languages</h1>
             <hr className="border-clr-text1" />
-            <h2 className="pt-5">Language</h2>
+            <h2 className="text-fs-h2 pb-2 pt-5">Language</h2>
             <LanguagesList />
             <LanguagesAddModal />
             <SelectPrimaryLanguageForm />
-            <h2>Subtitles</h2>
+            <h2 className="text-fs-h2 pb-2">Subtitles</h2>
             <SubtitlesList />
             <SubtitlesAddModal />
         </section>
