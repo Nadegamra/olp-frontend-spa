@@ -5,10 +5,12 @@ import PasswordSection from './settingsPage/PasswordSection'
 import EmailSection from './settingsPage/EmailSection'
 import AppearanceSection from './settingsPage/AppearanceSection'
 import AccountSection from './settingsPage/AccountSection'
+import EducatorSection from './settingsPage/EducatorSection'
+import { useAppSelector } from '../../app/hooks'
 
 function SettingsPage() {
     const { section } = useParams()
-
+    const { role } = useAppSelector((state) => state.auth)
     const sections: SidebarSection[] = [
         {
             name: 'Public profile',
@@ -36,6 +38,13 @@ function SettingsPage() {
             icon: 'person'
         }
     ]
+    if (role === 'CREATOR') {
+        sections.push({
+            name: 'Educator Profile',
+            sectionName: 'educatorProfile',
+            icon: 'school'
+        })
+    }
 
     const SectionContent = () => {
         switch (section) {
@@ -49,6 +58,8 @@ function SettingsPage() {
                 return <AppearanceSection />
             case 'account':
                 return <AccountSection />
+            case 'educatorProfile':
+                return <EducatorSection />
         }
     }
 

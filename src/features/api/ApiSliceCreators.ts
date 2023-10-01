@@ -1,4 +1,4 @@
-import { CreatorUpdateRequest } from '../../dtos/Creator'
+import { CreatorResponse, CreatorUpdateRequest } from '../../dtos/Creator'
 import { User } from '../../dtos/User'
 import apiSlice from './ApiSliceAuth'
 
@@ -15,9 +15,9 @@ const apiSliceCreators = apiSlice.injectEndpoints({
             }),
             invalidatesTags: ['CREATOR']
         }),
-        getCreatorProfile: builder.query<User, undefined>({
+        getCreatorProfile: builder.query<CreatorResponse, undefined>({
             query: () => ({
-                url: `https://localhost:44398`,
+                url: `https://localhost:44398/creator`,
                 method: 'GET'
             }),
             providesTags: ['CREATOR']
