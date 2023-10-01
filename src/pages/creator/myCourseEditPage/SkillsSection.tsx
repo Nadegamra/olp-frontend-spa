@@ -13,12 +13,12 @@ function SkillsSection({ data }: { data: CourseResponseOwner }) {
             <h1 className="text-fs-h1">Skills</h1>
             <hr className="border-clr-text1" />
             <DifficultyForm data={data} />
-            <h1 className="text-fs-h2 pb-3">Gained Skills</h1>
+            <h2 className="text-fs-h2 pb-3">Gained Skills</h2>
             <CourseGainedSkillsList />
             <GainedSkillsAddModal />
             <GainedSkillsAddCustomForm />
             {/* TODO: Prevent duplicates from being addable */}
-            <h1 className="text-fs-h2 pb-3">Requirements</h1>
+            <h2 className="text-fs-h2 pb-3">Requirements</h2>
             <RequirementsList />
             <RequirementsAddModal />
             <RequirementsAddCustomForm />

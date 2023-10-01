@@ -7,10 +7,8 @@ const apiSliceImages = apiSlice.injectEndpoints({
             query: (request) => ({
                 url: `https://localhost:44398/courses/${request.courseId}/image`,
                 method: 'PUT',
-                body: JSON.stringify(request),
-                headers: {
-                    'Content-Type': 'application/json'
-                }
+                body: request.image,
+                formData: true
             })
         })
     })

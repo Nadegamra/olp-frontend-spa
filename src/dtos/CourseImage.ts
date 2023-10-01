@@ -1,8 +1,8 @@
 export class SetCourseImageRequest {
     courseId: number
-    image: File
+    image: FormData
 
-    constructor(courseId: number, image: File) {
+    constructor(courseId: number, image: FormData) {
         this.courseId = courseId
         this.image = image
     }
