@@ -16,13 +16,15 @@ const apiSliceCourseLanguages = apiSlice.injectEndpoints({
                 headers: {
                     'Content-Type': 'application/json'
                 }
-            })
+            }),
+            invalidatesTags: (result, error, arg) => [{ type: 'COURSE_LANGUAGE', id: arg.courseId }]
         }),
         removeCourseLanguage: builder.mutation<undefined, CourseLanguageDeleteRequest>({
             query: (request) => ({
                 url: `https://localhost:44398/courses/${request.courseId}/languages/${request.id}`,
                 method: 'DELETE'
-            })
+            }),
+            invalidatesTags: (result, error, arg) => [{ type: 'COURSE_LANGUAGE', id: arg.courseId }]
         }),
         setCoursePrimaryLanguage: builder.mutation<undefined, CourseLanguageSetPrimaryRequest>({
             query: (request) => ({
@@ -32,13 +34,15 @@ const apiSliceCourseLanguages = apiSlice.injectEndpoints({
                 headers: {
                     'Content-Type': 'application/json'
                 }
-            })
+            }),
+            invalidatesTags: (result, error, arg) => [{ type: 'COURSE_LANGUAGE', id: arg.courseId }]
         }),
         getCourseLanguageList: builder.query<CourseLanguage[], number>({
             query: (courseId) => ({
                 url: `https://localhost:44398/courses/${courseId}/languages`,
                 method: 'GET'
-            })
+            }),
+            providesTags: (result, error, arg) => [{ type: 'COURSE_LANGUAGE', id: arg }]
         })
     })
 })

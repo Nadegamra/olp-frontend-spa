@@ -26,7 +26,7 @@ const apiSliceLanguages = apiSlice.injectEndpoints({
                 url: `https://localhost:44398/languages`,
                 method: 'GET'
             }),
-            providesTags: ['SKILL']
+            providesTags: ['LANGUAGE']
         }),
         getLanguagesSuggestions: builder.query<Language[], string>({
             query: (name) => ({
@@ -37,7 +37,8 @@ const apiSliceLanguages = apiSlice.injectEndpoints({
                               name
                           )}`,
                 method: 'GET'
-            })
+            }),
+            providesTags: ['LANGUAGE']
         })
     })
 })

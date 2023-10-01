@@ -9,7 +9,8 @@ const apiSliceImages = apiSlice.injectEndpoints({
                 method: 'PUT',
                 body: request.image,
                 formData: true
-            })
+            }),
+            invalidatesTags: (result, error, arg) => [{ type: 'IMAGE', id: arg.courseId }]
         })
     })
 })

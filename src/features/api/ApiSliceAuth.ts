@@ -5,7 +5,18 @@ import baseQueryWithReauth from './baseQueryWithReauth'
 const apiSlice = createApi({
     reducerPath: 'api',
     baseQuery: baseQueryWithReauth,
-    tagTypes: ['PROFILE', 'SKILL', 'COURSE', 'LANGUAGE'],
+    tagTypes: [
+        'PROFILE',
+        'CREATOR',
+        'SKILL',
+        'COURSE',
+        'LANGUAGE',
+        'IMAGE',
+        'COURSE_LANGUAGE',
+        'COURSE_SUBTITLE',
+        'REQUIREMENT',
+        'GAINED_SKILL'
+    ],
     refetchOnFocus: true,
     endpoints: (builder) => ({
         profile: builder.query<User, undefined>({

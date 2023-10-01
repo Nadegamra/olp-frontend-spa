@@ -12,17 +12,19 @@ const apiSliceCreators = apiSlice.injectEndpoints({
                 headers: {
                     'Content-Type': 'application/json'
                 }
-            })
+            }),
+            invalidatesTags: ['CREATOR']
         }),
-        getCreatorProfile: builder.mutation<User, undefined>({
+        getCreatorProfile: builder.query<User, undefined>({
             query: () => ({
                 url: `https://localhost:44398`,
                 method: 'GET'
-            })
+            }),
+            providesTags: ['CREATOR']
         })
     })
 })
 
 export default apiSliceCreators
 
-export const { useUpdateCreatorMutation, useGetCreatorProfileMutation } = apiSliceCreators
+export const { useUpdateCreatorMutation, useGetCreatorProfileQuery } = apiSliceCreators
