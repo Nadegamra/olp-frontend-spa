@@ -32,8 +32,8 @@ const apiSliceLanguages = apiSlice.injectEndpoints({
             query: (name) => ({
                 url:
                     name === ''
-                        ? `https://localhost:44398/skills/suggestions?name=`
-                        : `https://localhost:44398/skills/suggestions?name=${encodeURIComponent(
+                        ? `https://localhost:44398/languages/suggestions?name=`
+                        : `https://localhost:44398/languages/suggestions?name=${encodeURIComponent(
                               name
                           )}`,
                 method: 'GET'

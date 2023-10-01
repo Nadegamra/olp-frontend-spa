@@ -3,27 +3,30 @@ import { useParams } from 'react-router-dom'
 import Button from '../../../../components/forms/Button'
 import { Modal } from 'flowbite-react'
 import InputField from '../../../../components/forms/InputField'
+import { useGetLanguagesSuggestionsQuery } from '../../../../features/api/ApiSliceLanguages'
+import { useAddCourseLanguageMutation } from '../../../../features/api/ApiSliceCourseLanguages'
+import { CourseLanguageCreateRequest } from '../../../../dtos/CourseLanguage'
 
-function LanguageManagementForm() {
+function LanguagesAddModal() {
     const { id } = useParams()
     const [search, setSearch] = useState<string>('')
     const {
         data: skills,
-        isFetching: isFetchingSkills,
-        isSuccess: isSuccessSkills
-    } = useGetSkillsSuggestionsQuery(search)
-    const [addGainedSkill] = useAddGainedSkillMutation()
+        isFetching: isFetchingLanguages,
+        isSuccess: isSuccessLanguages
+    } = useGetLanguagesSuggestionsQuery(search)
+    const [addLanguage] = useAddCourseLanguageMutation()
     const [openModal, setOpenModal] = useState<string | undefined>()
     const props = { openModal, setOpenModal }
     return (
         <>
-            <Button onClick={() => props.setOpenModal('default')}>Search skills</Button>
+            <Button onClick={() => props.setOpenModal('default')}>Search Languages</Button>
             <Modal
                 dismissible
                 show={props.openModal === 'default'}
                 onClose={() => props.setOpenModal(undefined)}>
                 <Modal.Header className="bg-clr-bg3 border rounded-t-xl">
-                    <span className="text-white">Add Skills gained during the course</span>
+                    <span className="text-white">Add Course Languages</span>
                 </Modal.Header>
                 <Modal.Body className="bg-clr-bg3 text-white border rounded-b-xl">
                     <div className="p-10 w-full">
@@ -37,8 +40,8 @@ function LanguageManagementForm() {
                             }
                         />
                         <div className="border border-clr-text3 rounded-md p-3 grid grid-cols-3 grid-rows-10 gap-3 auto-cols-max">
-                            {!isFetchingSkills &&
-                                isSuccessSkills &&
+                            {!isFetchingLanguages &&
+                                isSuccessLanguages &&
                                 (skills?.length > 0 ? (
                                     skills?.map((sugg) => (
                                         <div className="flex p-3 bg-clr-bg2" key={sugg.id}>
@@ -47,10 +50,9 @@ function LanguageManagementForm() {
                                             <span
                                                 className="material-symbols-outlined cursor-pointer"
                                                 onClick={() => {
-                                                    addGainedSkill(
-                                                        new GainedSkillCreateRequest(
+                                                    addLanguage(
+                                                        new CourseLanguageCreateRequest(
                                                             parseInt(id ?? '-1'),
-                                                            '',
                                                             sugg.id
                                                         )
                                                     )
@@ -70,4 +72,4 @@ function LanguageManagementForm() {
     )
 }
 
-export default LanguageManagementForm
+export default LanguagesAddModal

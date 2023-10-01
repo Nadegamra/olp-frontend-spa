@@ -1,4 +1,5 @@
 import {
+    CourseLanguage,
     CourseLanguageCreateRequest,
     CourseLanguageDeleteRequest,
     CourseLanguageSetPrimaryRequest
@@ -26,7 +27,17 @@ const apiSliceCourseLanguages = apiSlice.injectEndpoints({
         setCoursePrimaryLanguage: builder.mutation<undefined, CourseLanguageSetPrimaryRequest>({
             query: (request) => ({
                 url: `https://localhost:44398/courses/${request.courseId}/languages/${request.id}`,
-                method: 'PUT'
+                method: 'PUT',
+                body: JSON.stringify(request),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+        }),
+        getCourseLanguageList: builder.query<CourseLanguage[], number>({
+            query: (courseId) => ({
+                url: `https://localhost:44398/courses/${courseId}/languages`,
+                method: 'GET'
             })
         })
     })
@@ -34,5 +45,9 @@ const apiSliceCourseLanguages = apiSlice.injectEndpoints({
 
 export default apiSliceCourseLanguages
 
-export const { useAddCourseLanguageMutation, useRemoveCourseLanguageMutation } =
-    apiSliceCourseLanguages
+export const {
+    useAddCourseLanguageMutation,
+    useRemoveCourseLanguageMutation,
+    useSetCoursePrimaryLanguageMutation,
+    useGetCourseLanguageListQuery
+} = apiSliceCourseLanguages
