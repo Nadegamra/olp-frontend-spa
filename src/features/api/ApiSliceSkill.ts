@@ -39,8 +39,8 @@ const apiSliceSkills = apiSlice.injectEndpoints({
             providesTags: ['SKILL']
         }),
         getSkillList: builder.query<SkillResponse[], { skip: number; take: number }>({
-            query: (request) => ({
-                url: `https://localhost:44398/skills?skip=${request.skip}&take=${request.take}`,
+            query: ({ skip, take }) => ({
+                url: `https://localhost:44398/skills?skip=${skip}&take=${take}`,
                 method: 'GET'
             }),
             transformResponse: (response: { items: SkillResponse[] }, meta, arg) => {
@@ -61,12 +61,13 @@ const apiSliceSkills = apiSlice.injectEndpoints({
         }),
         getSkillsCount: builder.query<SkillCountResponse, undefined>({
             query: () => ({
-                url: 'https://localhost:44398/skillsCount',
+                url: 'https://localhost:44398/skills/count',
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json'
                 }
-            })
+            }),
+            providesTags: ['SKILL']
         }),
         getSkillsSuggestions: builder.query<SkillSuggestion[], string>({
             query: (name) => ({
@@ -77,7 +78,8 @@ const apiSliceSkills = apiSlice.injectEndpoints({
                               name
                           )}`,
                 method: 'GET'
-            })
+            }),
+            providesTags: ['SKILL']
         })
     })
 })

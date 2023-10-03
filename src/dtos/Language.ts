@@ -31,3 +31,11 @@ export class RemoveLanguageRequest {
         this.id = id
     }
 }
+
+export class LanguageCountResponse {
+    count: number
+
+    constructor(count: number) {
+        this.count = count
+    }
+}

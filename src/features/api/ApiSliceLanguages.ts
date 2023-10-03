@@ -1,4 +1,4 @@
-import { AddLanguageRequest, Language } from '../../dtos/Language'
+import { AddLanguageRequest, Language, LanguageCountResponse } from '../../dtos/Language'
 import apiSlice from './ApiSliceAuth'
 
 const apiSliceLanguages = apiSlice.injectEndpoints({
@@ -21,12 +21,21 @@ const apiSliceLanguages = apiSlice.injectEndpoints({
             }),
             invalidatesTags: ['LANGUAGE']
         }),
-        getLanguageList: builder.query<Language[], undefined>({
-            query: (request) => ({
-                url: `https://localhost:44398/languages`,
+        getLanguageList: builder.query<Language[], { skip: number; take: number }>({
+            query: ({ skip, take }) => ({
+                url: `https://localhost:44398/languages?skip=${skip}&take=${take}`,
                 method: 'GET'
             }),
             providesTags: ['LANGUAGE']
+        }),
+        getLanguageCount: builder.query<LanguageCountResponse, undefined>({
+            query: () => ({
+                url: 'https://localhost:44398/languages/count',
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
         }),
         getLanguagesSuggestions: builder.query<Language[], string>({
             query: (name) => ({
@@ -49,5 +58,6 @@ export const {
     useCreateLanguageMutation,
     useDeleteLanguageMutation,
     useGetLanguageListQuery,
+    useGetLanguageCountQuery,
     useGetLanguagesSuggestionsQuery
 } = apiSliceLanguages

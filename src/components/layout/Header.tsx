@@ -51,6 +51,11 @@ function Header() {
                             <Link to={'/skills'}>Skills</Link>
                         </li>
                     )}
+                    {user !== undefined && role === 'ADMIN' && (
+                        <li className="select-none hover:text-clr-hover">
+                            <Link to={'/languages'}>Languages</Link>
+                        </li>
+                    )}
                     <li>
                         <button
                             onClick={toggleTheme}

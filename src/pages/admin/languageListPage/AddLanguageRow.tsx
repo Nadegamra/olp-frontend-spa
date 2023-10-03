@@ -1,11 +1,10 @@
 import { useState } from 'react'
-import { useCreateSkillMutation } from '../../../features/api/ApiSliceSkill'
-import { SkillCreateRequest } from '../../../dtos/Skill'
+import { useCreateLanguageMutation } from '../../../features/api/ApiSliceLanguages'
+import { AddLanguageRequest } from '../../../dtos/Language'
 
-function AddSkillRow() {
+function AddLanguageRow() {
     const [name, setName] = useState<string>('')
-    const [description, setDescription] = useState<string>('')
-    const [createSkill] = useCreateSkillMutation()
+    const [addLanguage] = useCreateLanguageMutation()
     return (
         <tr className="bg-clr-bg1 border-b border-clr-border">
             <td className="px-6 py-3 text-clr-text1"> </td>
@@ -17,23 +16,15 @@ function AddSkillRow() {
                 />
             </td>
             <td className="px-6 py-3 text-clr-text1">
-                <textarea
-                    className="bg-clr-bg1 border text-clr-text1 border-clr-border rounded-lg focus:ring-blue-500 focus:border-blue-500 block sm:max-w-full sm:w-full p-2.5"
-                    value={description}
-                    onChange={(e) => setDescription(e.target.value)}
-                />
-            </td>
-            <td className="px-6 py-3 text-clr-text1">
                 <span
                     onClick={() => {
-                        createSkill(new SkillCreateRequest(name ?? '', description ?? ''))
+                        addLanguage(new AddLanguageRequest(name ?? ''))
                             .unwrap()
                             .finally(() => {
                                 setName('')
-                                setDescription('')
                             })
                     }}
-                    className="material-symbols-outlined m-auto pt-2 text-fs-icon-lg">
+                    className="material-symbols-outlined m-auto pt-2 text-fs-icon-lg cursor-pointer">
                     add
                 </span>
             </td>
@@ -41,4 +32,4 @@ function AddSkillRow() {
     )
 }
 
-export default AddSkillRow
+export default AddLanguageRow

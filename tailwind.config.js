@@ -34,6 +34,7 @@ export default {
       "fs-h2": "18px",
       "fs-h3": "14px",
       "fs-h4": "12px",
+      "fs-icon-lg": "32px",
     },
   },
 };
