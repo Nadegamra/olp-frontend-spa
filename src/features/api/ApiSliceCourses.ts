@@ -29,7 +29,7 @@ const apiSliceCourses = apiSlice.injectEndpoints({
         }),
         getCourse: build.query<CourseResponse, number>({
             query: (id) => ({
-                url: `https//localhost:44398/courses/${id}`,
+                url: `https://localhost:44398/courses/${id}`,
                 method: 'GET'
             }),
             providesTags: (result, error, arg) => [{ type: 'COURSE', id: arg }]

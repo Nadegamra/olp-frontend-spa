@@ -33,7 +33,7 @@ function CoursesPage() {
                             <Link
                                 key={course.id}
                                 className="flex flex-col p-2 border rounded-2xl text-center align-middle w-[300px] items-center content-center"
-                                to={`/myCourses/${course.id}/description`}>
+                                to={`/courses/${course.id}`}>
                                 <img
                                     className="rounded-2xl"
                                     src={`https://localhost:44398/courses/${course.id}/image`}

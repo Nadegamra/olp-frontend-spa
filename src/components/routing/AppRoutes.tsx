@@ -16,12 +16,14 @@ import MyCourseEditPage from '../../pages/creator/MyCourseEditPage'
 import SkillsListPage from '../../pages/admin/SkillsListPage'
 import LanguageListPage from '../../pages/admin/LanguageListPage'
 import CoursesPage from '../../pages/public/CoursesPage'
+import CoursePage from '../../pages/public/CoursePage'
 
 function AppRoutes() {
     const { user, role } = useAppSelector((state) => state.auth)
     return (
         <Routes>
             <Route path="/" element={<CoursesPage />} />
+            <Route path="/courses/:id" element={<CoursePage />} />
             <Route path="/changeEmail/:token" element={<ChangeEmailPage />} />
             <Route element={<ConditionalRoute condition={user !== undefined} redirect="/" />}>
                 <Route path="/settings" element={<SettingsPage />} />
