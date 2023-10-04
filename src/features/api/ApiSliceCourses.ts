@@ -1,5 +1,6 @@
 import {
     CourseCreateRequest,
+    CourseGetListRequest,
     CourseResponse,
     CourseResponseOwner,
     CourseUpdateRequest
@@ -32,9 +33,9 @@ const apiSliceCourses = apiSlice.injectEndpoints({
             }),
             providesTags: (result, error, arg) => [{ type: 'COURSE', id: arg }]
         }),
-        getCourseList: build.query<CourseResponse[], undefined>({
-            query: () => ({
-                url: `https://localhost:44398/courses`,
+        getCourseList: build.query<CourseResponse[], CourseGetListRequest>({
+            query: (request) => ({
+                url: `https://localhost:44398/courses?phrase=${request.phrase}&skip=${request.skip}&take=${request.take}`,
                 method: 'GET'
             }),
             providesTags: (result, error, arg) =>
@@ -47,9 +48,9 @@ const apiSliceCourses = apiSlice.injectEndpoints({
             }),
             providesTags: (result, error, arg) => [{ type: 'COURSE', id: arg }]
         }),
-        getUserCourseList: build.query<CourseResponseOwner[], undefined>({
-            query: () => ({
-                url: `https://localhost:44398/courses/owned`,
+        getUserCourseList: build.query<CourseResponseOwner[], CourseGetListRequest>({
+            query: (request) => ({
+                url: `https://localhost:44398/courses/owned?phrase=${request.phrase}&skip=${request.skip}&take=${request.take}`,
                 method: 'GET'
             }),
             transformResponse: (response: { items: CourseResponseOwner[] }, meta, arg) => {

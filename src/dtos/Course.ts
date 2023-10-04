@@ -199,3 +199,15 @@ export class CourseUpdateRequest {
         this.isHidden = isHidden
     }
 }
+
+export class CourseGetListRequest {
+    phrase: string
+    skip: number
+    take: number
+
+    constructor(phrase: string = '', skip: number = 0, take: number = 20) {
+        this.phrase = phrase
+        this.skip = skip
+        this.take = take
+    }
+}
