@@ -8,6 +8,7 @@ import CertificatesSection from './myCourseEditPage/CertificatesSection'
 import SchedulingSection from './myCourseEditPage/SchedulingSection'
 import SkillsSection from './myCourseEditPage/SkillsSection'
 import LanguageSection from './myCourseEditPage/LanguageSection'
+import VisibilitySection from './myCourseEditPage/VisibilitySection'
 
 function MyCourseEditPage() {
     const { id, section } = useParams()
@@ -40,16 +41,21 @@ function MyCourseEditPage() {
             icon: 'keyboard_double_arrow_up'
         },
         {
-            name: 'Language',
+            name: 'Languages',
             sectionName: 'language',
             icon: 'language'
+        },
+        {
+            name: 'Visibility',
+            sectionName: 'visibility',
+            icon: 'visibility'
         }
     ]
 
     const SectionContent = ({ data }: { data: CourseResponseOwner }) => {
         switch (section) {
             case 'description':
-                return <DescriptionSection data={data} /> // Image
+                return <DescriptionSection data={data} />
             case 'pricing':
                 return <PricingSection data={data} />
             case 'certificates':
@@ -57,9 +63,11 @@ function MyCourseEditPage() {
             case 'scheduling':
                 return <SchedulingSection data={data} /> // Next course instances (fixed schedules)
             case 'skills':
-                return <SkillsSection data={data} /> //Difficulty, Requirements, GainedSkills
+                return <SkillsSection data={data} />
             case 'language':
-                return <LanguageSection data={data} /> //Languages, Subtitles
+                return <LanguageSection data={data} />
+            case 'visibility':
+                return <VisibilitySection data={data} />
         }
     }
 
@@ -77,8 +85,6 @@ function MyCourseEditPage() {
                     <div className="ml-[-200px] sm:ml-0 p-4 w-full sm:w-[min(800px,50%)]">
                         <SectionContent data={data} />
                     </div>
-                    {/* 
-                    <div>IsHidden: {data.isHidden.toString()}</div> */}
                 </section>
             )
         }

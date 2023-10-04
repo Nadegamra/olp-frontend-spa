@@ -1,4 +1,5 @@
 import {
+    CourseCountGetResponse,
     CourseCreateRequest,
     CourseGetListRequest,
     CourseResponse,
@@ -69,6 +70,18 @@ const apiSliceCourses = apiSlice.injectEndpoints({
                 }
             }),
             invalidatesTags: (result, error, arg) => [{ type: 'COURSE', id: arg.request.id }]
+        }),
+        getCourseCount: build.query<CourseCountGetResponse, CourseGetListRequest>({
+            query: (request) => ({
+                url: `https://localhost:44398/courses/count?phrase=${request.phrase}&skip=${request.skip}&take=${request.take}`,
+                method: 'GET'
+            })
+        }),
+        getUserCourseCount: build.query<CourseCountGetResponse, CourseGetListRequest>({
+            query: (request) => ({
+                url: `https://localhost:44398/courses/owned/count?phrase=${request.phrase}&skip=${request.skip}&take=${request.take}`,
+                method: 'GET'
+            })
         })
     })
 })
@@ -82,5 +95,7 @@ export const {
     useGetCourseListQuery,
     useGetUserCourseQuery,
     useGetUserCourseListQuery,
-    useUpdateCourseMutation
+    useUpdateCourseMutation,
+    useGetCourseCountQuery,
+    useGetUserCourseCountQuery
 } = apiSliceCourses

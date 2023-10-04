@@ -1,13 +1,24 @@
 import { Link } from 'react-router-dom'
-import { useGetUserCourseListQuery } from '../../features/api/ApiSliceCourses'
+import {
+    useGetUserCourseCountQuery,
+    useGetUserCourseListQuery
+} from '../../features/api/ApiSliceCourses'
 import SearchBar from '../../components/layout/SearchBar'
 import { useState } from 'react'
 import { CourseGetListRequest } from '../../dtos/Course'
+import Pagination from '../../components/layout/Pagination'
 
 function MyCoursesPage() {
+    const [from, setFrom] = useState<number>(0)
+    const perPage = 10
+    const to = from + perPage
+
     const [searchPhrase, setSearchPhrase] = useState<string>('')
     const [request, setRequest] = useState<CourseGetListRequest>(new CourseGetListRequest())
+
+    const { data: count } = useGetUserCourseCountQuery(request)
     const { data, isFetching, isError } = useGetUserCourseListQuery(request)
+
     if (!isFetching) {
         if (isError) {
             return <section>An error has occured</section>
@@ -17,7 +28,7 @@ function MyCoursesPage() {
                 <SearchBar
                     phrase={searchPhrase}
                     setPhrase={setSearchPhrase}
-                    onClick={() => setRequest(new CourseGetListRequest(searchPhrase))}
+                    onClick={() => setRequest(new CourseGetListRequest(searchPhrase, from, to))}
                 />
                 <section className="grid auto-cols-[400px] auto-rows-[200px] gap-10 grid-rows-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 p-5">
                     <Link
@@ -40,6 +51,13 @@ function MyCoursesPage() {
                             </Link>
                         ))}
                 </section>
+                <Pagination
+                    from={from}
+                    to={to}
+                    of={count?.count ?? -1}
+                    units="Courses"
+                    setFrom={setFrom}
+                />
             </>
         )
     }

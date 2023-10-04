@@ -211,3 +211,11 @@ export class CourseGetListRequest {
         this.take = take
     }
 }
+
+export class CourseCountGetResponse {
+    count: number
+
+    constructor(count: number) {
+        this.count = count
+    }
+}
