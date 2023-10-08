@@ -9,6 +9,7 @@ import SchedulingSection from './myCourseEditPage/SchedulingSection'
 import SkillsSection from './myCourseEditPage/SkillsSection'
 import LanguageSection from './myCourseEditPage/LanguageSection'
 import VisibilitySection from './myCourseEditPage/VisibilitySection'
+import DeleteSection from './myCourseEditPage/DeleteSection'
 
 function MyCourseEditPage() {
     const { id, section } = useParams()
@@ -49,6 +50,11 @@ function MyCourseEditPage() {
             name: 'Visibility',
             sectionName: 'visibility',
             icon: 'visibility'
+        },
+        {
+            name: 'Course Deletion',
+            sectionName: 'delete',
+            icon: 'delete'
         }
     ]
 
@@ -68,6 +74,8 @@ function MyCourseEditPage() {
                 return <LanguageSection data={data} />
             case 'visibility':
                 return <VisibilitySection data={data} />
+            case 'delete':
+                return <DeleteSection />
         }
     }
 

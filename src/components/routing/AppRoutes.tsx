@@ -1,5 +1,4 @@
 import { Route, Routes } from 'react-router-dom'
-import HomePage from '../../pages/public/HomePage'
 import SettingsPage from '../../pages/user/SettingsPage'
 import ConditionalRoute from './ConditionalRoute'
 import LoginPage from '../../pages/public/LoginPage'

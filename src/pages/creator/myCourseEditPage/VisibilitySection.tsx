@@ -1,5 +1,4 @@
 import { useEffect } from 'react'
-import Checkbox from '../../../components/forms/Checkbox'
 import { useParams } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { CourseResponseOwner, CourseUpdateRequest } from '../../../dtos/Course'

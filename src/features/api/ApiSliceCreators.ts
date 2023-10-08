@@ -21,10 +21,21 @@ const apiSliceCreators = apiSlice.injectEndpoints({
                 method: 'GET'
             }),
             providesTags: ['CREATOR']
+        }),
+        getCreatorProfileAnonymous: builder.query<CreatorResponse, number>({
+            query: (userId) => ({
+                url: `https://localhost:44398/creator/${userId}`,
+                method: 'GET'
+            }),
+            providesTags: (result, error, arg) => [{ type: 'CREATOR', id: arg }]
         })
     })
 })
 
 export default apiSliceCreators
 
-export const { useUpdateCreatorMutation, useGetCreatorProfileQuery } = apiSliceCreators
+export const {
+    useUpdateCreatorMutation,
+    useGetCreatorProfileQuery,
+    useGetCreatorProfileAnonymousQuery
+} = apiSliceCreators
