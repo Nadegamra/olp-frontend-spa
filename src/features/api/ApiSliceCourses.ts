@@ -49,17 +49,6 @@ const apiSliceCourses = apiSlice.injectEndpoints({
             }),
             providesTags: (result, error, arg) => [{ type: 'COURSE', id: arg }]
         }),
-        getUserCourseList: build.query<CourseResponseOwner[], CourseGetListRequest>({
-            query: (request) => ({
-                url: `https://localhost:44398/courses/owned?phrase=${request.phrase}&skip=${request.skip}&take=${request.take}`,
-                method: 'GET'
-            }),
-            transformResponse: (response: { items: CourseResponseOwner[] }, meta, arg) => {
-                return response.items
-            },
-            providesTags: (result, error, arg) =>
-                result ? [...result.map(({ id }) => ({ type: 'COURSE' as const, id }))] : ['COURSE']
-        }),
         updateCourse: build.mutation<CourseResponseOwner, { request: CourseUpdateRequest }>({
             query: ({ request }) => ({
                 url: `https://localhost:44398/courses/${request.id}`,
@@ -76,12 +65,6 @@ const apiSliceCourses = apiSlice.injectEndpoints({
                 url: `https://localhost:44398/courses/count?phrase=${request.phrase}&skip=${request.skip}&take=${request.take}`,
                 method: 'GET'
             })
-        }),
-        getUserCourseCount: build.query<CourseCountGetResponse, CourseGetListRequest>({
-            query: (request) => ({
-                url: `https://localhost:44398/courses/owned/count?phrase=${request.phrase}&skip=${request.skip}&take=${request.take}`,
-                method: 'GET'
-            })
         })
     })
 })
@@ -93,9 +76,6 @@ export const {
     useDeleteCourseMutation,
     useGetCourseQuery,
     useGetCourseListQuery,
-    useGetUserCourseQuery,
-    useGetUserCourseListQuery,
     useUpdateCourseMutation,
-    useGetCourseCountQuery,
-    useGetUserCourseCountQuery
+    useGetCourseCountQuery
 } = apiSliceCourses

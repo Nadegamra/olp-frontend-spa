@@ -1,8 +1,5 @@
 import { Link } from 'react-router-dom'
-import {
-    useGetUserCourseCountQuery,
-    useGetUserCourseListQuery
-} from '../../features/api/ApiSliceCourses'
+import { useGetCourseCountQuery, useGetCourseListQuery } from '../../features/api/ApiSliceCourses'
 import SearchBar from '../../components/layout/SearchBar'
 import { useState } from 'react'
 import { CourseGetListRequest } from '../../dtos/Course'
@@ -16,8 +13,8 @@ function MyCoursesPage() {
     const [searchPhrase, setSearchPhrase] = useState<string>('')
     const [request, setRequest] = useState<CourseGetListRequest>(new CourseGetListRequest())
 
-    const { data: count } = useGetUserCourseCountQuery(request)
-    const { data, isFetching, isError } = useGetUserCourseListQuery(request)
+    const { data: count } = useGetCourseCountQuery(request)
+    const { data, isFetching, isError } = useGetCourseListQuery(request)
 
     if (!isFetching) {
         if (isError) {

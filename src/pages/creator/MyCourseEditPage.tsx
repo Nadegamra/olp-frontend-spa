@@ -1,5 +1,4 @@
 import { useParams } from 'react-router-dom'
-import { useGetUserCourseQuery } from '../../features/api/ApiSliceCourses'
 import Sidebar, { SidebarSection } from '../../components/layout/Sidebar'
 import DescriptionSection from './myCourseEditPage/DescriptionSection'
 import { CourseResponseOwner } from '../../dtos/Course'
@@ -10,10 +9,11 @@ import SkillsSection from './myCourseEditPage/SkillsSection'
 import LanguageSection from './myCourseEditPage/LanguageSection'
 import VisibilitySection from './myCourseEditPage/VisibilitySection'
 import DeleteSection from './myCourseEditPage/DeleteSection'
+import { useGetCourseQuery } from '../../features/api/ApiSliceCourses'
 
 function MyCourseEditPage() {
     const { id, section } = useParams()
-    const { data, isFetching, isError, isSuccess } = useGetUserCourseQuery(parseInt(id ?? '0'))
+    const { data, isFetching, isError, isSuccess } = useGetCourseQuery(parseInt(id ?? '0'))
 
     const sections: SidebarSection[] = [
         {

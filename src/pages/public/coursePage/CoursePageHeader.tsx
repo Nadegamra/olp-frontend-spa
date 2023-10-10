@@ -5,9 +5,9 @@ function CoursePageHeader({ course }: { course: CourseResponse }) {
     const { data: creator } = useGetCreatorProfileAnonymousQuery(course.userId)
 
     return (
-        <section>
-            <div></div>
-            Course {course.name} by {creator?.username}
+        <section className="pb-5">
+            <h1 className="px-20 pt-20 text-fs-h1">{course.name}</h1>
+            <h2 className="px-20 text-fs-h1">by {creator?.username}</h2>
         </section>
     )
 }
