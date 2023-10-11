@@ -1,17 +1,17 @@
 import { useParams } from 'react-router-dom'
 import Sidebar, { SidebarSection } from '../../components/layout/Sidebar'
-import DescriptionSection from './myCourseEditPage/DescriptionSection'
+import DescriptionSection from './courseInfoEditPage/DescriptionSection'
 import { CourseResponseOwner } from '../../dtos/Course'
-import PricingSection from './myCourseEditPage/PricingSection'
-import CertificatesSection from './myCourseEditPage/CertificatesSection'
-import SchedulingSection from './myCourseEditPage/SchedulingSection'
-import SkillsSection from './myCourseEditPage/SkillsSection'
-import LanguageSection from './myCourseEditPage/LanguageSection'
-import VisibilitySection from './myCourseEditPage/VisibilitySection'
-import DeleteSection from './myCourseEditPage/DeleteSection'
+import PricingSection from './courseInfoEditPage/PricingSection'
+import CertificatesSection from './courseInfoEditPage/CertificatesSection'
+import SchedulingSection from './courseInfoEditPage/SchedulingSection'
+import SkillsSection from './courseInfoEditPage/SkillsSection'
+import LanguageSection from './courseInfoEditPage/LanguageSection'
+import VisibilitySection from './courseInfoEditPage/VisibilitySection'
+import DeleteSection from './courseInfoEditPage/DeleteSection'
 import { useGetCourseQuery } from '../../features/api/ApiSliceCourses'
 
-function MyCourseEditPage() {
+function CourseInfoEditPage() {
     const { id, section } = useParams()
     const { data, isFetching, isError, isSuccess } = useGetCourseQuery(parseInt(id ?? '0'))
 
@@ -99,4 +99,4 @@ function MyCourseEditPage() {
     }
 }
 
-export default MyCourseEditPage
+export default CourseInfoEditPage

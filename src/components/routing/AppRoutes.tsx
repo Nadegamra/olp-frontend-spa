@@ -11,11 +11,11 @@ import ConfirmEmailPage from '../../pages/public/ConfirmEmailPage'
 import CreateCoursePage from '../../pages/creator/CreateCoursePage'
 import { useAppSelector } from '../../app/hooks'
 import MyCoursesPage from '../../pages/creator/MyCoursesPage'
-import MyCourseEditPage from '../../pages/creator/MyCourseEditPage'
 import SkillsListPage from '../../pages/admin/SkillsListPage'
 import LanguageListPage from '../../pages/admin/LanguageListPage'
 import CoursesPage from '../../pages/public/CoursesPage'
 import CoursePage from '../../pages/public/CoursePage'
+import MyCoursePage from '../../pages/creator/MyCoursePage'
 
 function AppRoutes() {
     const { user, role } = useAppSelector((state) => state.auth)
@@ -45,8 +45,8 @@ function AppRoutes() {
                 <Route path="/addCourse" element={<CreateCoursePage />} />
                 <Route path="/myCourses" element={<MyCoursesPage />} />
 
-                <Route path="/myCourses/:id/" element={<MyCourseEditPage />} />
-                <Route path="/myCourses/:id/:section" element={<MyCourseEditPage />} />
+                <Route path="/myCourses/:id/" element={<MyCoursePage />} />
+                <Route path="/myCourses/:id/:section" element={<MyCoursePage />} />
             </Route>
             <Route
                 element={<ConditionalRoute condition={user !== undefined && role === 'ADMIN'} />}>
