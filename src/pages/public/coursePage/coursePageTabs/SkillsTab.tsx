@@ -4,8 +4,14 @@ function SkillsTab({ course }: { course: CourseResponse }) {
     return (
         <section>
             <div>Difficulty: {course.difficulty}</div>
-            <div>Gained Skills: {course.gainedSkills.length}</div>
-            <div>Requirements: {course.requirements.length}</div>
+            <div>Gained Skills:</div>
+            {course.gainedSkills.map((gs) => (
+                <div className="pl-3">{gs.skill?.name ?? gs.customDescription}</div>
+            ))}
+            <div>Requirements:</div>
+            {course.requirements.map((gs) => (
+                <div className="pl-3">{gs.skill?.name ?? gs.customDescription}</div>
+            ))}
         </section>
     )
 }

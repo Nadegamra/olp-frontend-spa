@@ -4,8 +4,12 @@ function PricingNCertificatesTab({ course }: { course: CourseResponse }) {
     return (
         <section>
             <div>Price: {course.price}</div>
-            <div>Grants certificate: {course.grantsCertificate ? 'true' : 'false'}</div>
-            {course.grantsCertificate && <div>Certificate Price: {course.certificatePrice}</div>}
+            {course.grantsCertificate && (
+                <>
+                    <div>Certificate included</div>
+                    <div>Certificate Price: {course.certificatePrice}</div>
+                </>
+            )}
         </section>
     )
 }
