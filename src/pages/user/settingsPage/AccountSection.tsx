@@ -1,8 +1,13 @@
-import useUsers from '../../../api/UsersApi'
+import { useNavigate } from 'react-router-dom'
+import { useAppDispatch } from '../../../app/hooks'
 import Button from '../../../components/forms/Button'
+import { useDeleteUserMutation } from '../../../features/api/ApiSliceUsers'
+import { sessionEnded } from '../../../features/auth/AuthSlice'
 
 function AccountSection() {
-    const { deleteUser } = useUsers()
+    const [deleteUser] = useDeleteUserMutation()
+    const dispatch = useAppDispatch()
+    const navigate = useNavigate()
     return (
         <section>
             <header className="mb-5">
@@ -13,7 +18,14 @@ function AccountSection() {
                 <p className="pb-2">This will queue the account for deletion.</p>
                 <p className="pb-2">The account can be recovered by logging in within 30 days.</p>
             </label>
-            <Button color="error" type="button" onClick={() => deleteUser()}>
+            <Button
+                color="error"
+                type="button"
+                onClick={() => {
+                    deleteUser(undefined).unwrap()
+                    dispatch(sessionEnded(undefined))
+                    navigate('/')
+                }}>
                 Delete Account
             </Button>
         </section>

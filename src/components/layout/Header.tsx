@@ -1,9 +1,11 @@
 import { Link, useNavigate } from 'react-router-dom'
-import useAuth from '../../stores/AuthStore'
 import { useEffect, useState } from 'react'
+import { useAppDispatch, useAppSelector } from '../../app/hooks'
+import { sessionEnded } from '../../features/auth/AuthSlice'
 
 function Header() {
-    const { user, logout, stateNumber, loading } = useAuth()
+    const { user, role } = useAppSelector((state) => state.auth)
+    const dispatch = useAppDispatch()
     const navigate = useNavigate()
     const [theme, setTheme] = useState<'light' | 'dark'>(
         (localStorage.getItem('theme') as 'light' | 'dark') ?? 'dark'
@@ -28,11 +30,8 @@ function Header() {
             document.documentElement.setAttribute('data-theme', 'light')
         }
     }
-    if (loading) {
-        return <header key={stateNumber} className="bg-clr-bg4 p-5 flex"></header>
-    }
     return (
-        <header key={stateNumber} className="bg-clr-bg4 p-5 flex">
+        <header className="bg-clr-bg4 p-5 flex">
             <a href="#main-content" className="sr-only">
                 Skip to main content
             </a>
@@ -42,6 +41,21 @@ function Header() {
             <div className="flex-1" />
             <nav role="navigation" aria-label="Main Navigation">
                 <ul className="flex gap-7">
+                    {user !== undefined && role === 'CREATOR' && (
+                        <li className="select-none hover:text-clr-hover">
+                            <Link to={'/myCourses'}>My Courses</Link>
+                        </li>
+                    )}
+                    {user !== undefined && role === 'ADMIN' && (
+                        <li className="select-none hover:text-clr-hover">
+                            <Link to={'/skills'}>Skills</Link>
+                        </li>
+                    )}
+                    {user !== undefined && role === 'ADMIN' && (
+                        <li className="select-none hover:text-clr-hover">
+                            <Link to={'/languages'}>Languages</Link>
+                        </li>
+                    )}
                     <li>
                         <button
                             onClick={toggleTheme}
@@ -49,7 +63,7 @@ function Header() {
                             aria-label={
                                 theme === 'light' ? 'Switch to dark mode' : 'Switch to light mode'
                             }>
-                            {theme === 'light' ? (
+                            {theme !== 'light' ? (
                                 <span className="material-symbols-outlined">light_mode</span>
                             ) : (
                                 <span className="material-symbols-outlined">dark_mode</span>
@@ -79,7 +93,7 @@ function Header() {
                                 role="button"
                                 className="select-none hover:text-clr-hover"
                                 onClick={() => {
-                                    logout()
+                                    dispatch(sessionEnded(undefined))
                                     navigate('/')
                                 }}>
                                 <span className="material-symbols-outlined">logout</span>

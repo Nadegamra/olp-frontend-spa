@@ -1,9 +1,9 @@
-import { set, useForm } from 'react-hook-form'
-import FormField from '../../../components/forms/FormField'
+import { useForm } from 'react-hook-form'
+import FormField from '../../../components/forms/InputField'
 import Button from '../../../components/forms/Button'
-import { useState } from 'react'
-import useUsers from '../../../api/UsersApi'
 import Spinner from '../../../components/forms/Spinner'
+import { useUpdatePasswordMutation } from '../../../features/api/ApiSliceUsers'
+import { toast } from 'react-toastify'
 
 interface UpdatePasswordProps {
     currentPassword: string
@@ -17,9 +17,8 @@ function PasswordSection() {
         formState: { errors },
         setError
     } = useForm<UpdatePasswordProps>()
-    const [message, setMessage] = useState<string>('')
-    const [loading, setLoading] = useState<boolean>(false)
-    const { updatePassword } = useUsers()
+    const [updatePassword, { isLoading }] = useUpdatePasswordMutation()
+
     return (
         <section>
             <header className="mb-5">
@@ -29,73 +28,58 @@ function PasswordSection() {
             <form
                 aria-label="Form for changing your password"
                 onSubmit={handleSubmit((data) => {
-                    setLoading(true)
-                    setMessage('')
-                    setError('root', {
-                        type: 'validate',
-                        message: ''
+                    updatePassword({
+                        oldPassword: data.currentPassword,
+                        newPassword: data.newPassword
                     })
-                    updatePassword(data.currentPassword, data.newPassword)
-                        .then((res) => {
-                            if (res === true) {
-                                setMessage('Password updated successfully')
-                            } else if (res === false) {
+                        .unwrap()
+                        .then(() => {
+                            toast.success('Password updated successfully')
+                        })
+                        .catch((error) => {
+                            if (error === undefined) {
+                                toast.error('An error has occured')
                                 setError('root', {
-                                    type: 'validate',
-                                    message: 'An error has occurred'
+                                    message: 'error'
                                 })
                             } else {
-                                setError('root', {
-                                    type: 'validate',
-                                    message: res
-                                })
+                                const errObj: object = (error as any).data.errors
+                                const errArr = Object.values(errObj).reduce((acc, curr) => {
+                                    return acc.concat(curr)
+                                }, [])
+                                for (const val of errArr) {
+                                    toast.error(val)
+                                }
                             }
-                        })
-                        .finally(() => {
-                            setLoading(false)
                         })
                 })}>
                 <fieldset className="w-[min(500px,60%)]">
                     <FormField
-                        disabled={loading}
+                        disabled={isLoading}
                         id="currentPassword"
                         label="currentPassword"
                         text="Current Password"
                         type="password"
                         {...register('currentPassword', { required: true })}
+                        error={errors.currentPassword && 'Field is required'}
                     />
-                    <p className="text-clr-error h-6">
-                        {errors.currentPassword && 'Field is required'}
-                    </p>
                     <FormField
-                        disabled={loading}
+                        disabled={isLoading}
                         id="newPassword"
                         label="newPassword"
                         text="New Password"
                         type="password"
                         {...register('newPassword', { required: true })}
+                        error={errors.newPassword && 'Field is required'}
                     />
-                    <p className="text-clr-error h-6">
-                        {errors.newPassword && 'Field is required'}
-                    </p>
                 </fieldset>
                 <div className="pt-2">
-                    <Button disabled={loading} key={'save1'} type="submit">
+                    <Button disabled={isLoading} key={'save1'} type="submit">
                         Update Password
                     </Button>
                 </div>
             </form>
-            {errors.root && (
-                <p role="alert" className="text-clr-error whitespace-pre-wrap" aria-live="polite">
-                    {errors.root.message}
-                </p>
-            )}
-            {message !== '' && (
-                <p role="alert" className="text-clr-success" aria-live="polite">
-                    {message}
-                </p>
-            )}
-            {loading && (
+            {isLoading && (
                 <div className="mx-auto">
                     <Spinner />
                 </div>

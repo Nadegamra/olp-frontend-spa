@@ -1,12 +1,11 @@
 import { useForm } from 'react-hook-form'
-import useAuth from '../../stores/AuthStore'
 import { RegisterDTO, UserRole } from '../../dtos/User'
-import { useNavigate } from 'react-router-dom'
-import { useState } from 'react'
 import Button from '../../components/forms/Button'
 import Spinner from '../../components/forms/Spinner'
-import FormField from '../../components/forms/FormField'
-import CustomRadio from '../../components/forms/Radio'
+import FormField from '../../components/forms/InputField'
+import CustomRadio from '../../components/forms/CustomRadio'
+import { useRegisterMutation } from '../../features/api/ApiSliceAuth'
+import { toast } from 'react-toastify'
 
 interface IRegisterInfo {
     email: string
@@ -20,41 +19,24 @@ function RegisterPage() {
         register,
         formState: { errors },
         handleSubmit,
-        watch,
-        setError
+        watch
     } = useForm<IRegisterInfo>()
-
-    const { register: registerUser } = useAuth()
-    const [loading, setLoading] = useState(false)
-    const [message, setMessage] = useState('')
+    const [registerRequest, { isLoading }] = useRegisterMutation()
     return (
         <section className="p-5 flex flex-col items-center">
             <form
                 aria-label="Register Form"
                 className="m-auto bg-clr-bg2 flex flex-col p-7 rounded-md mb-7"
                 onSubmit={handleSubmit(async (data) => {
-                    setMessage('')
-                    setLoading(true)
-
-                    const res = await registerUser(
-                        new RegisterDTO(data.email, data.password, data.role)
-                    )
-                    setLoading(false)
-                    if (res === true) {
-                        setMessage('Please check your email to confirm your account')
-                    } else if (res === false) {
-                        setError('root', {
-                            type: 'validate',
-                            message: 'An error has occurred while registering'
+                    registerRequest(new RegisterDTO(data.email, data.password, data.role))
+                        .unwrap()
+                        .then(() => toast.success('Please chech your email for confirmation mail'))
+                        .catch((error: any) => {
+                            const errObj: object = error.response.data.errors
+                            Object.values(errObj).forEach((value) => toast.error(value))
                         })
-                    } else {
-                        setError('root', {
-                            type: 'validate',
-                            message: res
-                        })
-                    }
                 })}
-                aria-busy={loading}>
+                aria-busy={isLoading}>
                 <h1 className="text-center pb-3 text-fs-h1">Register</h1>
                 <fieldset className="flex flex-col mb-2">
                     <legend className="sr-only">Registration details</legend>
@@ -63,12 +45,10 @@ function RegisterPage() {
                         label="email"
                         text="Email"
                         type="email"
-                        disabled={loading}
+                        disabled={isLoading}
                         {...register('email', { required: true })}
+                        error={errors.email?.type === 'required' && 'Email is required'}
                     />
-                    <p className="text-clr-error h-5 mb-2" role="alert">
-                        {errors.email?.type == 'required' && 'Email is required'}
-                    </p>
                     <div className="flex flex-col sm:flex-row pb-5 sm:pb-3 gap-2">
                         <div className="flex flex-col">
                             <FormField
@@ -76,12 +56,12 @@ function RegisterPage() {
                                 label="password"
                                 text="Password"
                                 type="password"
-                                disabled={loading}
+                                disabled={isLoading}
                                 {...register('password', { required: true })}
+                                error={
+                                    errors.password?.type === 'required' && 'Password is required'
+                                }
                             />
-                            <p className="text-clr-error h-5" role="alert">
-                                {errors.password?.type == 'required' && 'Password is required'}
-                            </p>
                         </div>
                         <div className="flex flex-col">
                             <FormField
@@ -89,23 +69,23 @@ function RegisterPage() {
                                 label="repeatPassword"
                                 text="Repeat Password"
                                 type="password"
-                                disabled={loading}
+                                disabled={isLoading}
                                 {...register('repeatPassword', {
                                     required: true,
                                     validate: (value) => value === watch('password')
                                 })}
+                                error={
+                                    errors.repeatPassword?.type == 'validate'
+                                        ? 'Passwords must match'
+                                        : errors.repeatPassword?.type == 'required' &&
+                                          'Password is required'
+                                }
                             />
-                            <p className="text-clr-error h-5" role="alert">
-                                {errors.repeatPassword?.type == 'validate'
-                                    ? 'Passwords must match'
-                                    : errors.repeatPassword?.type == 'required' &&
-                                      'Password is required'}
-                            </p>
                         </div>
                     </div>
                     <div className="flex gap-2">
                         <CustomRadio
-                            label="Creator"
+                            label="Educator"
                             id="role1"
                             helperText="Can create new courses"
                             value={UserRole.Creator}
@@ -124,22 +104,12 @@ function RegisterPage() {
                     </p>
                 </fieldset>
                 <div className="mx-auto mt-3">
-                    <Button type="submit" disabled={loading}>
+                    <Button type="submit" disabled={isLoading}>
                         Register
                     </Button>
                 </div>
             </form>
-            {errors.root && (
-                <p role="alert" className="text-clr-error text-center" aria-live="polite">
-                    {errors.root.message}
-                </p>
-            )}
-            {message !== '' && (
-                <p role="alert" className="text-clr-success text-center" aria-live="polite">
-                    {message}
-                </p>
-            )}
-            {loading && (
+            {isLoading && (
                 <div className="mx-auto">
                     <Spinner />
                 </div>

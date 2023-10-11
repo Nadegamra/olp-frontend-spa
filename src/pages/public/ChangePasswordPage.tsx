@@ -1,10 +1,10 @@
 import { useParams } from 'react-router-dom'
-import useUsers from '../../api/UsersApi'
 import { useForm } from 'react-hook-form'
-import FormField from '../../components/forms/FormField'
+import FormField from '../../components/forms/InputField'
 import Button from '../../components/forms/Button'
-import { useState } from 'react'
 import Spinner from '../../components/forms/Spinner'
+import { useChangePasswordMutation } from '../../features/api/ApiSliceUsers'
+import { toast } from 'react-toastify'
 
 interface Props {
     password: string
@@ -13,48 +13,29 @@ interface Props {
 
 function ChangePasswordPage() {
     const { token } = useParams()
-    const { changePassword } = useUsers()
-
+    const [changePassword, { isLoading }] = useChangePasswordMutation()
     const {
         register,
         handleSubmit,
         watch,
-        formState: { errors },
-        setError
+        formState: { errors }
     } = useForm<Props>()
-    const [loading, setLoading] = useState<boolean>(false)
-    const [message, setMessage] = useState<string>('')
     return (
         <section className="p-5 flex flex-col items-center">
             <form
                 aria-label="Change Password Form"
                 className="m-auto bg-clr-bg2 flex flex-col p-7 rounded-md mb-7"
                 onSubmit={handleSubmit((data) => {
-                    setLoading(true)
-                    setMessage('')
-                    setError('root', {
-                        type: 'validate',
-                        message: ''
-                    })
-                    changePassword(token ?? '', data.password)
-                        .then((res) => {
-                            if (res === true) {
-                                setMessage('Password changed successfully')
-                                return
-                            } else if (res === false) {
-                                setError('root', {
-                                    type: 'validate',
-                                    message: 'An error has occurred'
-                                })
-                            } else {
-                                setError('root', {
-                                    type: 'validate',
-                                    message: res
-                                })
-                            }
+                    changePassword({ token: token ?? '', newPassword: data.password })
+                        .unwrap()
+                        .then(() => {
+                            toast.success('Password updated successfully')
                         })
-                        .finally(() => {
-                            setLoading(false)
+                        .catch((error: any) => {
+                            const errObj: object = error.response.data.errors
+                            Object.values(errObj).forEach((value) => {
+                                toast.error(value)
+                            })
                         })
                 })}>
                 <header>
@@ -65,10 +46,8 @@ function ChangePasswordPage() {
                             label="password"
                             type="password"
                             {...register('password', { required: true })}
+                            error={errors.password && 'Password is required'}
                         />
-                        <p className="h-6 text-clr-error" role="alert">
-                            {errors.password && 'Password is required'}
-                        </p>
                         <FormField
                             text="Repeat Password"
                             label="repeatPassword"
@@ -80,10 +59,8 @@ function ChangePasswordPage() {
                                     }
                                 }
                             })}
+                            error={errors.repeatPassword?.message}
                         />
-                        <p className="h-6 text-clr-error" role="alert">
-                            {errors.repeatPassword?.message}
-                        </p>
                     </fieldset>
                     <div className="mx-auto w-max">
                         <Button type="submit" key={'submit'}>
@@ -92,20 +69,7 @@ function ChangePasswordPage() {
                     </div>
                 </header>
             </form>
-            {errors.root && (
-                <p
-                    role="alert"
-                    className="text-clr-error text-center whitespace-pre-wrap"
-                    aria-live="polite">
-                    {errors.root.message}
-                </p>
-            )}
-            {message !== '' && (
-                <p role="alert" className="text-clr-success text-center" aria-live="polite">
-                    {message}
-                </p>
-            )}
-            {loading && (
+            {isLoading && (
                 <div className="mx-auto">
                     <Spinner />
                 </div>
