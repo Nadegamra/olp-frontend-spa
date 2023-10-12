@@ -5,7 +5,7 @@ function CourseSectionsEditPage() {
     return (
         <section>
             <CourseSectionAddBar />
-            <CourseSectionList />
+            <CourseSectionList editMode={true} />
         </section>
     )
 }

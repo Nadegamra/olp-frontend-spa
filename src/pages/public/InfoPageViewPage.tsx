@@ -1,16 +1,16 @@
+import './InfoPageViewPage.css'
 import { useParams } from 'react-router-dom'
 import {
     useGetInfoPageQuery,
     useUpdateInfoPageMutation
 } from '../../features/api/ApiSliceInfoPages'
-
-import { Editor } from '@tinymce/tinymce-react'
 import { useRef } from 'react'
 import Button from '../../components/forms/Button'
 import { InfoPageUpdateRequest } from '../../dtos/InfoPage'
 import { toast } from 'react-toastify'
+import parse from 'html-react-parser'
 
-function InfoPageEditPage() {
+function InfoPageViewPage() {
     const { courseId, sectionId, id } = useParams()
     const [updateInfoPage] = useUpdateInfoPageMutation()
     const { data } = useGetInfoPageQuery([
@@ -44,7 +44,6 @@ function InfoPageEditPage() {
 
     let config = {
         skin: 'naked',
-        inline_styles: true,
         content_css: 'light',
         height: 500,
         menubar: false,
@@ -86,16 +85,11 @@ function InfoPageEditPage() {
         return (
             <section>
                 <h1 className="p-5 text-fs-h1">{data.name}</h1>
-                <Editor
-                    apiKey={'k9ef7v4h3f7s2w03gelkdczekdlqf6ljq5gm7yfzpjtug37o'}
-                    onInit={(evt, editor) => (editorRef.current = editor)}
-                    init={config}
-                    initialValue={data.text}
-                />
+                {parse(data.text)}
                 <div className="mt-5" />
                 <Button onClick={updateText}>Save changes</Button>
             </section>
         )
 }
 
-export default InfoPageEditPage
+export default InfoPageViewPage

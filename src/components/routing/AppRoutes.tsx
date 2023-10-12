@@ -17,6 +17,7 @@ import CoursesPage from '../../pages/public/CoursesPage'
 import CoursePage from '../../pages/public/CoursePage'
 import MyCoursePage from '../../pages/creator/MyCoursePage'
 import InfoPageEditPage from '../../pages/creator/InfoPageEditPage'
+import InfoPageViewPage from '../../pages/public/InfoPageViewPage'
 
 function AppRoutes() {
     const { user, role } = useAppSelector((state) => state.auth)
@@ -25,6 +26,10 @@ function AppRoutes() {
             <Route path="/" element={<CoursesPage />} />
             <Route path="/courses/:id" element={<CoursePage />} />
             <Route path="/changeEmail/:token" element={<ChangeEmailPage />} />
+            <Route
+                path="/myCourses/:courseId/sections/:sectionId/infoPages/:id"
+                element={<InfoPageViewPage />}
+            />
             <Route element={<ConditionalRoute condition={user !== undefined} redirect="/" />}>
                 <Route path="/settings" element={<SettingsPage />} />
                 <Route path="/settings/:section" element={<SettingsPage />} />
@@ -49,7 +54,7 @@ function AppRoutes() {
                 <Route path="/myCourses/:id/:tab" element={<MyCoursePage />} />
                 <Route path="/myCourses/:id/:tab/:section" element={<MyCoursePage />} />
                 <Route
-                    path="/myCourses/:courseId/sections/:sectionId/infoPages/:id"
+                    path="/myCourses/:courseId/sections/:sectionId/infoPages/:id/edit"
                     element={<InfoPageEditPage />}
                 />
             </Route>

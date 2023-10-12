@@ -5,11 +5,10 @@ import { useCallback, useState } from 'react'
 import { produce } from 'immer'
 import Button from '../../../components/forms/Button'
 
-function CourseSectionList() {
+function CourseSectionList({ editMode }: { editMode: boolean }) {
     const { id } = useParams()
     const { data } = useGetSectionListQuery(parseInt(id ?? '-1'))
     const [expanded, setExpanded] = useState<boolean[]>([])
-
     const toggleSection = useCallback((id: number) => {
         const idx = data?.findIndex((x) => x.id == id)
         if (idx !== undefined) {
@@ -39,6 +38,7 @@ function CourseSectionList() {
                 <section>
                     {data.map((item) => (
                         <CourseSectionListItem
+                            editMode={editMode}
                             section={item}
                             expanded={expanded[data.findIndex((x) => x.id === item.id)]}
                             toggleSection={toggleSection}

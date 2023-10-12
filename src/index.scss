@@ -10,6 +10,7 @@
   -webkit-text-size-adjust: 100%;
 }
 
+
 input:-webkit-autofill,
 input:-webkit-autofill:focus {
   transition: background-color 600000s 0s, color 600000s 0s;
@@ -27,7 +28,26 @@ input:-webkit-autofill:focus {
       --color-bg-quaternary: #cbd3d8;
       --color-bg-extra: rgb(20, 50, 255);
       --color-text-primary: black;
-      --color-text-secondary: rgb(107 114 128);
+      --color-text-secondar
+      ul { 
+        list-style-type: disc; 
+        list-style-position: inside; 
+      }
+      ol { 
+        list-style-type: decimal; 
+        list-style-position: inside; 
+      }
+      ul ul, ol ul { 
+        list-style-type: circle; 
+        list-style-position: inside; 
+        margin-left: 15px; 
+      }
+      ol ol, ul ol { 
+        list-style-type: lower-latin; 
+        list-style-position: inside; 
+        margin-left: 15px; 
+      }
+      y: rgb(107 114 128);
       --color-text-tertiary: rgb(229 231 235);
       --color-text-hover: rgb(37 99 235);
       --color-text-link: rgb(37 99 235);
@@ -47,4 +67,3 @@ input:-webkit-autofill:focus {
       --color-border: rgb(75 85 99);
   }
 }
-

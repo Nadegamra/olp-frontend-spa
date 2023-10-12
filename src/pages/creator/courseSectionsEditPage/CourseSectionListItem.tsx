@@ -5,11 +5,13 @@ import InfoPageList from './InfoPageList'
 function CourseSectionListItem({
     section,
     expanded,
-    toggleSection
+    toggleSection,
+    editMode
 }: {
     section: Section
     expanded: boolean
     toggleSection: (id: number) => void
+    editMode: boolean
 }) {
     return (
         <React.Fragment key={section.id}>
@@ -26,7 +28,7 @@ function CourseSectionListItem({
             {expanded && (
                 <div>
                     <div className="p-5">{section.description}</div>
-                    <InfoPageList sectionId={section.id} />
+                    <InfoPageList sectionId={section.id} editMode={editMode} />
                 </div>
             )}
         </React.Fragment>
