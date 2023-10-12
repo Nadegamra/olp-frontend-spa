@@ -27,7 +27,7 @@ function CourseSectionList() {
 
     if (data !== undefined) {
         if (expanded.length == 0 && data.length > 0) {
-            setExpanded(new Array(data.length).fill(false))
+            setExpanded(new Array(data.length).fill(true))
         }
 
         return (
