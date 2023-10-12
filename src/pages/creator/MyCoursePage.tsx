@@ -1,16 +1,23 @@
 import { Tabs } from 'flowbite-react'
 import CourseInfoEditPage from './CourseInfoEditPage'
 import CourseSectionsEditPage from './CourseSectionsEditPage'
+import { useNavigate, useParams } from 'react-router-dom'
 
 function MyCoursePage() {
+    const { tab, id } = useParams()
+    const navigate = useNavigate()
     const tabs = [
         {
-            active: true,
-            title: 'Course Info'
+            name: 'info',
+            active: tab === 'info',
+            title: 'Course Info',
+            url: `/myCourses/${id}/info`
         },
         {
-            active: false,
-            title: 'Sections'
+            name: 'sections',
+            active: tab === 'sections',
+            title: 'Sections',
+            url: `/myCourses/${id}/sections`
         }
     ]
 
@@ -24,7 +31,12 @@ function MyCoursePage() {
     }
 
     return (
-        <Tabs.Group aria-label="Course edit page tabs" style="underline">
+        <Tabs.Group
+            aria-label="Course edit page tabs"
+            style="underline"
+            onActiveTabChange={(tab) => {
+                navigate(tabs[tab].url)
+            }}>
             {tabs.map((t) => (
                 <Tabs.Item key={t.title} title={t.title} active={t.active}>
                     <PageContent tab={t.title} />

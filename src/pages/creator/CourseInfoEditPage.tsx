@@ -88,7 +88,7 @@ function CourseInfoEditPage() {
                     <Sidebar
                         sections={sections}
                         currentSection={section}
-                        pageUrl={`/myCourses/${id}`}
+                        pageUrl={`/myCourses/info/${id}`}
                     />
                     <div className="ml-[-200px] sm:ml-0 p-4 w-full sm:w-[min(800px,50%)]">
                         <SectionContent data={data} />

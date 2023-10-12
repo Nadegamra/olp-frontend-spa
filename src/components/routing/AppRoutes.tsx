@@ -45,8 +45,8 @@ function AppRoutes() {
                 <Route path="/addCourse" element={<CreateCoursePage />} />
                 <Route path="/myCourses" element={<MyCoursesPage />} />
 
-                <Route path="/myCourses/:id/" element={<MyCoursePage />} />
-                <Route path="/myCourses/:id/:section" element={<MyCoursePage />} />
+                <Route path="/myCourses/:id/:tab" element={<MyCoursePage />} />
+                <Route path="/myCourses/:id/:tab/:section" element={<MyCoursePage />} />
             </Route>
             <Route
                 element={<ConditionalRoute condition={user !== undefined && role === 'ADMIN'} />}>

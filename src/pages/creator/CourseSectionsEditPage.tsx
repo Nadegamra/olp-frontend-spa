@@ -1,7 +1,11 @@
+import CourseSectionAddBar from './courseSectionsEditPage/CourseSectionAddBar'
+import CourseSectionList from './courseSectionsEditPage/CourseSectionList'
+
 function CourseSectionsEditPage() {
     return (
         <section>
-            <div></div>
+            <CourseSectionAddBar />
+            <CourseSectionList />
         </section>
     )
 }
