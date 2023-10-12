@@ -5,12 +5,12 @@ const apiSliceInfoPages = apiSlice.injectEndpoints({
     endpoints: (builder) => ({
         getInfoPageList: builder.query<InfoPage[], [number, number]>({
             query: ([courseId, sectionId]) => ({
-                url: `https://localhost:44340/courses/${courseId}/sections/${sectionId}`,
+                url: `https://localhost:44340/courses/${courseId}/sections/${sectionId}/infoPages`,
                 method: 'GET'
             }),
             providesTags: (result, error, arg) => [{ type: 'INFO_PAGE', id: arg[1] }]
         }),
-        getInfoPage: builder.query<InfoPage[], [number, number, number]>({
+        getInfoPage: builder.query<InfoPage, [number, number, number]>({
             query: ([courseId, sectionId, id]) => ({
                 url: `https://localhost:44340/courses/${courseId}/sections/${sectionId}/infoPages/${id}`,
                 method: 'GET'

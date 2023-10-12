@@ -16,6 +16,7 @@ import LanguageListPage from '../../pages/admin/LanguageListPage'
 import CoursesPage from '../../pages/public/CoursesPage'
 import CoursePage from '../../pages/public/CoursePage'
 import MyCoursePage from '../../pages/creator/MyCoursePage'
+import InfoPageEditPage from '../../pages/creator/InfoPageEditPage'
 
 function AppRoutes() {
     const { user, role } = useAppSelector((state) => state.auth)
@@ -47,6 +48,10 @@ function AppRoutes() {
 
                 <Route path="/myCourses/:id/:tab" element={<MyCoursePage />} />
                 <Route path="/myCourses/:id/:tab/:section" element={<MyCoursePage />} />
+                <Route
+                    path="/myCourses/:courseId/sections/:sectionId/infoPages/:id"
+                    element={<InfoPageEditPage />}
+                />
             </Route>
             <Route
                 element={<ConditionalRoute condition={user !== undefined && role === 'ADMIN'} />}>

@@ -1,5 +1,6 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Section } from '../../../dtos/Section'
+import InfoPageList from './InfoPageList'
 
 function CourseSectionListItem({
     section,
@@ -18,7 +19,6 @@ function CourseSectionListItem({
                     className="flex items-center justify-between p-5 font-medium text-left text-clr-text3 flex-1 mx-4 border-b border-clr-border focus:ring-1 focus:ring-clr-bg-extra hover:bg-clr-bg2">
                     <span className="flex items-center">{section.name}</span>
                     <span className="material-symbols-outlined">
-                        {' '}
                         {expanded ? 'expand_less' : 'expand_more'}
                     </span>
                 </button>
@@ -26,6 +26,7 @@ function CourseSectionListItem({
             {expanded && (
                 <div>
                     <div className="p-5">{section.description}</div>
+                    <InfoPageList sectionId={section.id} />
                 </div>
             )}
         </React.Fragment>

@@ -22,13 +22,7 @@ function CourseSectionList() {
     }, [])
 
     const toggleAll = useCallback((value: boolean) => {
-        setExpanded(
-            produce((draft) => {
-                for (let i = 0; i < expanded.length; i++) {
-                    draft[i] = value
-                }
-            })
-        )
+        setExpanded(new Array(data?.length).fill(value))
     }, [])
 
     if (data !== undefined) {

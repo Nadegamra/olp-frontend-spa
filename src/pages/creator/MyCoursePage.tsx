@@ -11,7 +11,7 @@ function MyCoursePage() {
             name: 'info',
             active: tab === 'info',
             title: 'Course Info',
-            url: `/myCourses/${id}/info`
+            url: `/myCourses/${id}/info/description`
         },
         {
             name: 'sections',
