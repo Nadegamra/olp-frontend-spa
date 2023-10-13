@@ -6,8 +6,8 @@ import { produce } from 'immer'
 import Button from '../../../components/forms/Button'
 
 function CourseSectionList({ editMode }: { editMode: boolean }) {
-    const { id } = useParams()
-    const { data } = useGetSectionListQuery(parseInt(id ?? '-1'))
+    const { courseId } = useParams()
+    const { data } = useGetSectionListQuery(parseInt(courseId ?? '-1'))
     const [expanded, setExpanded] = useState<boolean[]>([])
     const toggleSection = useCallback((id: number) => {
         const idx = data?.findIndex((x) => x.id == id)
@@ -21,7 +21,7 @@ function CourseSectionList({ editMode }: { editMode: boolean }) {
     }, [])
 
     const toggleAll = useCallback((value: boolean) => {
-        setExpanded(new Array(data?.length).fill(value))
+        setExpanded(new Array(data!.length).fill(value))
     }, [])
 
     if (data !== undefined) {

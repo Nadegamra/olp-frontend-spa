@@ -24,7 +24,7 @@ function AppRoutes() {
     return (
         <Routes>
             <Route path="/" element={<CoursesPage />} />
-            <Route path="/courses/:id" element={<CoursePage />} />
+            <Route path="/courses/:courseId" element={<CoursePage />} />
             <Route path="/changeEmail/:token" element={<ChangeEmailPage />} />
             <Route
                 path="/myCourses/:courseId/sections/:sectionId/infoPages/:id"
@@ -51,8 +51,8 @@ function AppRoutes() {
                 <Route path="/addCourse" element={<CreateCoursePage />} />
                 <Route path="/myCourses" element={<MyCoursesPage />} />
 
-                <Route path="/myCourses/:id/:tab" element={<MyCoursePage />} />
-                <Route path="/myCourses/:id/:tab/:section" element={<MyCoursePage />} />
+                <Route path="/myCourses/:courseId/:tab" element={<MyCoursePage />} />
+                <Route path="/myCourses/:courseId/:tab/:section" element={<MyCoursePage />} />
                 <Route
                     path="/myCourses/:courseId/sections/:sectionId/infoPages/:id/edit"
                     element={<InfoPageEditPage />}

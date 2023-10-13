@@ -12,8 +12,8 @@ import DeleteSection from './courseInfoEditPage/DeleteSection'
 import { useGetCourseQuery } from '../../features/api/ApiSliceCourses'
 
 function CourseInfoEditPage() {
-    const { id, section } = useParams()
-    const { data, isFetching, isError, isSuccess } = useGetCourseQuery(parseInt(id ?? '0'))
+    const { courseId, section } = useParams()
+    const { data, isFetching, isError, isSuccess } = useGetCourseQuery(parseInt(courseId ?? '0'))
 
     const sections: SidebarSection[] = [
         {
@@ -88,7 +88,7 @@ function CourseInfoEditPage() {
                     <Sidebar
                         sections={sections}
                         currentSection={section}
-                        pageUrl={`/myCourses/${id}/info`}
+                        pageUrl={`/myCourses/${courseId}/info`}
                     />
                     <div className="ml-[-200px] sm:ml-0 p-4 w-full sm:w-[min(800px,50%)]">
                         <SectionContent data={data} />

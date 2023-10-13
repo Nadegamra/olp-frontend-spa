@@ -5,13 +5,15 @@ import {
 } from '../../features/api/ApiSliceInfoPages'
 
 import { Editor } from '@tinymce/tinymce-react'
-import { useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import Button from '../../components/forms/Button'
 import { InfoPageUpdateRequest } from '../../dtos/InfoPage'
 import { toast } from 'react-toastify'
+import InputField from '../../components/forms/InputField'
 
 function InfoPageEditPage() {
     const { courseId, sectionId, id } = useParams()
+    const [name, setName] = useState<string>('')
     const [updateInfoPage] = useUpdateInfoPageMutation()
     const { data } = useGetInfoPageQuery([
         parseInt(courseId ?? '-1'),
@@ -26,11 +28,7 @@ function InfoPageEditPage() {
                 parseInt(courseId ?? '-1'),
                 parseInt(sectionId ?? '-1'),
                 parseInt(id ?? '-1'),
-                new InfoPageUpdateRequest(
-                    data!.name,
-                    editorRef.current.getContent(),
-                    data!.isHidden
-                )
+                new InfoPageUpdateRequest(name, editorRef.current.getContent(), data!.isHidden)
             ])
                 .unwrap()
                 .then(() => {
@@ -41,6 +39,12 @@ function InfoPageEditPage() {
                 })
         }
     }
+
+    useEffect(() => {
+        if (data !== undefined) {
+            setName(data.name)
+        }
+    }, [data])
 
     let config = {
         skin: 'naked',
@@ -85,7 +89,13 @@ function InfoPageEditPage() {
     if (data !== undefined)
         return (
             <section>
-                <h1 className="p-5 text-fs-h1">{data.name}</h1>
+                <InputField
+                    id="name"
+                    label="name"
+                    value={name}
+                    onChange={(e: any) => setName(e.target.value)}
+                    type="text"
+                />
                 <Editor
                     apiKey={'k9ef7v4h3f7s2w03gelkdczekdlqf6ljq5gm7yfzpjtug37o'}
                     onInit={(evt, editor) => (editorRef.current = editor)}

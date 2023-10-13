@@ -37,6 +37,26 @@ const apiSliceInfoPages = apiSlice.injectEndpoints({
                         'Content-Type': 'application/json'
                     }
                 }),
+                async onQueryStarted(
+                    [courseId, sectionId, id, request],
+                    { dispatch, queryFulfilled }
+                ) {
+                    const result = dispatch(
+                        apiSliceInfoPages.util.updateQueryData(
+                            'getInfoPageList',
+                            [courseId, sectionId],
+                            (infoPages) => {
+                                const idx = infoPages.findIndex((x) => x.id == id)
+                                infoPages[idx] = { ...infoPages[idx], ...request }
+                            }
+                        )
+                    )
+                    try {
+                        await queryFulfilled
+                    } catch {
+                        result.undo()
+                    }
+                },
                 invalidatesTags: (result, error, arg) => [{ type: 'SECTION', id: arg[1] }]
             }
         ),

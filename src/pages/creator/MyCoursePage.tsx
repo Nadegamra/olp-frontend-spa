@@ -4,20 +4,20 @@ import CourseSectionsEditPage from './CourseSectionsEditPage'
 import { useNavigate, useParams } from 'react-router-dom'
 
 function MyCoursePage() {
-    const { tab, id } = useParams()
+    const { tab, courseId } = useParams()
     const navigate = useNavigate()
     const tabs = [
         {
             name: 'info',
             active: tab === 'info',
             title: 'Course Info',
-            url: `/myCourses/${id}/info/description`
+            url: `/myCourses/${courseId}/info/description`
         },
         {
             name: 'sections',
             active: tab === 'sections',
             title: 'Sections',
-            url: `/myCourses/${id}/sections`
+            url: `/myCourses/${courseId}/sections`
         }
     ]
 
