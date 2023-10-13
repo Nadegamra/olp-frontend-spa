@@ -1,7 +1,12 @@
+import Button from '../../../components/forms/Button'
+import InputField from '../../../components/forms/InputField'
+
 function CourseSectionAddBar() {
     return (
-        <section className="border m-3 p-5">
-            <div>Add Section</div>
+        <section className="flex flex-row">
+            <InputField placeholder="Section Name" />
+            <div className="px-2" />
+            <Button>Add Section</Button>
         </section>
     )
 }
