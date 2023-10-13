@@ -10,7 +10,7 @@ const apiSliceSections = apiSlice.injectEndpoints({
             }),
             providesTags: (result, error, arg) => [{ type: 'SECTION', id: arg }]
         }),
-        getSection: builder.query<Section[], [number, number]>({
+        getSection: builder.query<Section, [number, number]>({
             query: ([courseId, sectionId]) => ({
                 url: `https://localhost:44340/courses/${courseId}/sections/${sectionId}`,
                 method: 'GET'
@@ -36,13 +36,45 @@ const apiSliceSections = apiSlice.injectEndpoints({
                     'Content-Type': 'application/json'
                 }
             }),
+            async onQueryStarted([courseId, sectionId, request], { dispatch, queryFulfilled }) {
+                const result = dispatch(
+                    apiSliceSections.util.updateQueryData(
+                        'getSection',
+                        [courseId, sectionId],
+                        (section) => {
+                            section = { ...section, ...request }
+                        }
+                    )
+                )
+                try {
+                    await queryFulfilled
+                } catch {
+                    result.undo()
+                }
+            },
             invalidatesTags: (result, error, arg) => [{ type: 'SECTION', id: arg[0] }]
         }),
         deleteSection: builder.mutation<Section, [number, number]>({
-            query: ([courseId, id]) => ({
-                url: `https://localhost:44340/courses/${courseId}/sections/${id}`,
+            query: ([courseId, sectionId]) => ({
+                url: `https://localhost:44340/courses/${courseId}/sections/${sectionId}`,
                 method: 'DELETE'
             }),
+            async onQueryStarted([courseId, sectionId], { dispatch, queryFulfilled }) {
+                const result = dispatch(
+                    apiSliceSections.util.updateQueryData(
+                        'getSectionList',
+                        courseId,
+                        (sections) => {
+                            sections = sections.filter((x) => x.id !== sectionId)
+                        }
+                    )
+                )
+                try {
+                    await queryFulfilled
+                } catch {
+                    result.undo()
+                }
+            },
             invalidatesTags: (result, error, arg) => [{ type: 'SECTION', id: arg[0] }]
         })
     })

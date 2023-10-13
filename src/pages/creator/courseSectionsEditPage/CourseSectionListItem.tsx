@@ -1,6 +1,11 @@
 import React from 'react'
-import { Section } from '../../../dtos/Section'
+import { Section, SectionUpdateRequest } from '../../../dtos/Section'
 import InfoPageList from './InfoPageList'
+import {
+    useDeleteSectionMutation,
+    useUpdateSectionMutation
+} from '../../../features/api/ApiSliceSections'
+import { toast } from 'react-toastify'
 
 function CourseSectionListItem({
     section,
@@ -13,23 +18,54 @@ function CourseSectionListItem({
     toggleSection: (id: number) => void
     editMode: boolean
 }) {
+    const [updateSection] = useUpdateSectionMutation()
+    const [deleteSection] = useDeleteSectionMutation()
     return (
         <React.Fragment key={section.id}>
             <h2 className="w-full flex">
-                <button
-                    className="flex justify-between p-5 font-medium text-left text-clr-text3 flex-1 mx-4 border-b border-clr-border focus:ring-1 focus:ring-clr-bg-extra hover:bg-clr-bg2"
-                    onClick={() => toggleSection(section.id)}>
-                    <span className="flex items-center">{section.name}</span>
-                    <span className="flex-1" />
+                <button className="flex justify-between p-5 font-medium text-left text-clr-text3 flex-1 mx-4 border-b border-clr-border focus:ring-1 focus:ring-clr-bg-extra hover:bg-clr-bg2">
+                    <span
+                        onClick={() => toggleSection(section.id)}
+                        className="flex items-center flex-1">
+                        {section.name}
+                    </span>
                     {editMode && (
                         <>
-                            <span className="material-symbols-outlined">
+                            <span
+                                className="material-symbols-outlined pr-2"
+                                onClick={() =>
+                                    updateSection([
+                                        section.courseId,
+                                        section.id,
+                                        new SectionUpdateRequest(
+                                            section.name,
+                                            section.description,
+                                            !section.isHidden
+                                        )
+                                    ])
+                                        .unwrap()
+                                        .then(() =>
+                                            toast.success('Changed visibility successfully')
+                                        )
+                                        .catch(() => toast.error('An error has occured'))
+                                }>
                                 {section.isHidden ? 'visibility' : 'visibility_off'}
                             </span>
-                            <span className="material-symbols-outlined pr-5">delete</span>
+                            <span
+                                onClick={() =>
+                                    deleteSection([section.courseId, section.id])
+                                        .unwrap()
+                                        .then(() => toast.success('Section deleted successfully'))
+                                        .catch(() => toast.error('An error has occured'))
+                                }
+                                className="material-symbols-outlined">
+                                delete
+                            </span>
                         </>
                     )}
-                    <span className="material-symbols-outlined">
+                    <span
+                        onClick={() => toggleSection(section.id)}
+                        className="material-symbols-outlined pl-5">
                         {expanded ? 'expand_less' : 'expand_more'}
                     </span>
                 </button>

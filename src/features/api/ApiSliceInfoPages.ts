@@ -46,7 +46,7 @@ const apiSliceInfoPages = apiSlice.injectEndpoints({
                             'getInfoPageList',
                             [courseId, sectionId],
                             (infoPages) => {
-                                const idx = infoPages.findIndex((x) => x.id == id)
+                                const idx = infoPages.findIndex((x) => x.id === id)
                                 infoPages[idx] = { ...infoPages[idx], ...request }
                             }
                         )
@@ -65,6 +65,22 @@ const apiSliceInfoPages = apiSlice.injectEndpoints({
                 url: `https://localhost:44340/courses/${courseId}/sections/${sectionId}/infoPages/${id}`,
                 method: 'DELETE'
             }),
+            async onQueryStarted([courseId, sectionId, id], { dispatch, queryFulfilled }) {
+                const result = dispatch(
+                    apiSliceInfoPages.util.updateQueryData(
+                        'getInfoPageList',
+                        [courseId, sectionId],
+                        (infoPages) => {
+                            infoPages = infoPages.filter((x) => x.id !== id)
+                        }
+                    )
+                )
+                try {
+                    await queryFulfilled
+                } catch {
+                    result.undo()
+                }
+            },
             invalidatesTags: (result, error, arg) => [{ type: 'SECTION', id: arg[1] }]
         })
     })
