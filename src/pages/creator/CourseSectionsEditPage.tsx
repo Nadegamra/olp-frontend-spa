@@ -4,8 +4,8 @@ import CourseSectionList from './courseSectionsEditPage/CourseSectionList'
 function CourseSectionsEditPage() {
     return (
         <section>
-            <CourseSectionAddBar />
             <CourseSectionList editMode={true} />
+            <CourseSectionAddBar />
         </section>
     )
 }
