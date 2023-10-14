@@ -15,7 +15,9 @@ const apiSlice = createApi({
         'COURSE_LANGUAGE',
         'COURSE_SUBTITLE',
         'REQUIREMENT',
-        'GAINED_SKILL'
+        'GAINED_SKILL',
+        'SECTION',
+        'INFO_PAGE'
     ],
     refetchOnFocus: true,
     endpoints: (builder) => ({

@@ -11,19 +11,25 @@ import ConfirmEmailPage from '../../pages/public/ConfirmEmailPage'
 import CreateCoursePage from '../../pages/creator/CreateCoursePage'
 import { useAppSelector } from '../../app/hooks'
 import MyCoursesPage from '../../pages/creator/MyCoursesPage'
-import MyCourseEditPage from '../../pages/creator/MyCourseEditPage'
 import SkillsListPage from '../../pages/admin/SkillsListPage'
 import LanguageListPage from '../../pages/admin/LanguageListPage'
 import CoursesPage from '../../pages/public/CoursesPage'
 import CoursePage from '../../pages/public/CoursePage'
+import MyCoursePage from '../../pages/creator/MyCoursePage'
+import InfoPageEditPage from '../../pages/creator/InfoPageEditPage'
+import InfoPageViewPage from '../../pages/public/InfoPageViewPage'
 
 function AppRoutes() {
     const { user, role } = useAppSelector((state) => state.auth)
     return (
         <Routes>
             <Route path="/" element={<CoursesPage />} />
-            <Route path="/courses/:id" element={<CoursePage />} />
+            <Route path="/courses/:courseId" element={<CoursePage />} />
             <Route path="/changeEmail/:token" element={<ChangeEmailPage />} />
+            <Route
+                path="/myCourses/:courseId/sections/:sectionId/infoPages/:id"
+                element={<InfoPageViewPage />}
+            />
             <Route element={<ConditionalRoute condition={user !== undefined} redirect="/" />}>
                 <Route path="/settings" element={<SettingsPage />} />
                 <Route path="/settings/:section" element={<SettingsPage />} />
@@ -45,8 +51,12 @@ function AppRoutes() {
                 <Route path="/addCourse" element={<CreateCoursePage />} />
                 <Route path="/myCourses" element={<MyCoursesPage />} />
 
-                <Route path="/myCourses/:id/" element={<MyCourseEditPage />} />
-                <Route path="/myCourses/:id/:section" element={<MyCourseEditPage />} />
+                <Route path="/myCourses/:courseId/:tab" element={<MyCoursePage />} />
+                <Route path="/myCourses/:courseId/:tab/:section" element={<MyCoursePage />} />
+                <Route
+                    path="/myCourses/:courseId/sections/:sectionId/infoPages/:id/edit"
+                    element={<InfoPageEditPage />}
+                />
             </Route>
             <Route
                 element={<ConditionalRoute condition={user !== undefined && role === 'ADMIN'} />}>

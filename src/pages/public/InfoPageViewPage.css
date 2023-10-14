@@ -1,0 +1,8 @@
+#infoText ul { 
+    list-style-type: disc; 
+    list-style-position: inside; 
+ }
+#infoText ol { 
+    list-style-type: decimal; 
+    list-style-position: inside; 
+ }

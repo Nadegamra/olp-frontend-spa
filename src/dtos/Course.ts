@@ -62,7 +62,7 @@ export class CourseResponse {
 }
 
 export class CourseResponseOwner extends CourseResponse {
-    isHidden: boolean
+    isHidden?: boolean
 
     constructor(
         id: number,
