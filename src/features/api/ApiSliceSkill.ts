@@ -1,7 +1,6 @@
 import {
     SkillCountResponse,
     SkillCreateRequest,
-    SkillListRequest,
     SkillResponse,
     SkillSuggestion,
     SkillUpdateRequest
@@ -43,7 +42,7 @@ const apiSliceSkills = apiSlice.injectEndpoints({
                 url: `/skills?skip=${skip}&take=${take}`,
                 method: 'GET'
             }),
-            transformResponse: (response: { items: SkillResponse[] }, meta, arg) => {
+            transformResponse: (response: { items: SkillResponse[] }, _meta, _arg) => {
                 return response.items
             },
             providesTags: ['SKILL']

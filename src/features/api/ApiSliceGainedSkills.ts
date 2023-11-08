@@ -13,7 +13,7 @@ const apiSliceGainedSkills = apiSlice.injectEndpoints({
                 url: `/courses/${courseId}/gained`,
                 method: 'GET'
             }),
-            providesTags: (result, error, arg) => [{ type: 'GAINED_SKILL', id: arg }]
+            providesTags: (_result, _error, arg) => [{ type: 'GAINED_SKILL', id: arg }]
         }),
         addGainedSkill: builder.mutation<undefined, GainedSkillCreateRequest>({
             query: (request) => ({
@@ -24,7 +24,7 @@ const apiSliceGainedSkills = apiSlice.injectEndpoints({
                     'Content-Type': 'application/json'
                 }
             }),
-            invalidatesTags: (result, error, arg) => [{ type: 'GAINED_SKILL', id: arg.courseId }]
+            invalidatesTags: (_result, _error, arg) => [{ type: 'GAINED_SKILL', id: arg.courseId }]
         }),
         removeGainedSkill: builder.mutation<undefined, GainedSkillDeleteRequest>({
             query: (request) => ({
@@ -35,7 +35,7 @@ const apiSliceGainedSkills = apiSlice.injectEndpoints({
                     'Content-Type': 'application/json'
                 }
             }),
-            invalidatesTags: (result, error, arg) => [{ type: 'GAINED_SKILL', id: arg.courseId }]
+            invalidatesTags: (_result, _error, arg) => [{ type: 'GAINED_SKILL', id: arg.courseId }]
         }),
         updateGainedSkill: builder.mutation<undefined, GainedSkillUpdateRequest>({
             query: (request) => ({
@@ -46,7 +46,7 @@ const apiSliceGainedSkills = apiSlice.injectEndpoints({
                     'Content-Type': 'application/json'
                 }
             }),
-            invalidatesTags: (result, error, arg) => [{ type: 'GAINED_SKILL', id: arg.courseId }]
+            invalidatesTags: (_result, _error, arg) => [{ type: 'GAINED_SKILL', id: arg.courseId }]
         })
     })
 })

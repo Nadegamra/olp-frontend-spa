@@ -12,13 +12,7 @@ interface FormProps {
 
 function VisibilitySection({ data: { isHidden } }: { data: CourseResponseOwner }) {
     const { id } = useParams()
-    const {
-        register,
-        watch,
-        handleSubmit,
-        reset,
-        formState: { errors }
-    } = useForm<FormProps>()
+    const { reset } = useForm<FormProps>()
 
     useEffect(() => {
         reset({
@@ -26,7 +20,7 @@ function VisibilitySection({ data: { isHidden } }: { data: CourseResponseOwner }
         })
     }, [])
 
-    const [updateCourse, { isLoading }] = useUpdateCourseMutation()
+    const [updateCourse] = useUpdateCourseMutation()
 
     return (
         <section>

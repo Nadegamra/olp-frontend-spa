@@ -8,7 +8,7 @@ const apiSliceSections = apiSlice.injectEndpoints({
                 url: `/courses/${courseId}/sections`,
                 method: 'GET'
             }),
-            providesTags: (result, error, arg) => [{ type: 'SECTION', id: arg }]
+            providesTags: (_result, _error, arg) => [{ type: 'SECTION', id: arg }]
         }),
         getSection: builder.query<Section, [number, number]>({
             query: ([courseId, sectionId]) => ({
@@ -25,7 +25,7 @@ const apiSliceSections = apiSlice.injectEndpoints({
                     'Content-Type': 'application/json'
                 }
             }),
-            invalidatesTags: (result, error, arg) => [{ type: 'SECTION', id: arg[0] }]
+            invalidatesTags: (_result, _error, arg) => [{ type: 'SECTION', id: arg[0] }]
         }),
         updateSection: builder.mutation<Section, [number, number, SectionUpdateRequest]>({
             query: ([courseId, id, request]) => ({
@@ -52,7 +52,7 @@ const apiSliceSections = apiSlice.injectEndpoints({
                     result.undo()
                 }
             },
-            invalidatesTags: (result, error, arg) => [{ type: 'SECTION', id: arg[0] }]
+            invalidatesTags: (_result, _error, arg) => [{ type: 'SECTION', id: arg[0] }]
         }),
         deleteSection: builder.mutation<Section, [number, number]>({
             query: ([courseId, sectionId]) => ({
@@ -75,7 +75,7 @@ const apiSliceSections = apiSlice.injectEndpoints({
                     result.undo()
                 }
             },
-            invalidatesTags: (result, error, arg) => [{ type: 'SECTION', id: arg[0] }]
+            invalidatesTags: (_result, _error, arg) => [{ type: 'SECTION', id: arg[0] }]
         })
     })
 })

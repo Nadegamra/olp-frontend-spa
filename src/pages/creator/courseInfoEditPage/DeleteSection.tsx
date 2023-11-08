@@ -6,7 +6,7 @@ import { toast } from 'react-toastify'
 function DeleteSection() {
     const { id } = useParams()
     const navigate = useNavigate()
-    const [deleteCourse, { isLoading }] = useDeleteCourseMutation()
+    const [deleteCourse] = useDeleteCourseMutation()
 
     return (
         <section>

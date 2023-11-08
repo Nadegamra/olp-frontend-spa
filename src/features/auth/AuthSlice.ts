@@ -27,7 +27,7 @@ const authSlice = createSlice({
     name: 'auth',
     initialState,
     reducers: {
-        sessionEnded: (state, action) => {
+        sessionEnded: (state, _action) => {
             state.user = undefined
             localStorage.removeItem('user')
             state.role = undefined

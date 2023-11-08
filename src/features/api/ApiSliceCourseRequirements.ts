@@ -13,7 +13,7 @@ const apiSliceCourseRequirements = apiSlice.injectEndpoints({
                 url: `/courses/${courseId}/requirements`,
                 method: 'GET'
             }),
-            providesTags: (result, error, arg) => [{ type: 'REQUIREMENT', id: arg }]
+            providesTags: (_result, _error, arg) => [{ type: 'REQUIREMENT', id: arg }]
         }),
         addCourseRequirement: builder.mutation<undefined, CourseRequirementCreateRequest>({
             query: (request) => ({
@@ -24,7 +24,7 @@ const apiSliceCourseRequirements = apiSlice.injectEndpoints({
                     'Content-Type': 'application/json'
                 }
             }),
-            invalidatesTags: (result, error, arg) => [{ type: 'REQUIREMENT', id: arg.courseId }]
+            invalidatesTags: (_result, _error, arg) => [{ type: 'REQUIREMENT', id: arg.courseId }]
         }),
         removeCourseRequirement: builder.mutation<undefined, CourseRequirementDeleteRequest>({
             query: (request) => ({
@@ -35,7 +35,7 @@ const apiSliceCourseRequirements = apiSlice.injectEndpoints({
                     'Content-Type': 'application/json'
                 }
             }),
-            invalidatesTags: (result, error, arg) => [{ type: 'REQUIREMENT', id: arg.courseId }]
+            invalidatesTags: (_result, _error, arg) => [{ type: 'REQUIREMENT', id: arg.courseId }]
         }),
         updateCourseRequirement: builder.mutation<undefined, CourseRequirementUpdateRequest>({
             query: (request) => ({
@@ -46,7 +46,7 @@ const apiSliceCourseRequirements = apiSlice.injectEndpoints({
                     'Content-Type': 'application/json'
                 }
             }),
-            invalidatesTags: (result, error, arg) => [{ type: 'REQUIREMENT', id: arg.courseId }]
+            invalidatesTags: (_result, _error, arg) => [{ type: 'REQUIREMENT', id: arg.courseId }]
         })
     })
 })

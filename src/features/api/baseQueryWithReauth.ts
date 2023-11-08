@@ -41,7 +41,7 @@ const baseQueryWithReauth: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQue
     return result
 }
 
-const refreshSession = async (args: string | FetchArgs, api: BaseQueryApi, extraOptions: {}) => {
+const refreshSession = async (_args: string | FetchArgs, api: BaseQueryApi, extraOptions: {}) => {
     const { user, refreshToken } = (api.getState() as RootState).auth
     const refreshResult = await baseQuery(
         {

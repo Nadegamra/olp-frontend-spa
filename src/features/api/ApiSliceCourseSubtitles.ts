@@ -16,7 +16,9 @@ const apiSliceCourseSubtitles = apiSlice.injectEndpoints({
                     'Content-Type': 'application/json'
                 }
             }),
-            invalidatesTags: (result, error, arg) => [{ type: 'COURSE_SUBTITLE', id: arg.courseId }]
+            invalidatesTags: (_result, _error, arg) => [
+                { type: 'COURSE_SUBTITLE', id: arg.courseId }
+            ]
         }),
         removeCourseSubtitle: builder.mutation<undefined, CourseSubtitleDeleteRequest>({
             query: (request) => ({
@@ -27,14 +29,16 @@ const apiSliceCourseSubtitles = apiSlice.injectEndpoints({
                     'Content-Type': 'application/json'
                 }
             }),
-            invalidatesTags: (result, error, arg) => [{ type: 'COURSE_SUBTITLE', id: arg.courseId }]
+            invalidatesTags: (_result, _error, arg) => [
+                { type: 'COURSE_SUBTITLE', id: arg.courseId }
+            ]
         }),
         getCourseSubtitleList: builder.query<CourseSubtitle[], number>({
             query: (courseId) => ({
                 url: `/courses/${courseId}/subtitles`,
                 method: 'GET'
             }),
-            providesTags: (result, error, arg) => [{ type: 'COURSE_SUBTITLE', id: arg }]
+            providesTags: (_result, _error, arg) => [{ type: 'COURSE_SUBTITLE', id: arg }]
         })
     })
 })

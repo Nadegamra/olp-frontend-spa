@@ -25,21 +25,21 @@ const apiSliceCourses = apiSlice.injectEndpoints({
                 url: `/courses/${id}`,
                 method: 'DELETE'
             }),
-            invalidatesTags: (result, error, arg) => [{ type: 'COURSE', id: arg }]
+            invalidatesTags: (_result, _error, arg) => [{ type: 'COURSE', id: arg }]
         }),
         getCourse: build.query<CourseResponse, number>({
             query: (id) => ({
                 url: `/courses/${id}`,
                 method: 'GET'
             }),
-            providesTags: (result, error, arg) => [{ type: 'COURSE', id: arg }]
+            providesTags: (_result, _error, arg) => [{ type: 'COURSE', id: arg }]
         }),
         getCourseList: build.query<CourseResponse[], CourseGetListRequest>({
             query: (request) => ({
                 url: `/courses?phrase=${request.phrase}&skip=${request.skip}&take=${request.take}`,
                 method: 'GET'
             }),
-            providesTags: (result, error, arg) =>
+            providesTags: (result, _error, _arg) =>
                 result ? [...result.map(({ id }) => ({ type: 'COURSE' as const, id }))] : ['COURSE']
         }),
         getUserCourse: build.query<CourseResponseOwner, number>({
@@ -47,7 +47,7 @@ const apiSliceCourses = apiSlice.injectEndpoints({
                 url: `/courses/owned/${id}`,
                 method: 'GET'
             }),
-            providesTags: (result, error, arg) => [{ type: 'COURSE', id: arg }]
+            providesTags: (_result, _error, arg) => [{ type: 'COURSE', id: arg }]
         }),
         updateCourse: build.mutation<CourseResponseOwner, { request: CourseUpdateRequest }>({
             query: ({ request }) => ({
@@ -58,7 +58,7 @@ const apiSliceCourses = apiSlice.injectEndpoints({
                     'Content-Type': 'application/json'
                 }
             }),
-            invalidatesTags: (result, error, arg) => [{ type: 'COURSE', id: arg.request.id }]
+            invalidatesTags: (_result, _error, arg) => [{ type: 'COURSE', id: arg.request.id }]
         }),
         getCourseCount: build.query<CourseCountGetResponse, CourseGetListRequest>({
             query: (request) => ({

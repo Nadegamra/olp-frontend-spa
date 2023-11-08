@@ -1,5 +1,4 @@
 import { CreatorResponse, CreatorUpdateRequest } from '../../dtos/Creator'
-import { User } from '../../dtos/User'
 import apiSlice from './ApiSliceAuth'
 
 const apiSliceCreators = apiSlice.injectEndpoints({
@@ -27,7 +26,7 @@ const apiSliceCreators = apiSlice.injectEndpoints({
                 url: `/creator/${userId}`,
                 method: 'GET'
             }),
-            providesTags: (result, error, arg) => [{ type: 'CREATOR', id: arg }]
+            providesTags: (_result, _error, arg) => [{ type: 'CREATOR', id: arg }]
         })
     })
 })
