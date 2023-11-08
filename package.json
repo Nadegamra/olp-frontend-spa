@@ -4,8 +4,8 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite --port 80",
-    "build": "tsc && vite build",
+    "dev": "vite --port 80 --mode dev",
+    "build": "tsc && vite build --mode prod",
     "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview --port 80"
   },

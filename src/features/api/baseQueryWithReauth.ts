@@ -21,7 +21,7 @@ const baseQuery = fetchBaseQuery({
 
         return headers
     },
-    baseUrl: 'https://localhost'
+    baseUrl: import.meta.env.VITE_BACKEND_URI
 })
 const baseQueryWithReauth: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQueryError> = async (
     args,
