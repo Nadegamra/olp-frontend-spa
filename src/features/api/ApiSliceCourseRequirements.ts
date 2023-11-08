@@ -10,14 +10,14 @@ const apiSliceCourseRequirements = apiSlice.injectEndpoints({
     endpoints: (builder) => ({
         getCourseRequirementList: builder.query<CourseRequirement[], number>({
             query: (courseId) => ({
-                url: `https://localhost:44398/courses/${courseId}/requirements`,
+                url: `/courses/${courseId}/requirements`,
                 method: 'GET'
             }),
             providesTags: (result, error, arg) => [{ type: 'REQUIREMENT', id: arg }]
         }),
         addCourseRequirement: builder.mutation<undefined, CourseRequirementCreateRequest>({
             query: (request) => ({
-                url: `https://localhost:44398/courses/${request.courseId}/requirements`,
+                url: `/courses/${request.courseId}/requirements`,
                 method: 'POST',
                 body: JSON.stringify(request),
                 headers: {
@@ -28,7 +28,7 @@ const apiSliceCourseRequirements = apiSlice.injectEndpoints({
         }),
         removeCourseRequirement: builder.mutation<undefined, CourseRequirementDeleteRequest>({
             query: (request) => ({
-                url: `https://localhost:44398/courses/${request.courseId}/requirements/${request.id}`,
+                url: `/courses/${request.courseId}/requirements/${request.id}`,
                 method: 'DELETE',
                 body: JSON.stringify(request),
                 headers: {
@@ -39,7 +39,7 @@ const apiSliceCourseRequirements = apiSlice.injectEndpoints({
         }),
         updateCourseRequirement: builder.mutation<undefined, CourseRequirementUpdateRequest>({
             query: (request) => ({
-                url: `https://localhost:44398/courses/${request.courseId}/requirements/${request.id}`,
+                url: `/courses/${request.courseId}/requirements/${request.id}`,
                 method: 'PUT',
                 body: JSON.stringify(request),
                 headers: {

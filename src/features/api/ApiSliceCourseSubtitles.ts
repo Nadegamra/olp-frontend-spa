@@ -9,7 +9,7 @@ const apiSliceCourseSubtitles = apiSlice.injectEndpoints({
     endpoints: (builder) => ({
         addCourseSubtitle: builder.mutation<undefined, CourseSubtitleCreateRequest>({
             query: (request) => ({
-                url: `https://localhost:44398/courses/${request.courseId}/subtitles`,
+                url: `/courses/${request.courseId}/subtitles`,
                 method: 'POST',
                 body: JSON.stringify(request),
                 headers: {
@@ -20,7 +20,7 @@ const apiSliceCourseSubtitles = apiSlice.injectEndpoints({
         }),
         removeCourseSubtitle: builder.mutation<undefined, CourseSubtitleDeleteRequest>({
             query: (request) => ({
-                url: `https://localhost:44398/courses/${request.courseId}/subtitles/${request.id}`,
+                url: `/courses/${request.courseId}/subtitles/${request.id}`,
                 method: 'DELETE',
                 body: JSON.stringify(request),
                 headers: {
@@ -31,7 +31,7 @@ const apiSliceCourseSubtitles = apiSlice.injectEndpoints({
         }),
         getCourseSubtitleList: builder.query<CourseSubtitle[], number>({
             query: (courseId) => ({
-                url: `https://localhost:44398/courses/${courseId}/subtitles`,
+                url: `/courses/${courseId}/subtitles`,
                 method: 'GET'
             }),
             providesTags: (result, error, arg) => [{ type: 'COURSE_SUBTITLE', id: arg }]

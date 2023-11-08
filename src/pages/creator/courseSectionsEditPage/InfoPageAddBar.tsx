@@ -15,7 +15,6 @@ function InfoPageAddBar({ sectionId }: { sectionId: number }) {
     const {
         handleSubmit,
         register,
-        reset,
         formState: { errors, isLoading }
     } = useForm<Props>()
     const [addInfoPage] = useAddInfoPageMutation()

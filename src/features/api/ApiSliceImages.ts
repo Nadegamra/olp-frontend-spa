@@ -5,7 +5,7 @@ const apiSliceImages = apiSlice.injectEndpoints({
     endpoints: (builder) => ({
         setCourseImage: builder.mutation<undefined, SetCourseImageRequest>({
             query: (request) => ({
-                url: `https://localhost:44398/courses/${request.courseId}/image`,
+                url: `/courses/${request.courseId}/image`,
                 method: 'PUT',
                 body: request.image,
                 formData: true

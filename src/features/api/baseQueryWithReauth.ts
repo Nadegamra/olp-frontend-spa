@@ -20,7 +20,8 @@ const baseQuery = fetchBaseQuery({
         }
 
         return headers
-    }
+    },
+    baseUrl: 'https://localhost'
 })
 const baseQueryWithReauth: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQueryError> = async (
     args,
@@ -44,7 +45,7 @@ const refreshSession = async (args: string | FetchArgs, api: BaseQueryApi, extra
     const { user, refreshToken } = (api.getState() as RootState).auth
     const refreshResult = await baseQuery(
         {
-            url: 'https://localhost:44396/auth/refresh-token',
+            url: '/auth/refresh-token',
             body: JSON.stringify(
                 new RenewTokenRequestDTO(user?.id.toString() ?? '', refreshToken ?? '')
             ),

@@ -1,6 +1,5 @@
 import { useForm } from 'react-hook-form'
 import Button from '../../../components/forms/Button'
-import TextAreaField from '../../../components/forms/TextAreaField'
 import { useAddSectionMutation } from '../../../features/api/ApiSliceSections'
 import { useParams } from 'react-router-dom'
 import { SectionAddRequest } from '../../../dtos/Section'

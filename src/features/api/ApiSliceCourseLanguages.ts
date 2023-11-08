@@ -10,7 +10,7 @@ const apiSliceCourseLanguages = apiSlice.injectEndpoints({
     endpoints: (builder) => ({
         addCourseLanguage: builder.mutation<undefined, CourseLanguageCreateRequest>({
             query: (request) => ({
-                url: `https://localhost:44398/courses/${request.courseId}/languages`,
+                url: `/courses/${request.courseId}/languages`,
                 method: 'POST',
                 body: JSON.stringify(request),
                 headers: {
@@ -21,14 +21,14 @@ const apiSliceCourseLanguages = apiSlice.injectEndpoints({
         }),
         removeCourseLanguage: builder.mutation<undefined, CourseLanguageDeleteRequest>({
             query: (request) => ({
-                url: `https://localhost:44398/courses/${request.courseId}/languages/${request.id}`,
+                url: `/courses/${request.courseId}/languages/${request.id}`,
                 method: 'DELETE'
             }),
             invalidatesTags: (result, error, arg) => [{ type: 'COURSE_LANGUAGE', id: arg.courseId }]
         }),
         setCoursePrimaryLanguage: builder.mutation<undefined, CourseLanguageSetPrimaryRequest>({
             query: (request) => ({
-                url: `https://localhost:44398/courses/${request.courseId}/languages/${request.id}`,
+                url: `/courses/${request.courseId}/languages/${request.id}`,
                 method: 'PUT',
                 body: JSON.stringify(request),
                 headers: {
@@ -39,7 +39,7 @@ const apiSliceCourseLanguages = apiSlice.injectEndpoints({
         }),
         getCourseLanguageList: builder.query<CourseLanguage[], number>({
             query: (courseId) => ({
-                url: `https://localhost:44398/courses/${courseId}/languages`,
+                url: `/courses/${courseId}/languages`,
                 method: 'GET'
             }),
             providesTags: (result, error, arg) => [{ type: 'COURSE_LANGUAGE', id: arg }]

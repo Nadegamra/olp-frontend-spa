@@ -6,7 +6,7 @@ const apiSliceCreators = apiSlice.injectEndpoints({
     endpoints: (builder) => ({
         updateCreator: builder.mutation<undefined, CreatorUpdateRequest>({
             query: (request) => ({
-                url: `https://localhost:44398/creator`,
+                url: `/creator`,
                 method: 'PUT',
                 body: JSON.stringify(request),
                 headers: {
@@ -17,14 +17,14 @@ const apiSliceCreators = apiSlice.injectEndpoints({
         }),
         getCreatorProfile: builder.query<CreatorResponse, undefined>({
             query: () => ({
-                url: `https://localhost:44398/creator`,
+                url: `/creator`,
                 method: 'GET'
             }),
             providesTags: ['CREATOR']
         }),
         getCreatorProfileAnonymous: builder.query<CreatorResponse, number>({
             query: (userId) => ({
-                url: `https://localhost:44398/creator/${userId}`,
+                url: `/creator/${userId}`,
                 method: 'GET'
             }),
             providesTags: (result, error, arg) => [{ type: 'CREATOR', id: arg }]

@@ -10,14 +10,14 @@ const apiSliceGainedSkills = apiSlice.injectEndpoints({
     endpoints: (builder) => ({
         getGainedSkillList: builder.query<GainedSkill[], number>({
             query: (courseId) => ({
-                url: `https://localhost:44398/courses/${courseId}/gained`,
+                url: `/courses/${courseId}/gained`,
                 method: 'GET'
             }),
             providesTags: (result, error, arg) => [{ type: 'GAINED_SKILL', id: arg }]
         }),
         addGainedSkill: builder.mutation<undefined, GainedSkillCreateRequest>({
             query: (request) => ({
-                url: `https://localhost:44398/courses/${request.courseId}/gained`,
+                url: `/courses/${request.courseId}/gained`,
                 method: 'POST',
                 body: JSON.stringify(request),
                 headers: {
@@ -28,7 +28,7 @@ const apiSliceGainedSkills = apiSlice.injectEndpoints({
         }),
         removeGainedSkill: builder.mutation<undefined, GainedSkillDeleteRequest>({
             query: (request) => ({
-                url: `https://localhost:44398/courses/${request.courseId}/gained/${request.id}`,
+                url: `/courses/${request.courseId}/gained/${request.id}`,
                 method: 'DELETE',
                 body: JSON.stringify(request),
                 headers: {
@@ -39,7 +39,7 @@ const apiSliceGainedSkills = apiSlice.injectEndpoints({
         }),
         updateGainedSkill: builder.mutation<undefined, GainedSkillUpdateRequest>({
             query: (request) => ({
-                url: `https://localhost:44398/courses/${request.courseId}/gained/${request.id}`,
+                url: `/courses/${request.courseId}/gained/${request.id}`,
                 method: 'PUT',
                 body: JSON.stringify(request),
                 headers: {

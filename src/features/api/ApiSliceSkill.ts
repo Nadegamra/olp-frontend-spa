@@ -12,7 +12,7 @@ const apiSliceSkills = apiSlice.injectEndpoints({
     endpoints: (builder) => ({
         createSkill: builder.mutation<SkillResponse, SkillCreateRequest>({
             query: (request) => ({
-                url: `https://localhost:44398/skills`,
+                url: `/skills`,
                 method: 'POST',
                 body: JSON.stringify(request),
                 headers: {
@@ -23,14 +23,14 @@ const apiSliceSkills = apiSlice.injectEndpoints({
         }),
         deleteSkill: builder.mutation<undefined, number>({
             query: (id) => ({
-                url: `https://localhost:44398/skills/${id}`,
+                url: `/skills/${id}`,
                 method: 'DELETE'
             }),
             invalidatesTags: ['SKILL']
         }),
         getSkill: builder.query<SkillResponse, number>({
             query: (id) => ({
-                url: `https://localhost:44398/skills/${id}`,
+                url: `/skills/${id}`,
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json'
@@ -40,7 +40,7 @@ const apiSliceSkills = apiSlice.injectEndpoints({
         }),
         getSkillList: builder.query<SkillResponse[], { skip: number; take: number }>({
             query: ({ skip, take }) => ({
-                url: `https://localhost:44398/skills?skip=${skip}&take=${take}`,
+                url: `/skills?skip=${skip}&take=${take}`,
                 method: 'GET'
             }),
             transformResponse: (response: { items: SkillResponse[] }, meta, arg) => {
@@ -50,7 +50,7 @@ const apiSliceSkills = apiSlice.injectEndpoints({
         }),
         updateSkill: builder.mutation<SkillResponse, SkillUpdateRequest>({
             query: (request) => ({
-                url: `https://localhost:44398/skills/${request.id}`,
+                url: `/skills/${request.id}`,
                 method: 'PUT',
                 body: JSON.stringify(request),
                 headers: {
@@ -61,7 +61,7 @@ const apiSliceSkills = apiSlice.injectEndpoints({
         }),
         getSkillsCount: builder.query<SkillCountResponse, undefined>({
             query: () => ({
-                url: 'https://localhost:44398/skills/count',
+                url: '/skills/count',
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json'
@@ -73,10 +73,8 @@ const apiSliceSkills = apiSlice.injectEndpoints({
             query: (name) => ({
                 url:
                     name === ''
-                        ? `https://localhost:44398/skills/suggestions?name=`
-                        : `https://localhost:44398/skills/suggestions?name=${encodeURIComponent(
-                              name
-                          )}`,
+                        ? `/skills/suggestions?name=`
+                        : `/skills/suggestions?name=${encodeURIComponent(name)}`,
                 method: 'GET'
             }),
             providesTags: ['SKILL']
