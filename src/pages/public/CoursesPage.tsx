@@ -36,7 +36,7 @@ function CoursesPage() {
                                 to={`/courses/${course.id}`}>
                                 <img
                                     className="rounded-2xl"
-                                    src={`https://localhost:44398/courses/${course.id}/image`}
+                                    src={`/courses/${course.id}/image`}
                                     onError={({ currentTarget }) => {
                                         currentTarget.onerror = null
                                         currentTarget.src = './NoImage.jpg'

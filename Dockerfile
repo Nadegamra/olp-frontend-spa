@@ -7,6 +7,7 @@ COPY package*.json ./
 FROM base AS dev
 RUN npm i
 COPY . .
+RUN chown -R node /app
 CMD ["npm", "run", "dev"]
 #-----------------------------
 FROM base AS prod

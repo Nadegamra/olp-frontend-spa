@@ -19,5 +19,4 @@ export default apiSliceImages
 
 export const { useSetCourseImageMutation } = apiSliceImages
 
-export const getCourseImageURL = (courseId: number) =>
-    `https://locahost:44398/courses/${courseId}/image`
+export const getCourseImageURL = (courseId: number) => `/courses/${courseId}/image`
