@@ -22,12 +22,12 @@ const apiSlice = createApi({
     refetchOnFocus: true,
     endpoints: (builder) => ({
         profile: builder.query<User, undefined>({
-            query: () => ({ url: 'https://localhost:44396/auth/profile' }),
+            query: () => ({ url: '/auth/profile' }),
             providesTags: ['PROFILE']
         }),
         login: builder.mutation<LoginResponseDTO, LoginRequestDTO>({
             query: (request: LoginRequestDTO) => ({
-                url: 'https://localhost:44396/auth/login',
+                url: '/auth/login',
                 body: JSON.stringify(request),
                 method: 'POST',
                 headers: {
@@ -38,7 +38,7 @@ const apiSlice = createApi({
         }),
         register: builder.mutation<undefined, RegisterDTO>({
             query: (request: RegisterDTO) => ({
-                url: 'https://localhost:44396/auth/register',
+                url: '/auth/register',
                 body: JSON.stringify(request),
                 method: 'POST',
                 headers: {

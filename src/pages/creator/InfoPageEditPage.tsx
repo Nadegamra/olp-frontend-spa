@@ -98,7 +98,7 @@ function InfoPageEditPage() {
                 />
                 <Editor
                     apiKey={'k9ef7v4h3f7s2w03gelkdczekdlqf6ljq5gm7yfzpjtug37o'}
-                    onInit={(evt, editor) => (editorRef.current = editor)}
+                    onInit={(_evt, editor) => (editorRef.current = editor)}
                     init={config}
                     initialValue={data.text}
                 />

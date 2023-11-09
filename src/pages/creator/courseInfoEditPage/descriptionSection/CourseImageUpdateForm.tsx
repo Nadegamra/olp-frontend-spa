@@ -15,7 +15,6 @@ interface FormProps {
 function CourseImageUpdateForm() {
     const { id } = useParams()
     const {
-        register,
         handleSubmit,
         reset,
         formState: { errors },

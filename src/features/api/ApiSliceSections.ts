@@ -5,31 +5,31 @@ const apiSliceSections = apiSlice.injectEndpoints({
     endpoints: (builder) => ({
         getSectionList: builder.query<Section[], number>({
             query: (courseId) => ({
-                url: `https://localhost:44340/courses/${courseId}/sections`,
+                url: `/courses/${courseId}/sections`,
                 method: 'GET'
             }),
-            providesTags: (result, error, arg) => [{ type: 'SECTION', id: arg }]
+            providesTags: (_result, _error, arg) => [{ type: 'SECTION', id: arg }]
         }),
         getSection: builder.query<Section, [number, number]>({
             query: ([courseId, sectionId]) => ({
-                url: `https://localhost:44340/courses/${courseId}/sections/${sectionId}`,
+                url: `/courses/${courseId}/sections/${sectionId}`,
                 method: 'GET'
             })
         }),
         addSection: builder.mutation<Section, [number, SectionAddRequest]>({
             query: ([courseId, request]) => ({
-                url: `https://localhost:44340/courses/${courseId}/sections`,
+                url: `localhost/courses/${courseId}/sections`,
                 method: 'POST',
                 body: JSON.stringify(request),
                 headers: {
                     'Content-Type': 'application/json'
                 }
             }),
-            invalidatesTags: (result, error, arg) => [{ type: 'SECTION', id: arg[0] }]
+            invalidatesTags: (_result, _error, arg) => [{ type: 'SECTION', id: arg[0] }]
         }),
         updateSection: builder.mutation<Section, [number, number, SectionUpdateRequest]>({
             query: ([courseId, id, request]) => ({
-                url: `https://localhost:44340/courses/${courseId}/sections/${id}`,
+                url: `/courses/${courseId}/sections/${id}`,
                 method: 'PUT',
                 body: JSON.stringify(request),
                 headers: {
@@ -52,11 +52,11 @@ const apiSliceSections = apiSlice.injectEndpoints({
                     result.undo()
                 }
             },
-            invalidatesTags: (result, error, arg) => [{ type: 'SECTION', id: arg[0] }]
+            invalidatesTags: (_result, _error, arg) => [{ type: 'SECTION', id: arg[0] }]
         }),
         deleteSection: builder.mutation<Section, [number, number]>({
             query: ([courseId, sectionId]) => ({
-                url: `https://localhost:44340/courses/${courseId}/sections/${sectionId}`,
+                url: `/courses/${courseId}/sections/${sectionId}`,
                 method: 'DELETE'
             }),
             async onQueryStarted([courseId, sectionId], { dispatch, queryFulfilled }) {
@@ -75,7 +75,7 @@ const apiSliceSections = apiSlice.injectEndpoints({
                     result.undo()
                 }
             },
-            invalidatesTags: (result, error, arg) => [{ type: 'SECTION', id: arg[0] }]
+            invalidatesTags: (_result, _error, arg) => [{ type: 'SECTION', id: arg[0] }]
         })
     })
 })

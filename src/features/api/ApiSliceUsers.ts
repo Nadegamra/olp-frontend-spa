@@ -4,7 +4,7 @@ const apiSliceUsers = apiSlice.injectEndpoints({
     endpoints: (build) => ({
         changeEmail: build.mutation<undefined, string>({
             query: (token: string) => ({
-                url: 'https://localhost:44396/auth/changeEmail',
+                url: '/auth/changeEmail',
                 body: JSON.stringify({ token }),
                 method: 'POST',
                 headers: {
@@ -15,7 +15,7 @@ const apiSliceUsers = apiSlice.injectEndpoints({
         }),
         changePassword: build.mutation<object, { token: string; newPassword: string }>({
             query: ({ token, newPassword }) => ({
-                url: 'https://localhost:44396/auth/changePassword',
+                url: '/auth/changePassword',
                 body: JSON.stringify({ token, newPassword }),
                 method: 'POST',
                 headers: {
@@ -25,7 +25,7 @@ const apiSliceUsers = apiSlice.injectEndpoints({
         }),
         confirmEmail: build.mutation<undefined, string>({
             query: (token: string) => ({
-                url: 'https://localhost:44396/auth/confirmEmail',
+                url: '/auth/confirmEmail',
                 body: JSON.stringify({ token }),
                 method: 'POST',
                 headers: {
@@ -36,14 +36,14 @@ const apiSliceUsers = apiSlice.injectEndpoints({
         }),
         deleteUser: build.mutation<undefined, undefined>({
             query: () => ({
-                url: 'https://localhost:44396/auth/deleteUser',
+                url: '/auth/deleteUser',
                 method: 'DELETE'
             }),
             invalidatesTags: ['PROFILE']
         }),
         sendEmailChangeToken: build.mutation<undefined, string>({
             query: (email: string) => ({
-                url: 'https://localhost:44396/auth/sendEmailChangeToken',
+                url: '/auth/sendEmailChangeToken',
                 body: JSON.stringify({ emailAddress: email }),
                 method: 'POST',
                 headers: {
@@ -53,7 +53,7 @@ const apiSliceUsers = apiSlice.injectEndpoints({
         }),
         sendPasswordResetToken: build.mutation<undefined, string>({
             query: (email: string) => ({
-                url: 'https://localhost:44396/auth/sendPasswordResetToken',
+                url: '/auth/sendPasswordResetToken',
                 body: JSON.stringify({ emailAddress: email }),
                 method: 'POST',
                 headers: {
@@ -63,7 +63,7 @@ const apiSliceUsers = apiSlice.injectEndpoints({
         }),
         updatePassword: build.mutation<undefined, { oldPassword: string; newPassword: string }>({
             query: ({ oldPassword, newPassword }) => ({
-                url: 'https://localhost:44396/auth/updatePassword',
+                url: '/auth/updatePassword',
                 body: JSON.stringify({ oldPassword, newPassword }),
                 method: 'PUT',
                 headers: {
@@ -74,7 +74,7 @@ const apiSliceUsers = apiSlice.injectEndpoints({
         }),
         updateUsername: build.mutation<undefined, string>({
             query: (newUsername: string) => ({
-                url: 'https://localhost:44396/auth/updateUsername',
+                url: '/auth/updateUsername',
                 body: JSON.stringify({ newUsername }),
                 method: 'PUT',
                 headers: {

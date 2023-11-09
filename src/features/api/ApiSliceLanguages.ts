@@ -5,7 +5,7 @@ const apiSliceLanguages = apiSlice.injectEndpoints({
     endpoints: (builder) => ({
         createLanguage: builder.mutation<undefined, AddLanguageRequest>({
             query: (request) => ({
-                url: `https://localhost:44398/languages`,
+                url: `/languages`,
                 method: 'POST',
                 body: JSON.stringify(request),
                 headers: {
@@ -16,21 +16,21 @@ const apiSliceLanguages = apiSlice.injectEndpoints({
         }),
         deleteLanguage: builder.mutation<undefined, number>({
             query: (id) => ({
-                url: `https://localhost:44398/languages/${id}`,
+                url: `/languages/${id}`,
                 method: 'DELETE'
             }),
             invalidatesTags: ['LANGUAGE']
         }),
         getLanguageList: builder.query<Language[], { skip: number; take: number }>({
             query: ({ skip, take }) => ({
-                url: `https://localhost:44398/languages?skip=${skip}&take=${take}`,
+                url: `/languages?skip=${skip}&take=${take}`,
                 method: 'GET'
             }),
             providesTags: ['LANGUAGE']
         }),
         getLanguageCount: builder.query<LanguageCountResponse, undefined>({
             query: () => ({
-                url: 'https://localhost:44398/languages/count',
+                url: '/languages/count',
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json'
@@ -41,10 +41,8 @@ const apiSliceLanguages = apiSlice.injectEndpoints({
             query: (name) => ({
                 url:
                     name === ''
-                        ? `https://localhost:44398/languages/suggestions?name=`
-                        : `https://localhost:44398/languages/suggestions?name=${encodeURIComponent(
-                              name
-                          )}`,
+                        ? `/languages/suggestions?name=`
+                        : `/languages/suggestions?name=${encodeURIComponent(name)}`,
                 method: 'GET'
             }),
             providesTags: ['LANGUAGE']

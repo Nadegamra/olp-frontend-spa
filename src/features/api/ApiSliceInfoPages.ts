@@ -5,32 +5,32 @@ const apiSliceInfoPages = apiSlice.injectEndpoints({
     endpoints: (builder) => ({
         getInfoPageList: builder.query<InfoPage[], [number, number]>({
             query: ([courseId, sectionId]) => ({
-                url: `https://localhost:44340/courses/${courseId}/sections/${sectionId}/infoPages`,
+                url: `/courses/${courseId}/sections/${sectionId}/infoPages`,
                 method: 'GET'
             }),
-            providesTags: (result, error, arg) => [{ type: 'INFO_PAGE', id: arg[1] }]
+            providesTags: (_result, _error, arg) => [{ type: 'INFO_PAGE', id: arg[1] }]
         }),
         getInfoPage: builder.query<InfoPage, [number, number, number]>({
             query: ([courseId, sectionId, id]) => ({
-                url: `https://localhost:44340/courses/${courseId}/sections/${sectionId}/infoPages/${id}`,
+                url: `/courses/${courseId}/sections/${sectionId}/infoPages/${id}`,
                 method: 'GET'
             })
         }),
         addInfoPage: builder.mutation<InfoPage, [number, number, InfoPageAddRequest]>({
             query: ([courseId, sectionId, request]) => ({
-                url: `https://localhost:44340/courses/${courseId}/sections/${sectionId}/infoPages`,
+                url: `/courses/${courseId}/sections/${sectionId}/infoPages`,
                 method: 'POST',
                 body: JSON.stringify(request),
                 headers: {
                     'Content-Type': 'application/json'
                 }
             }),
-            invalidatesTags: (result, error, arg) => [{ type: 'INFO_PAGE', id: arg[1] }]
+            invalidatesTags: (_result, _error, arg) => [{ type: 'INFO_PAGE', id: arg[1] }]
         }),
         updateInfoPage: builder.mutation<InfoPage, [number, number, number, InfoPageUpdateRequest]>(
             {
                 query: ([courseId, sectionId, id, request]) => ({
-                    url: `https://localhost:44340/courses/${courseId}/sections/${sectionId}/infoPages/${id}`,
+                    url: `/courses/${courseId}/sections/${sectionId}/infoPages/${id}`,
                     method: 'PUT',
                     body: JSON.stringify(request),
                     headers: {
@@ -57,12 +57,12 @@ const apiSliceInfoPages = apiSlice.injectEndpoints({
                         result.undo()
                     }
                 },
-                invalidatesTags: (result, error, arg) => [{ type: 'INFO_PAGE', id: arg[1] }]
+                invalidatesTags: (_result, _error, arg) => [{ type: 'INFO_PAGE', id: arg[1] }]
             }
         ),
         deleteInfoPage: builder.mutation<InfoPage, [number, number, number]>({
             query: ([courseId, sectionId, id]) => ({
-                url: `https://localhost:44340/courses/${courseId}/sections/${sectionId}/infoPages/${id}`,
+                url: `/courses/${courseId}/sections/${sectionId}/infoPages/${id}`,
                 method: 'DELETE'
             }),
             async onQueryStarted([courseId, sectionId, id], { dispatch, queryFulfilled }) {
@@ -81,7 +81,7 @@ const apiSliceInfoPages = apiSlice.injectEndpoints({
                     result.undo()
                 }
             },
-            invalidatesTags: (result, error, arg) => [{ type: 'INFO_PAGE', id: arg[1] }]
+            invalidatesTags: (_result, _error, arg) => [{ type: 'INFO_PAGE', id: arg[1] }]
         })
     })
 })

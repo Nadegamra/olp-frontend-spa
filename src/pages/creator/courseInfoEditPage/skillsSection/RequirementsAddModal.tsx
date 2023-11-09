@@ -4,7 +4,6 @@ import { useGetSkillsSuggestionsQuery } from '../../../../features/api/ApiSliceS
 import Button from '../../../../components/forms/Button'
 import { Modal } from 'flowbite-react'
 import InputField from '../../../../components/forms/InputField'
-import { GainedSkillCreateRequest } from '../../../../dtos/GainedSkill'
 import { useAddCourseRequirementMutation } from '../../../../features/api/ApiSliceCourseRequirements'
 import { CourseRequirementCreateRequest } from '../../../../dtos/CourseRequirement'
 

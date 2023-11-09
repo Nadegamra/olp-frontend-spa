@@ -20,7 +20,8 @@ const baseQuery = fetchBaseQuery({
         }
 
         return headers
-    }
+    },
+    baseUrl: import.meta.env.VITE_BACKEND_URI
 })
 const baseQueryWithReauth: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQueryError> = async (
     args,
@@ -40,11 +41,11 @@ const baseQueryWithReauth: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQue
     return result
 }
 
-const refreshSession = async (args: string | FetchArgs, api: BaseQueryApi, extraOptions: {}) => {
+const refreshSession = async (_args: string | FetchArgs, api: BaseQueryApi, extraOptions: {}) => {
     const { user, refreshToken } = (api.getState() as RootState).auth
     const refreshResult = await baseQuery(
         {
-            url: 'https://localhost:44396/auth/refresh-token',
+            url: '/auth/refresh-token',
             body: JSON.stringify(
                 new RenewTokenRequestDTO(user?.id.toString() ?? '', refreshToken ?? '')
             ),

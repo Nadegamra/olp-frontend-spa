@@ -16,9 +16,7 @@ function SelectPrimaryLanguageForm() {
     const { id } = useParams()
     const {
         register,
-        watch,
         handleSubmit,
-        reset,
         formState: { errors }
     } = useForm<FormProps>()
     const { isSuccess: isSuccessLanguages, data: courseLanguages } = useGetCourseLanguageListQuery(

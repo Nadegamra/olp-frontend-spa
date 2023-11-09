@@ -5,7 +5,7 @@ import SelectPrimaryLanguageForm from './languageSection/SelectPrimaryLanguageFo
 import SubtitlesAddModal from './languageSection/SubtitlesAddModal'
 import SubtitlesList from './languageSection/SubtitlesList'
 
-function LanguageSection({ data }: { data: CourseResponseOwner }) {
+function LanguageSection({}: { data: CourseResponseOwner }) {
     return (
         <section>
             <h1 className="text-fs-h1">Languages</h1>

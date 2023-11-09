@@ -13,9 +13,12 @@ function Header() {
 
     useEffect(() => {
         const theme = localStorage.getItem('theme')
-        if (theme !== undefined) {
+        if (theme !== null) {
             setTheme(theme as 'light' | 'dark')
             document.documentElement.setAttribute('data-theme', theme as 'light' | 'dark')
+        } else {
+            setTheme('dark')
+            document.documentElement.setAttribute('data-theme', 'dark')
         }
     }, [])
 

@@ -5,14 +5,17 @@ WORKDIR /app
 COPY package*.json ./
 #----------------------------
 FROM base AS dev
-RUN npm install
+RUN npm i
 COPY . .
+RUN chown -R node /app
 CMD ["npm", "run", "dev"]
 #-----------------------------
-FROM base AS production
-ENV NODE_ENV production
+FROM base AS prod
+ENV NODE_ENV=production
 RUN npm ci --only=production
-USER node
 COPY . .
-EXPOSE 3000
-CMD ["npm", "run", "build"]
+RUN chown -R node /app
+USER node
+RUN npm run build
+CMD ["npm", "run", "preview"]
+

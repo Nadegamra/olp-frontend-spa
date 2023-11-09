@@ -8,13 +8,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-      target: dev
-    volumes:
-      - '.:/app'
-      - '/app/node_modules'
+      target: prod
     ports:
-      - 3000:80
-    environment:
-      - WDS_SOCKET_HOST=127.0.0.1 
-      - CHOKIDAR_USEPOLLING=true
-      - WATCHPACK_POLLING=true
+      - 80:80
+      - 443:443
