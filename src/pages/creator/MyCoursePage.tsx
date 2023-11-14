@@ -1,6 +1,6 @@
 import { Tabs } from 'flowbite-react'
-import CourseInfoEditPage from './CourseInfoEditPage'
-import CourseSectionsEditPage from './CourseSectionsEditPage'
+import CourseInfoEditPage from './courseInfoEditPage/CourseInfoEditPage'
+import CourseSectionsEditPage from './courseSectionsEditPage/CourseSectionsEditPage'
 import { useNavigate, useParams } from 'react-router-dom'
 
 function MyCoursePage() {
