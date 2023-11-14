@@ -1,5 +1,5 @@
-import CourseSectionAddBar from './courseSectionsEditPage/CourseSectionAddBar'
-import CourseSectionList from './courseSectionsEditPage/CourseSectionList'
+import CourseSectionAddBar from './CourseSectionAddBar'
+import CourseSectionList from './CourseSectionList'
 
 function CourseSectionsEditPage() {
     return (

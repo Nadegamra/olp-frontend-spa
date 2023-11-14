@@ -1,8 +1,8 @@
 import { useParams } from 'react-router-dom'
-import { useGetCourseQuery } from '../../features/api/ApiSliceCourses'
-import CoursePageHeader from './coursePage/CoursePageHeader'
-import CoursePageTabs from './coursePage/CoursePageTabs'
-import CourseSectionList from '../creator/courseSectionsEditPage/CourseSectionList'
+import { useGetCourseQuery } from '../../../features/api/ApiSliceCourses'
+import CoursePageHeader from './CoursePageHeader'
+import CoursePageTabs from './CoursePageTabs'
+import CourseSectionList from '../../creator/courseSectionsEditPage/CourseSectionList'
 
 function CoursePage() {
     const { courseId } = useParams()

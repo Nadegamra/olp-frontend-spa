@@ -1,12 +1,12 @@
 import { useParams } from 'react-router-dom'
-import Sidebar, { SidebarSection } from '../../components/layout/Sidebar'
-import PublicProfileSection from './settingsPage/PublicProfileSection'
-import PasswordSection from './settingsPage/PasswordSection'
-import EmailSection from './settingsPage/EmailSection'
-import AppearanceSection from './settingsPage/AppearanceSection'
-import AccountSection from './settingsPage/AccountSection'
-import EducatorSection from './settingsPage/EducatorSection'
-import { useAppSelector } from '../../app/hooks'
+import Sidebar, { SidebarSection } from '../../../components/layout/Sidebar'
+import PublicProfileSection from './PublicProfileSection'
+import PasswordSection from './PasswordSection'
+import EmailSection from './EmailSection'
+import AppearanceSection from './AppearanceSection'
+import AccountSection from './AccountSection'
+import EducatorSection from './EducatorSection'
+import { useAppSelector } from '../../../app/hooks'
 
 function SettingsPage() {
     const { section } = useParams()

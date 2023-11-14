@@ -59,6 +59,6 @@ export class RegisterDTO {
 }
 
 export enum UserRole {
-    Creator,
-    Consumer
+    Creator = 2,
+    Consumer = 3
 }
