@@ -20,6 +20,11 @@ input:-webkit-autofill:focus {
 @tailwind components;
 @tailwind utilities;
 
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+body {
+  font-family: 'Roboto', cursive;
+}
+
 @layer base {
   [data-theme='light'] {
       --color-bg-primary: #f1f4f7;
