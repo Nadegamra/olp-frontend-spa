@@ -1,13 +1,9 @@
-import { useNavigate } from 'react-router-dom'
-import { useAppDispatch } from '../../../app/hooks'
 import Button from '../../../components/forms/Button'
-import { useDeleteUserMutation } from '../../../features/api/ApiSliceUsers'
-import { sessionEnded } from '../../../features/auth/AuthSlice'
+import { useState } from 'react'
+import DeleteUserModal from '../../../components/modals/DeleteUserModal'
 
 function AccountSection() {
-    const [deleteUser] = useDeleteUserMutation()
-    const dispatch = useAppDispatch()
-    const navigate = useNavigate()
+    const [openModal, setOpenModal] = useState<boolean>(false)
     return (
         <section>
             <header className="mb-5">
@@ -22,12 +18,11 @@ function AccountSection() {
                 color="error"
                 type="button"
                 onClick={() => {
-                    deleteUser(undefined).unwrap()
-                    dispatch(sessionEnded(undefined))
-                    navigate('/')
+                    setOpenModal(!openModal)
                 }}>
                 Delete Account
             </Button>
+            <DeleteUserModal openModal={openModal} setOpenModal={setOpenModal} />
         </section>
     )
 }
