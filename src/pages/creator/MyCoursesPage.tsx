@@ -4,6 +4,7 @@ import SearchBar from '../../components/layout/SearchBar'
 import { useState } from 'react'
 import { CourseGetListRequest } from '../../dtos/Course'
 import Pagination from '../../components/layout/Pagination'
+import CoursesSkeletonLoader from '../../components/skeleton/CoursesSkeletonLoader'
 
 function MyCoursesPage() {
     const [from, setFrom] = useState<number>(0)
@@ -15,8 +16,9 @@ function MyCoursesPage() {
 
     const { data: count } = useGetCourseCountQuery(request)
     const { data, isFetching, isError } = useGetCourseListQuery(request)
-
-    if (!isFetching) {
+    if (isFetching) {
+        return <CoursesSkeletonLoader includeAdd={true} />
+    } else {
         if (isError) {
             return <section>An error has occured</section>
         }

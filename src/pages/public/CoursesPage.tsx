@@ -4,6 +4,7 @@ import { useGetCourseCountQuery, useGetCourseListQuery } from '../../features/ap
 import SearchBar from '../../components/layout/SearchBar'
 import { Link } from 'react-router-dom'
 import Pagination from '../../components/layout/Pagination'
+import CoursesSkeletonLoader from '../../components/skeleton/CoursesSkeletonLoader'
 
 function CoursesPage() {
     const [from, setFrom] = useState<number>(0)
@@ -15,8 +16,9 @@ function CoursesPage() {
 
     const { data: count } = useGetCourseCountQuery(request)
     const { data, isFetching, isError } = useGetCourseListQuery(request)
-
-    if (!isFetching) {
+    if (isFetching) {
+        return <CoursesSkeletonLoader includeAdd={false} />
+    } else {
         if (isError) {
             return <section>An error has occured</section>
         }
