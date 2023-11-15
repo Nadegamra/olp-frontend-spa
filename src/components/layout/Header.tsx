@@ -109,6 +109,10 @@ function Header() {
                         className="hidden justify-between items-center w-full mr-auto sm:flex sm:w-auto sm:order-1"
                         id="mobile-menu-2">
                         <ul className="flex flex-col mt-4 font-medium sm:flex-row sm:space-x-8 sm:mt-0">
+                            <li className="select-none hover:text-clr-hover py-2">
+                                <Link to={'/'}>Home</Link>
+                            </li>
+
                             {user !== undefined && role === 'CREATOR' && (
                                 <li className="select-none hover:text-clr-hover py-2">
                                     <Link to={'/myCourses'}>My Courses</Link>
