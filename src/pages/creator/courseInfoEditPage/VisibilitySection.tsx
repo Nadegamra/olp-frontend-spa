@@ -11,7 +11,7 @@ interface FormProps {
 }
 
 function VisibilitySection({ data: { isHidden } }: { data: CourseResponseOwner }) {
-    const { id } = useParams()
+    const { courseId } = useParams()
     const { reset } = useForm<FormProps>()
 
     useEffect(() => {
@@ -34,7 +34,7 @@ function VisibilitySection({ data: { isHidden } }: { data: CourseResponseOwner }
                 onClick={() => {
                     updateCourse({
                         request: new CourseUpdateRequest({
-                            id: parseInt(id ?? '-1'),
+                            id: parseInt(courseId ?? '-1'),
                             isHidden: !isHidden
                         })
                     })

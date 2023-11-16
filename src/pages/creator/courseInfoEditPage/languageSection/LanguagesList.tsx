@@ -6,9 +6,9 @@ import {
 import { CourseLanguageDeleteRequest } from '../../../../dtos/CourseLanguage'
 
 function CourseGainedSkillsList() {
-    const { id } = useParams()
+    const { courseId } = useParams()
     const { isSuccess: isSuccessLanguages, data: courseLanguages } = useGetCourseLanguageListQuery(
-        parseInt(id ?? '-1')
+        parseInt(courseId ?? '-1')
     )
     const [removeCourseLanguage] = useRemoveCourseLanguageMutation()
 

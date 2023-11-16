@@ -8,7 +8,7 @@ import { GainedSkillCreateRequest } from '../../../../dtos/GainedSkill'
 import { useParams } from 'react-router-dom'
 
 function GainedSkillsAddModal() {
-    const { id } = useParams()
+    const { courseId } = useParams()
     const [search, setSearch] = useState<string>('')
     const {
         data: skills,
@@ -52,7 +52,7 @@ function GainedSkillsAddModal() {
                                                 onClick={() => {
                                                     addGainedSkill(
                                                         new GainedSkillCreateRequest(
-                                                            parseInt(id ?? '-1'),
+                                                            parseInt(courseId ?? '-1'),
                                                             '',
                                                             sugg.id
                                                         )

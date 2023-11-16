@@ -7,7 +7,7 @@ import { useParams } from 'react-router-dom'
 import { useAddGainedSkillMutation } from '../../../../features/api/ApiSliceGainedSkills'
 
 function GainedSkillsAddCustomForm() {
-    const { id } = useParams()
+    const { courseId } = useParams()
     const [description, setDescription] = useState<string>('')
     const [addGainedSkill] = useAddGainedSkillMutation()
     const [openModal, setOpenModal] = useState<string | undefined>()
@@ -40,7 +40,7 @@ function GainedSkillsAddCustomForm() {
                                 if (description !== '')
                                     addGainedSkill(
                                         new GainedSkillCreateRequest(
-                                            parseInt(id ?? '-1'),
+                                            parseInt(courseId ?? '-1'),
                                             description
                                         )
                                     )

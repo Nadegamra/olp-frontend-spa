@@ -4,7 +4,7 @@ import Button from '../../../components/forms/Button'
 import { toast } from 'react-toastify'
 
 function DeleteSection() {
-    const { id } = useParams()
+    const { courseId } = useParams()
     const navigate = useNavigate()
     const [deleteCourse] = useDeleteCourseMutation()
 
@@ -18,7 +18,7 @@ function DeleteSection() {
             <Button
                 color="error"
                 onClick={() => {
-                    deleteCourse(parseInt(id ?? '-1'))
+                    deleteCourse(parseInt(courseId ?? '-1'))
                         .unwrap()
                         .then(() => {
                             navigate('/myCourses')

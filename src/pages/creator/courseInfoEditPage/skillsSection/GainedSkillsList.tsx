@@ -7,9 +7,9 @@ import { GainedSkillDeleteRequest } from '../../../../dtos/GainedSkill'
 import GainedSkillEditCustomForm from './GainedSkillEditCustomForm'
 
 function CourseGainedSkillsList() {
-    const { id } = useParams()
+    const { courseId } = useParams()
     const { isSuccess: isSuccessGained, data: gainedSkills } = useGetGainedSkillListQuery(
-        parseInt(id ?? '-1')
+        parseInt(courseId ?? '-1')
     )
     const [removeGainedSkill] = useRemoveGainedSkillMutation()
     return (

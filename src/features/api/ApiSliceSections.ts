@@ -18,7 +18,7 @@ const apiSliceSections = apiSlice.injectEndpoints({
         }),
         addSection: builder.mutation<Section, [number, SectionAddRequest]>({
             query: ([courseId, request]) => ({
-                url: `localhost/courses/${courseId}/sections`,
+                url: `/courses/${courseId}/sections`,
                 method: 'POST',
                 body: JSON.stringify(request),
                 headers: {

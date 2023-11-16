@@ -19,7 +19,7 @@ function CertificatesSection({
 }: {
     data: CourseResponseOwner
 }) {
-    const { id } = useParams()
+    const { courseId } = useParams()
     const {
         register,
         watch,
@@ -45,7 +45,7 @@ function CertificatesSection({
                 onSubmit={handleSubmit(({ grantsCertificate, certificatePrice }) => {
                     updateCourse({
                         request: new CourseUpdateRequest({
-                            id: parseInt(id ?? '-1'),
+                            id: parseInt(courseId ?? '-1'),
                             grantsCertificate,
                             certificatePrice
                         })

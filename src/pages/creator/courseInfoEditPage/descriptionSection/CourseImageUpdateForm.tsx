@@ -13,7 +13,7 @@ interface FormProps {
 }
 
 function CourseImageUpdateForm() {
-    const { id } = useParams()
+    const { courseId } = useParams()
     const {
         handleSubmit,
         reset,
@@ -27,7 +27,7 @@ function CourseImageUpdateForm() {
     const [setCourseImage, { isLoading }] = useSetCourseImageMutation()
 
     const handleChange = (e: any) => {
-        setValue('images', e.target.files) // you get all the files object here
+        setValue('images', e.target.files)
     }
 
     return (
@@ -39,7 +39,7 @@ function CourseImageUpdateForm() {
                     let formData = new FormData()
                     formData.append('image', images[0], images[0].name)
 
-                    setCourseImage(new SetCourseImageRequest(parseInt(id ?? '-1'), formData))
+                    setCourseImage(new SetCourseImageRequest(parseInt(courseId ?? '-1'), formData))
                         .unwrap()
                         .then(() => {
                             toast.success('Course updated successfully!')

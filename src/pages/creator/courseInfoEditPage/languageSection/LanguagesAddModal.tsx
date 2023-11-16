@@ -8,7 +8,7 @@ import { useAddCourseLanguageMutation } from '../../../../features/api/ApiSliceC
 import { CourseLanguageCreateRequest } from '../../../../dtos/CourseLanguage'
 
 function LanguagesAddModal() {
-    const { id } = useParams()
+    const { courseId } = useParams()
     const [search, setSearch] = useState<string>('')
     const {
         data: skills,
@@ -52,7 +52,7 @@ function LanguagesAddModal() {
                                                 onClick={() => {
                                                     addLanguage(
                                                         new CourseLanguageCreateRequest(
-                                                            parseInt(id ?? '-1'),
+                                                            parseInt(courseId ?? '-1'),
                                                             sugg.id
                                                         )
                                                     )

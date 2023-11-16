@@ -13,14 +13,14 @@ interface FormProps {
     languageId: number
 }
 function SelectPrimaryLanguageForm() {
-    const { id } = useParams()
+    const { courseId } = useParams()
     const {
         register,
         handleSubmit,
         formState: { errors }
     } = useForm<FormProps>()
     const { isSuccess: isSuccessLanguages, data: courseLanguages } = useGetCourseLanguageListQuery(
-        parseInt(id ?? '-1')
+        parseInt(courseId ?? '-1')
     )
     const [setPrimaryLanguage] = useSetCoursePrimaryLanguageMutation()
     return (
@@ -31,7 +31,10 @@ function SelectPrimaryLanguageForm() {
                     className="mb-2 block"
                     onSubmit={handleSubmit(({ languageId }) => {
                         setPrimaryLanguage(
-                            new CourseLanguageSetPrimaryRequest(parseInt(id ?? '-1'), languageId)
+                            new CourseLanguageSetPrimaryRequest(
+                                parseInt(courseId ?? '-1'),
+                                languageId
+                            )
                         )
                             .unwrap()
                             .then(() => {

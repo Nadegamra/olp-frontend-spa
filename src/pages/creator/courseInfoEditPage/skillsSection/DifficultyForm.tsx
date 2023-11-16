@@ -14,7 +14,7 @@ interface Props {
 }
 
 function DifficultyForm({ data: { difficulty } }: { data: CourseResponseOwner }) {
-    const { id } = useParams()
+    const { courseId } = useParams()
     const {
         handleSubmit,
         register,
@@ -36,7 +36,7 @@ function DifficultyForm({ data: { difficulty } }: { data: CourseResponseOwner })
                 onSubmit={handleSubmit(({ difficulty }) => {
                     updateCourse({
                         request: new CourseUpdateRequest({
-                            id: parseInt(id ?? '-1'),
+                            id: parseInt(courseId ?? '-1'),
                             difficulty
                         })
                     })

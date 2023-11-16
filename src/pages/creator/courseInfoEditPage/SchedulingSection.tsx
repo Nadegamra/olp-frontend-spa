@@ -22,7 +22,7 @@ function SchedulingSection({
 }: {
     data: CourseResponseOwner
 }) {
-    const { id } = useParams()
+    const { courseId } = useParams()
     const {
         register,
         handleSubmit,
@@ -48,7 +48,7 @@ function SchedulingSection({
                 onSubmit={handleSubmit(({ lengthInDays, activityFormat, scheduleType }) => {
                     updateCourse({
                         request: new CourseUpdateRequest({
-                            id: parseInt(id ?? '-1'),
+                            id: parseInt(courseId ?? '-1'),
                             lengthInDays,
                             activityFormat,
                             scheduleType

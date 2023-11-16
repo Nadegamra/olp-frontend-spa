@@ -20,7 +20,7 @@ function DescriptionUpdateForm({
 }: {
     data: CourseResponseOwner
 }) {
-    const { id } = useParams()
+    const { courseId } = useParams()
     const {
         register,
         handleSubmit,
@@ -44,7 +44,7 @@ function DescriptionUpdateForm({
                 onSubmit={handleSubmit(({ name, shortDescription, detailedDescription }) => {
                     updateCourse({
                         request: new CourseUpdateRequest({
-                            id: parseInt(id ?? '-1'),
+                            id: parseInt(courseId ?? '-1'),
                             name,
                             shortDescription,
                             detailedDescription

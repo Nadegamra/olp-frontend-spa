@@ -6,9 +6,9 @@ import {
 import { CourseSubtitleDeleteRequest } from '../../../../dtos/CourseSubtitle'
 
 function CourseGainedSkillsList() {
-    const { id } = useParams()
+    const { courseId } = useParams()
     const { isSuccess: isSuccessLanguages, data: courseLanguages } = useGetCourseSubtitleListQuery(
-        parseInt(id ?? '-1')
+        parseInt(courseId ?? '-1')
     )
     const [removeCourseLanguage] = useRemoveCourseSubtitleMutation()
     return (

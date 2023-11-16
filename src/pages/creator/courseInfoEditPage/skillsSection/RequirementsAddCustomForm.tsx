@@ -7,7 +7,7 @@ import Button from '../../../../components/forms/Button'
 import { Modal } from 'flowbite-react'
 
 function RequirementsAddCustomForm() {
-    const { id } = useParams()
+    const { courseId } = useParams()
     const [description, setDescription] = useState<string>('')
     const [addRequirement] = useAddCourseRequirementMutation()
     const [openModal, setOpenModal] = useState<string | undefined>()
@@ -40,7 +40,7 @@ function RequirementsAddCustomForm() {
                                 if (description !== '')
                                     addRequirement(
                                         new CourseRequirementCreateRequest(
-                                            parseInt(id ?? '-1'),
+                                            parseInt(courseId ?? '-1'),
                                             description
                                         )
                                     )

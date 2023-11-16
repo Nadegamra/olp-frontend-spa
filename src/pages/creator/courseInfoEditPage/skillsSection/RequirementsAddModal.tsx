@@ -8,7 +8,7 @@ import { useAddCourseRequirementMutation } from '../../../../features/api/ApiSli
 import { CourseRequirementCreateRequest } from '../../../../dtos/CourseRequirement'
 
 function RequirementsAddModal() {
-    const { id } = useParams()
+    const { courseId } = useParams()
     const [search, setSearch] = useState<string>('')
     const {
         data: skills,
@@ -52,7 +52,7 @@ function RequirementsAddModal() {
                                                 onClick={() => {
                                                     addRequirement(
                                                         new CourseRequirementCreateRequest(
-                                                            parseInt(id ?? '-1'),
+                                                            parseInt(courseId ?? '-1'),
                                                             '',
                                                             sugg.id
                                                         )

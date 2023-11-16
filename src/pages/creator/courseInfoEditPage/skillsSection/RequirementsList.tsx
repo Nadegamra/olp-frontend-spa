@@ -8,9 +8,9 @@ import { CourseRequirementDeleteRequest } from '../../../../dtos/CourseRequireme
 import RequirementEditCustomForm from './RequirementEditCustomForm'
 
 function RequirementsList() {
-    const { id } = useParams()
+    const { courseId } = useParams()
     const { isSuccess: isSuccessRequirements, data: requirements } =
-        useGetCourseRequirementListQuery(parseInt(id ?? '-1'))
+        useGetCourseRequirementListQuery(parseInt(courseId ?? '-1'))
     const [removeRequirement] = useRemoveCourseRequirementMutation()
     return (
         <>

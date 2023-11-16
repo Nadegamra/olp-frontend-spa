@@ -8,7 +8,7 @@ import InputField from '../../../../components/forms/InputField'
 import { CourseSubtitleCreateRequest } from '../../../../dtos/CourseSubtitle'
 
 function SubtitlesAddModal() {
-    const { id } = useParams()
+    const { courseId } = useParams()
     const [search, setSearch] = useState<string>('')
     const {
         data: skills,
@@ -52,7 +52,7 @@ function SubtitlesAddModal() {
                                                 onClick={() => {
                                                     addSubtitle(
                                                         new CourseSubtitleCreateRequest(
-                                                            parseInt(id ?? '-1'),
+                                                            parseInt(courseId ?? '-1'),
                                                             sugg.id
                                                         )
                                                     )

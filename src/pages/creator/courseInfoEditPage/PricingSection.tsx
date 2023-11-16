@@ -13,7 +13,7 @@ interface FormProps {
 }
 
 function PricingSection({ data: { price } }: { data: CourseResponseOwner }) {
-    const { id } = useParams()
+    const { courseId } = useParams()
     const {
         register,
         handleSubmit,
@@ -37,7 +37,7 @@ function PricingSection({ data: { price } }: { data: CourseResponseOwner }) {
                 onSubmit={handleSubmit(({ price }) => {
                     updateCourse({
                         request: new CourseUpdateRequest({
-                            id: parseInt(id ?? '-1'),
+                            id: parseInt(courseId ?? '-1'),
                             price
                         })
                     })
