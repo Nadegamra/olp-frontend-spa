@@ -50,8 +50,8 @@ function CoursesSkeletonLoader({ includeAdd }: { includeAdd: boolean }) {
                         <span>New Course</span>
                     </Link>
                 )}
-                {[...Array(visibleElements)].map(() => (
-                    <div role="status" className={`animate-pulse w-[300px]`}>
+                {[...Array(visibleElements)].map((_, idx) => (
+                    <div key={idx} role="status" className={`animate-pulse w-[300px]`}>
                         <div className="flex items-center justify-center w-full h-48 bg-gray-300 rounded-2xl">
                             <svg
                                 className="w-10 h-10 text-gray-200 dark:text-gray-600"

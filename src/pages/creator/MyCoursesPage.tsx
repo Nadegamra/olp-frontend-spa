@@ -44,7 +44,9 @@ function MyCoursesPage() {
                                 to={`/myCourses/${course.id}/info/description`}>
                                 <img
                                     className="rounded-2xl"
-                                    src={`https://localhost:44398/courses/${course.id}/image`}
+                                    src={`${import.meta.env.VITE_BACKEND_URI}/courses/${
+                                        course.id
+                                    }/image`}
                                     onError={({ currentTarget }) => {
                                         currentTarget.onerror = null
                                         currentTarget.src = './NoImage.jpg'

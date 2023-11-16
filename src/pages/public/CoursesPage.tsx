@@ -38,7 +38,9 @@ function CoursesPage() {
                                 to={`/courses/${course.id}`}>
                                 <img
                                     className="rounded-2xl"
-                                    src={`/courses/${course.id}/image`}
+                                    src={`${import.meta.env.VITE_BACKEND_URI}/courses/${
+                                        course.id
+                                    }/image`}
                                     onError={({ currentTarget }) => {
                                         currentTarget.onerror = null
                                         currentTarget.src = './NoImage.jpg'
