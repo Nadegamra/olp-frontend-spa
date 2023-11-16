@@ -6,7 +6,7 @@ const apiSliceUsers = apiSlice.injectEndpoints({
             query: (token: string) => ({
                 url: '/auth/changeEmail',
                 body: JSON.stringify({ token }),
-                method: 'POST',
+                method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'
                 }
@@ -17,7 +17,7 @@ const apiSliceUsers = apiSlice.injectEndpoints({
             query: ({ token, newPassword }) => ({
                 url: '/auth/changePassword',
                 body: JSON.stringify({ token, newPassword }),
-                method: 'POST',
+                method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'
                 }
@@ -27,7 +27,7 @@ const apiSliceUsers = apiSlice.injectEndpoints({
             query: (token: string) => ({
                 url: '/auth/confirmEmail',
                 body: JSON.stringify({ token }),
-                method: 'POST',
+                method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'
                 }
