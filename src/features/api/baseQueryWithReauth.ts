@@ -10,6 +10,7 @@ import { LoginResponseDTO, RenewTokenRequestDTO } from '../../dtos/User'
 import { sessionEnded, sessionRefreshed } from '../auth/AuthSlice'
 import apiSlice from './ApiSliceAuth'
 import { isAuthTokenExpired } from '../auth/endSessionIfExpired'
+import { Mutex } from 'async-mutex'
 
 const baseQuery = fetchBaseQuery({
     prepareHeaders(headers, { getState }) {
@@ -23,18 +24,23 @@ const baseQuery = fetchBaseQuery({
     },
     baseUrl: import.meta.env.VITE_BACKEND_URI
 })
+
+const mutex = new Mutex()
+
 const baseQueryWithReauth: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQueryError> = async (
     args,
     api,
     extraOptions
 ) => {
-    if (isAuthTokenExpired()) {
-        console.log('text')
-        await refreshSession(args, api, extraOptions)
-    }
+    mutex.runExclusive(async () => {
+        if (isAuthTokenExpired()) {
+            console.log('text')
+            await refreshSession(args, api, extraOptions)
+        }
+    })
 
     let result = await baseQuery(args, api, extraOptions)
-    if (result.error && result.error.status === 401) {
+    if (result.error && (result.error.status === 401 || result.error.status === 404)) {
         // await refreshSession(args, api, extraOptions)
         result = await baseQuery(args, api, extraOptions)
     }

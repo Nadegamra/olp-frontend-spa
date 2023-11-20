@@ -108,7 +108,7 @@ function CourseSectionListItem({
                         <div className="p-5">{section.description}</div>
                     )}
                     <InfoPageList sectionId={section.id} editMode={editMode} />
-                    <InfoPageAddBar sectionId={section.id} />
+                    {editMode && <InfoPageAddBar sectionId={section.id} />}
                 </div>
             )}
         </React.Fragment>
