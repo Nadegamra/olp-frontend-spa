@@ -30,7 +30,7 @@ function RegisterPage() {
                 onSubmit={handleSubmit(async (data) => {
                     registerRequest(new RegisterDTO(data.email, data.password, data.role))
                         .unwrap()
-                        .then(() => toast.success('Please chech your email for confirmation mail'))
+                        .then(() => toast.success('Please check your email for confirmation mail'))
                         .catch((error: any) => {
                             const errObj: object = error.response.data.errors
                             Object.values(errObj).forEach((value) => toast.error(value))
